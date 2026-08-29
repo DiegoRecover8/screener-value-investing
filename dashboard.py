@@ -28,6 +28,8 @@ from screener_value import (
 )
 from universos_yfinance import (
     CATEGORIAS_TEMATICAS_ETF,
+    SECTORES_NO_FINANCIEROS,
+    TIPOS_ACTIVO,
     UNIVERSOS_YAHOO,
     catalogar_tickers,
     obtener_tickers_universo,
@@ -95,21 +97,34 @@ st.warning(DISCLAIMER, icon="⚠️")
 st.sidebar.header("Universo")
 modo = st.sidebar.radio("Origen de los tickers", ["Lista manual", "Universo Yahoo"])
 
-with st.sidebar.expander("🔎 Descubrir ETF / fondos por categoría"):
+with st.sidebar.expander("🔎 Descubrir tickers por categoría"):
     st.caption(
-        "Solo para AÑADIR tickers a la lista manual, no se evalúan con las "
-        "métricas de valor: PER/ROIC/EV-EBIT no existen a nivel de ETF o fondo."
+        "Busca tickers por zona económica y categoría, y añádelos a la lista "
+        "manual de arriba. Las ACCIONES sí se evalúan con las métricas de "
+        "valor al pulsar \"Descargar y calcular\"; los ETF y fondos NO -"
+        "PER/ROIC/EV-EBIT no existen a nivel de fondo-, así que para esos dos "
+        "este buscador sirve solo para reunir tickers, no para analizarlos."
     )
-    tipo_descubrir = st.radio("Tipo de activo", ["etf", "fondo"], horizontal=True, key="tipo_descubrir")
+    tipo_descubrir = st.radio(
+        "Tipo de activo", ["accion", "etf", "fondo"], horizontal=True, key="tipo_descubrir",
+    )
 
-    if tipo_descubrir == "etf":
+    if TIPOS_ACTIVO[tipo_descubrir]["soporta_region"]:
         universo_descubrir = st.selectbox("Región", sorted(UNIVERSOS_YAHOO), key="universo_descubrir")
+        if tipo_descubrir == "accion":
+            opciones_categoria = SECTORES_NO_FINANCIEROS
+            etiqueta_categoria = "Sector"
+            ayuda_categoria = None
+        else:
+            opciones_categoria = sorted(CATEGORIAS_TEMATICAS_ETF)
+            etiqueta_categoria = "Categoría temática"
+            ayuda_categoria = (
+                "Taxonomía Morningstar, no GICS: sectores como Industrials o "
+                "Consumer Cyclical no tienen categoría ETF equivalente (ver README)."
+            )
         categorias_sel = st.multiselect(
-            "Categoría temática",
-            sorted(CATEGORIAS_TEMATICAS_ETF),
-            key="categorias_descubrir",
-            help="Taxonomía Morningstar, no GICS: sectores como Industrials o "
-                 "Consumer Cyclical no tienen categoría ETF equivalente (ver README).",
+            etiqueta_categoria, opciones_categoria,
+            key=f"categorias_descubrir_{tipo_descubrir}", help=ayuda_categoria,
         )
     else:
         st.caption(
