@@ -1,8 +1,9 @@
 name: Screener semanal
 
 # Se ejecuta cada lunes a las 07:00 UTC y añade el resultado a
-# journal_candidatos.csv (nunca lo sobrescribe, ver journal.py). También se
-# puede lanzar a mano desde la pestaña "Actions" de GitHub.
+# journal_candidatos.csv y seguimiento_candidatas.csv (ninguno de los dos
+# se sobrescribe, ver journal.py y seguimiento.py). También se puede
+# lanzar a mano desde la pestaña "Actions" de GitHub.
 "on":
   schedule:
     - cron: "0 7 * * 1"
@@ -27,19 +28,22 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Ejecutar tests (no seguir si el motor está roto)
-        run: python -m pytest test_screener.py test_journal.py -q
+        run: python -m pytest test_screener.py test_journal.py test_seguimiento.py -q
 
       - name: Ejecutar el screener sobre universo.txt y actualizar el journal
         run: python ejecutar_semanal.py universo.txt journal_candidatos.csv
 
-      - name: Commitear el journal si cambió
+      - name: Calcular rendimiento de las candidatas trackeadas
+        run: python ejecutar_seguimiento.py journal_candidatos.csv seguimiento_candidatas.csv
+
+      - name: Commitear journal y seguimiento si cambiaron
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add journal_candidatos.csv
+          git add journal_candidatos.csv seguimiento_candidatas.csv
           if git diff --cached --quiet; then
-            echo "Sin cambios en el journal"
+            echo "Sin cambios que commitear"
           else
-            git commit -m "Actualiza journal semanal ($(date -u +%Y-%m-%d))"
+            git commit -m "Actualiza journal y seguimiento semanal ($(date -u +%Y-%m-%d))"
             git push
           fi

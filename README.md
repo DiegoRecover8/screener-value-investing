@@ -40,6 +40,10 @@ motivo de descarte auditable si no pasa.
    automatizan una ejecución semanal sobre `universo.txt` y acumulan el
    resultado en `journal_candidatos.csv` -un histórico, no una foto- con
    timestamp de cuándo se calculó cada fila (ver más abajo).
+6. **`seguimiento.py`** + **`ejecutar_seguimiento.py`** miden, cada semana,
+   el retorno TWR y el drawdown máximo real de cada candidata desde que
+   apareció por primera vez, sobre precio de cierre ajustado y sin sesgo
+   retrospectivo, acumulando el resultado en `seguimiento_candidatas.csv`.
 
 ## Uso
 
@@ -160,6 +164,53 @@ GitHub, y el permiso de escritura ya declarado en el workflow
 (`permissions: contents: write`) — no requiere secretos adicionales, el
 `GITHUB_TOKEN` por defecto basta para commitear de vuelta al mismo repo.
 
+### Seguimiento longitudinal del rendimiento real (Fase 4)
+
+Las tres fases anteriores contestan "¿qué candidatas salieron esta semana y
+con qué métricas?". Esta contesta la pregunta que de verdad importa:
+**¿cómo les fue de verdad después?** Cada ejecución semanal de la Action
+también corre `ejecutar_seguimiento.py`, que:
+
+1. Lee `journal_candidatos.csv` y se queda con la **primera** vez que cada
+   ticker apareció como candidata (`pasa=True`). Si vuelve a aparecer en
+   semanas posteriores sin haber dejado de serlo, no abre una entrada
+   nueva -sigue siendo la misma señal original, con la misma fecha de
+   entrada. Un ticker que deja de ser candidata y vuelve a serlo meses
+   después sí generaría una señal nueva, porque el contexto fundamental ya
+   cambió.
+2. Descarga el **precio de cierre ajustado** (splits + dividendos,
+   `auto_adjust=True` de yfinance) desde esa fecha de entrada hasta hoy.
+3. Calcula el retorno **encadenando los retornos diarios** (TWR: `∏(1+r_t)
+   - 1`) y el **drawdown máximo** desde el pico acumulado de esa misma
+   serie -nunca sobre "valor de la posición" con flujos, la misma
+   disciplina que un backtest de cartera con aportaciones periódicas,
+   aunque aquí no haya flujos que mezclar al ser una única entrada.
+4. Añade el resultado a `seguimiento_candidatas.csv` -otro histórico que
+   se **acumula**, nunca se sobrescribe, con su propio timestamp
+   (`fecha_calculo`) para poder ver más adelante cómo evolucionó el
+   retorno semana a semana, no solo su valor actual.
+
+**Disciplina contra el sesgo retrospectivo (look-ahead bias):**
+
+- La decisión de qué es candidata **nunca se recalcula** con los
+  fundamentales de hoy: `journal_candidatos.csv` ya la dejó congelada en
+  el momento en que se emitió. Este módulo solo lee esa fecha, no la
+  cuestiona.
+- El precio de entrada es el primer cierre ajustado disponible **en o
+  después** de esa fecha, nunca uno anterior -usar un precio de antes de
+  que la señal existiera sería fabricar una entrada más barata de la que
+  realmente se podría haber conseguido.
+- Un ticker recién detectado (como en la primera ejecución de este
+  proyecto) no tiene todavía suficiente histórico de precio para calcular
+  un retorno: la fila sale con `NaN` en vez de con un cero o un valor
+  inventado, siguiendo la misma regla de "un dato ausente nunca se rellena
+  por omisión" del resto del proyecto.
+
+```bash
+# Ejecutarlo tú mismo:
+python ejecutar_seguimiento.py journal_candidatos.csv seguimiento_candidatas.csv
+```
+
 ## Metodología
 
 ### Métricas
@@ -261,8 +312,11 @@ en el ranking, pero conservan sus métricas y motivos de descarte en el CSV.
       (`.github/workflows/screener_semanal.yml`) y un histórico acumulado
       (`journal_candidatos.csv`) de qué candidatas salieron cada semana y
       con qué métricas, con timestamp de cuándo se calculó cada fila.
-- [ ] Fase 4 — seguimiento longitudinal del rendimiento real de las
-      candidatas pasadas (TWR sobre precios ajustados, sin look-ahead bias).
+- [x] Fase 4 — seguimiento longitudinal (`seguimiento.py`,
+      `ejecutar_seguimiento.py`) del rendimiento real de las candidatas
+      pasadas: retorno TWR y drawdown máximo sobre precio de cierre
+      ajustado desde su primera aparición, sin look-ahead bias, acumulado
+      semana a semana en `seguimiento_candidatas.csv`.
 - [ ] Fase 5 (opcional) — interpretación cualitativa en lenguaje natural de
       las métricas ya calculadas vía la API de Claude, sin generar tesis de
       inversión propias.
