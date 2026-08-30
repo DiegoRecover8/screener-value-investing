@@ -28,7 +28,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Ejecutar tests (no seguir si el motor está roto)
-        run: python -m pytest test_screener.py test_journal.py test_seguimiento.py -q
+        run: python -m pytest -q
 
       - name: Ejecutar el screener sobre universo.txt y actualizar el journal
         run: python ejecutar_semanal.py universo.txt journal_candidatos.csv

@@ -31,7 +31,10 @@ motivo de descarte auditable si no pasa.
    todos.
 3. **`test_screener.py`** cubre el cálculo de métricas con datos sintéticos,
    sin red — incluye regresiones explícitas de los dos bugs reales
-   corregidos durante el desarrollo (ver más abajo).
+   corregidos durante el desarrollo (ver más abajo). `test_journal.py`,
+   `test_seguimiento.py` y `test_prompt_llm.py` hacen lo mismo para sus
+   módulos respectivos; los cuatro corren sin red y `pytest` los
+   autodescubre juntos.
 4. **`dashboard.py`** es un panel interactivo en Streamlit sobre el mismo
    motor: sliders para ajustar `UMBRALES` en vivo, tabla filtrable con los
    motivos de descarte y gráficos de composición del universo por región y
@@ -66,7 +69,7 @@ evaluado, con todas las métricas, si pasó (`pasa`) y por qué no si no lo hizo
 (`motivos_descarte`).
 
 ```bash
-python -m pytest test_screener.py -v
+python -m pytest -v
 ```
 
 ### Dashboard interactivo
@@ -81,6 +84,16 @@ la única operación que va a red — queda cacheada por lista de tickers durant
 24h. A partir de ahí, cada slider de `UMBRALES` recalcula filtros y ranking al
 instante sobre los datos ya descargados, sin volver a consultar Yahoo
 Finance.
+
+En la misma barra lateral, el desplegable **"🔎 Descubrir tickers por
+categoría"** deja buscar acciones (por región + sector), ETF o fondos (por
+categoría temática) directamente contra Yahoo Finance y añadirlos con un
+clic a la lista manual, sin salir del dashboard (ver "Catálogo de universos
+por tipo de activo" más abajo para la lógica que hay detrás). Y bajo la
+tabla de resultados, la sección **"🤖 Prompt para interpretar con tu LLM"**
+genera un prompt listo para copiar y pegar en Claude, ChatGPT, Gemini o
+cualquier otro asistente, a partir de las candidatas que estés viendo en
+ese momento (ver Fase 5 más abajo).
 
 ### Catálogo de universos por tipo de activo
 
@@ -132,8 +145,8 @@ categorías de ETF ya verificadas.
 las 07:00 UTC (y también se puede lanzar a mano desde la pestaña "Actions"
 de GitHub, con `workflow_dispatch`). El flujo es:
 
-1. Corre los tests (`test_screener.py`, `test_journal.py`) — si el motor
-   está roto, no se genera ni se commitea nada.
+1. Corre toda la suite de tests (`pytest` autodescubre cualquier
+   `test_*.py`) — si el motor está roto, no se genera ni se commitea nada.
 2. Ejecuta `python ejecutar_semanal.py universo.txt journal_candidatos.csv`.
 3. Si `journal_candidatos.csv` cambió, lo commitea y lo pushea de vuelta al
    repositorio.
