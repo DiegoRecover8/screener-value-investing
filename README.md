@@ -50,6 +50,12 @@ motivo de descarte auditable si no pasa.
 7. **`prompt_llm.py`** convierte las candidatas actuales en un prompt listo
    para copiar y pegar en cualquier LLM, con instrucciones explícitas para
    que resuma datos sin inventar una tesis de inversión (ver más abajo).
+8. **`tradingview.py`** mapea tickers de yfinance a símbolos de TradingView
+   (verificado a mano contra el widget real) para embeber el gráfico de
+   precio de cualquier ticker evaluado, dentro del dashboard.
+9. **`exportar_historico.py`** exporta journal + seguimiento a un JSON
+   compacto, usado para refrescar la "Bitácora del Screener" -una página
+   estática publicada como Claude Artifact (ver más abajo).
 
 ## Uso
 
@@ -246,6 +252,63 @@ que el LLM **resuma las métricas ya calculadas, nunca invente una tesis de
 inversión ni recomiende comprar o vender**, y reproduce el mismo
 disclaimer que el resto de la herramienta.
 
+### Bitácora del Screener (Artifact estático)
+
+Complemento a la vista "Histórico" del dashboard: una página HTML
+autocontenida publicada como Claude Artifact -privada por defecto, gratis,
+sin necesitar GitHub Pages (que exige un plan de pago para repos privados
+y, aun así, publica la página en abierto). Muestra las mismas tres cosas
+que la vista "Histórico" (KPIs, candidatas de la última ejecución, journal
+filtrable, rendimiento trackeado con gráfico de evolución), pero como una
+página que se puede compartir sin tener Streamlit corriendo.
+
+**No se actualiza sola** -un Artifact es una página publicada, no un
+servidor; no puede leer el repo en directo. El refresco es en dos pasos:
+
+1. Una rutina cloud programada (lunes 09:00 UTC, un par de horas después
+   de la Action semanal) ejecuta `exportar_historico.py` y commitea
+   `historico.json` al repo -esta parte sí es automática.
+2. Cuando quieras ver la Bitácora al día, pide "actualiza el Artifact del
+   histórico": se lee `historico.json` y se republica en la misma URL. Este
+   paso sigue siendo manual porque publicar un Artifact solo se puede hacer
+   desde una sesión de Claude Code, no desde una Action ni una rutina cloud.
+
+```bash
+# Regenerar historico.json a mano en cualquier momento:
+python exportar_historico.py > historico.json
+```
+
+### Gráfico de TradingView
+
+Tanto en "Analizar en vivo" como en "Histórico", un selector deja elegir
+cualquier ticker evaluado y ver su gráfico de precio real, embebido con el
+widget gratuito de TradingView (`tradingview.py`).
+
+**Por qué vive en el dashboard de Streamlit y no en el Artifact de
+histórico**: los Artifacts de Claude tienen una CSP estricta que bloquea
+cualquier script externo salvo Google Fonts -TradingView no puede cargar
+ahí bajo ninguna circunstancia. Streamlit, al ser una página normal servida
+localmente, no tiene esa restricción.
+
+yfinance y TradingView usan formatos de ticker distintos (`ITX.MC` frente a
+`BME:ITX`) y no existe una conversión oficial entre ambos. El mapeo de
+`tradingview.py` está **verificado a mano, símbolo por símbolo, contra el
+widget real** para los mercados de `universo.txt` -no es una tabla
+inventada. Limitaciones reales encontradas durante esa verificación:
+
+- Los tickers sin sufijo (EE.UU.) se pasan tal cual: TradingView los
+  resuelve sin necesitar el prefijo de bolsa.
+- "EURONEXT" cubre Ámsterdam y París (verificado); se asume que también
+  cubre Bruselas y Lisboa por ser el mismo grupo, pero no se ha probado
+  símbolo a símbolo.
+- Algunos símbolos válidos están disponibles en tradingview.com pero el
+  widget gratuito los bloquea con "solo disponible en TradingView" -pasó
+  con Ryanair (Dublín) aunque el mercado irlandés en general funciona. Esto
+  depende de la licencia de datos de cada valor, no del mercado.
+- Cuando el símbolo no resuelve, el propio widget deja buscarlo a mano
+  haciendo clic en su nombre -no hay forma de detectar el fallo desde
+  fuera del iframe para mostrar un aviso automático.
+
 ## Metodología
 
 ### Métricas
@@ -358,3 +421,10 @@ en el ranking, pero conservan sus métricas y motivos de descarte en el CSV.
       u otro), a coste $0 y sin atarse a ningún proveedor, con
       instrucciones explícitas para resumir datos sin inventar una tesis
       de inversión.
+- [x] Extra — Bitácora del Screener: página estática (Claude Artifact) con
+      el mismo histórico que la vista "Histórico" del dashboard, refrescada
+      con `exportar_historico.py` (exportación automática semanal vía una
+      rutina cloud, publicación manual). Y gráfico de precio real de
+      TradingView (`tradingview.py`) embebido en el dashboard -no en el
+      Artifact, cuya CSP bloquea scripts externos-, con el mapeo de
+      tickers verificado símbolo a símbolo contra el widget real.

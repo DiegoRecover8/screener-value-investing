@@ -30,6 +30,7 @@ from screener_value import (
     incorporar_ranking_candidatos,
 )
 from seguimiento import RUTA_SEGUIMIENTO_DEFECTO, leer_seguimiento
+from tradingview import ticker_a_tradingview
 from universos_yfinance import (
     CATEGORIAS_TEMATICAS_ETF,
     SECTORES_NO_FINANCIEROS,
@@ -105,6 +106,48 @@ def _bar_conteo(df: pd.DataFrame, columna: str, etiqueta: str) -> alt.Chart:
     )
 
 
+def _grafico_tradingview(ticker: str, altura: int = 480) -> None:
+    """Embebe el widget gratuito de TradingView para `ticker`.
+
+    Vive en Streamlit y no en el Artifact de histórico a propósito: la CSP
+    de los Artifacts de Claude bloquea cualquier script externo salvo
+    Google Fonts, así que TradingView no puede cargar ahí. Aquí, al ser una
+    página normal servida localmente, no hay esa restricción.
+
+    El símbolo es un mapeo best-effort (ver `tradingview.py`) -si no
+    resuelve a la empresa correcta, el propio widget deja buscarla a mano
+    haciendo clic en el nombre del símbolo.
+    """
+    simbolo = ticker_a_tradingview(ticker)
+    st.caption(
+        f"Símbolo usado: `{simbolo}` (mapeo aproximado desde `{ticker}`, no "
+        "oficial). Si no es la empresa correcta, o TradingView solo la sirve "
+        "en su plan de pago, haz clic en el nombre del símbolo dentro del "
+        "gráfico para buscarla tú mismo."
+    )
+    st.iframe(
+        f"""
+        <div class="tradingview-widget-container" style="height:{altura}px">
+          <div id="tv_{simbolo.replace(':', '_')}" style="height:100%"></div>
+        </div>
+        <script src="https://s3.tradingview.com/tv.js"></script>
+        <script>
+        new TradingView.widget({{
+          "autosize": true,
+          "symbol": "{simbolo}",
+          "interval": "D",
+          "timezone": "Etc/UTC",
+          "theme": "light",
+          "style": "1",
+          "locale": "es",
+          "container_id": "tv_{simbolo.replace(':', '_')}"
+        }});
+        </script>
+        """,
+        height=altura + 10,
+    )
+
+
 def _vista_historico() -> None:
     """Muestra lo que la Action semanal ya calculó, sin red ni recálculo.
 
@@ -167,6 +210,13 @@ def _vista_historico() -> None:
         journal.to_csv(index=False).encode("utf-8"),
         file_name=RUTA_JOURNAL_DEFECTO, mime="text/csv",
     )
+
+    st.markdown("#### 📈 Gráfico de TradingView")
+    ticker_grafico = st.selectbox(
+        "Ver el gráfico de precio de un ticker evaluado",
+        sorted(journal["ticker"].unique()), key="tv_ticker_historico",
+    )
+    _grafico_tradingview(ticker_grafico)
 
     st.markdown("#### Rendimiento de candidatas trackeadas (Fase 4)")
     seguimiento = leer_seguimiento()
@@ -498,6 +548,17 @@ st.download_button(
     file_name="candidatos_filtrados.csv",
     mime="text/csv",
 )
+
+# --- Gráfico de TradingView ---------------------------------------------
+st.subheader("📈 Gráfico de TradingView")
+if vista.empty:
+    st.caption("No hay tickers en la vista actual para graficar.")
+else:
+    ticker_grafico = st.selectbox(
+        "Ver el gráfico de precio de un ticker de la tabla de arriba",
+        sorted(vista["ticker"].unique()), key="tv_ticker_vivo",
+    )
+    _grafico_tradingview(ticker_grafico)
 
 # --- Prompt para interpretar las candidatas con un LLM -----------------------
 st.subheader("🤖 Prompt para interpretar con tu LLM")
