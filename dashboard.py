@@ -12,11 +12,13 @@ Separa a propósito dos costes muy distintos:
 from __future__ import annotations
 
 from dataclasses import asdict
+from pathlib import Path
 
 import altair as alt
 import pandas as pd
 import streamlit as st
 
+from journal import RUTA_JOURNAL_DEFECTO, leer_journal
 from prompt_llm import generar_prompt_interpretacion
 from screener_value import (
     DISCLAIMER,
@@ -27,6 +29,7 @@ from screener_value import (
     descargar_fundamentales,
     incorporar_ranking_candidatos,
 )
+from seguimiento import RUTA_SEGUIMIENTO_DEFECTO, leer_seguimiento
 from universos_yfinance import (
     CATEGORIAS_TEMATICAS_ETF,
     SECTORES_NO_FINANCIEROS,
@@ -35,6 +38,17 @@ from universos_yfinance import (
     catalogar_tickers,
     obtener_tickers_universo,
 )
+
+RUTA_UNIVERSO_TXT = Path("universo.txt")
+
+# Verificadas contra yfinance antes de incluirlas -no es una lista curada
+# por Yahoo (FundQuery no valida categoryname), son ejemplos que en la
+# práctica devuelven resultados reales. "World Allocation" se probó y no
+# devolvió nada, por eso no está.
+CATEGORIAS_FONDO_EJEMPLO = [
+    "Large Blend", "Large Growth", "Large Value", "Foreign Large Blend",
+    "High Yield Bond", "Intermediate-Term Bond", "Small Blend",
+]
 
 st.set_page_config(page_title="Screener de value investing", layout="wide")
 
@@ -91,12 +105,137 @@ def _bar_conteo(df: pd.DataFrame, columna: str, etiqueta: str) -> alt.Chart:
     )
 
 
+def _vista_historico() -> None:
+    """Muestra lo que la Action semanal ya calculó, sin red ni recálculo.
+
+    Lee directamente journal_candidatos.csv y seguimiento_candidatas.csv
+    -los mismos archivos que .github/workflows/screener_semanal.yml
+    commitea cada semana- para que el dashboard deje de ser solo una
+    herramienta de análisis en vivo desconectada de esa automatización.
+    """
+    st.subheader("📅 Histórico generado por GitHub Actions")
+    st.caption(
+        "Esto es lo que la Action semanal ya calculó y commiteó -no descarga "
+        "nada nuevo ni consulta Yahoo Finance."
+    )
+
+    journal = leer_journal()
+    if journal.empty:
+        st.info(
+            f"Todavía no existe `{RUTA_JOURNAL_DEFECTO}` en esta carpeta. "
+            "Lánzalo tú mismo con `python ejecutar_semanal.py universo.txt` "
+            "o dispara la Action desde la pestaña Actions de GitHub."
+        )
+        return
+
+    ultima_semana = journal["semana_iso"].max()
+    ultima_fecha = journal["fecha_ejecucion"].max()
+    candidatas_ultima_semana = journal[
+        (journal["semana_iso"] == ultima_semana) & (journal["pasa"].astype(bool))
+    ]
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Última ejecución", ultima_fecha.strftime("%Y-%m-%d %H:%M UTC"))
+    col2.metric("Semana", ultima_semana)
+    col3.metric("Candidatas esa semana", len(candidatas_ultima_semana))
+
+    columnas_journal = [
+        "ticker", "nombre", "sector", "region", "per", "ev_ebit", "roic",
+        "deuda_ebitda", "puntuacion", "pasa", "motivos_descarte",
+    ]
+
+    st.markdown("#### Candidatas de la última ejecución")
+    if candidatas_ultima_semana.empty:
+        st.caption("Ninguna candidata en la última ejecución.")
+    else:
+        st.dataframe(
+            candidatas_ultima_semana[columnas_journal].sort_values("puntuacion"),
+            hide_index=True, width="stretch",
+        )
+
+    st.markdown("#### Histórico completo del journal")
+    semanas = sorted(journal["semana_iso"].unique(), reverse=True)
+    semanas_sel = st.multiselect("Filtrar por semana", semanas)
+    vista_journal = journal[journal["semana_iso"].isin(semanas_sel)] if semanas_sel else journal
+    st.dataframe(
+        vista_journal[["fecha_ejecucion", "semana_iso"] + columnas_journal]
+        .sort_values(["fecha_ejecucion", "puntuacion"], ascending=[False, True]),
+        hide_index=True, width="stretch",
+    )
+    st.download_button(
+        "Descargar journal completo (CSV)",
+        journal.to_csv(index=False).encode("utf-8"),
+        file_name=RUTA_JOURNAL_DEFECTO, mime="text/csv",
+    )
+
+    st.markdown("#### Rendimiento de candidatas trackeadas (Fase 4)")
+    seguimiento = leer_seguimiento()
+    if seguimiento.empty:
+        st.caption(
+            f"Todavía no existe `{RUTA_SEGUIMIENTO_DEFECTO}` -se genera junto "
+            "al journal en la misma ejecución de la Action."
+        )
+        return
+
+    ultimo_snapshot = (
+        seguimiento.sort_values("fecha_calculo").groupby("ticker", as_index=False).tail(1)
+    )
+    st.dataframe(
+        ultimo_snapshot[[
+            "ticker", "nombre", "fecha_entrada", "precio_entrada", "precio_actual",
+            "retorno_total", "max_drawdown", "dias_en_seguimiento",
+        ]],
+        hide_index=True, width="stretch",
+        column_config={
+            "retorno_total": st.column_config.NumberColumn("retorno total", format="percent"),
+            "max_drawdown": st.column_config.NumberColumn("drawdown máx.", format="percent"),
+        },
+    )
+    st.download_button(
+        "Descargar seguimiento completo (CSV)",
+        seguimiento.to_csv(index=False).encode("utf-8"),
+        file_name=RUTA_SEGUIMIENTO_DEFECTO, mime="text/csv",
+    )
+
+    tickers_con_historia = seguimiento.groupby("ticker").size()
+    tickers_con_historia = tickers_con_historia[tickers_con_historia > 1]
+    if not tickers_con_historia.empty:
+        ticker_evolucion = st.selectbox(
+            "Ver evolución semanal de un ticker", sorted(tickers_con_historia.index),
+        )
+        serie = seguimiento[seguimiento["ticker"] == ticker_evolucion]
+        grafico = (
+            alt.Chart(serie)
+            .mark_line(point=True, color=AZUL)
+            .encode(
+                x=alt.X("fecha_calculo:T", title="Fecha de cálculo"),
+                y=alt.Y("retorno_total:Q", title="Retorno total", axis=alt.Axis(format="%")),
+                tooltip=[
+                    alt.Tooltip("fecha_calculo:T", title="Fecha"),
+                    alt.Tooltip("retorno_total:Q", title="Retorno", format=".1%"),
+                    alt.Tooltip("max_drawdown:Q", title="Drawdown máx.", format=".1%"),
+                ],
+            )
+        )
+        st.altair_chart(grafico, width="stretch")
+
+
 st.title("Screener de value investing")
 st.warning(DISCLAIMER, icon="⚠️")
 
+vista = st.sidebar.radio("Vista", ["🔍 Analizar en vivo", "📅 Histórico (GitHub Actions)"])
+st.sidebar.divider()
+
+if vista == "📅 Histórico (GitHub Actions)":
+    _vista_historico()
+    st.stop()
+
 # --- Sidebar: origen del universo -------------------------------------------
 st.sidebar.header("Universo")
-modo = st.sidebar.radio("Origen de los tickers", ["Lista manual", "Universo Yahoo"])
+modo = st.sidebar.radio(
+    "Origen de los tickers",
+    ["Lista manual", "Universo Yahoo", "universo.txt (el de la Action)"],
+)
 
 with st.sidebar.expander("🔎 Descubrir tickers por categoría"):
     st.caption(
@@ -129,13 +268,27 @@ with st.sidebar.expander("🔎 Descubrir tickers por categoría"):
         )
     else:
         st.caption(
-            "Los fondos no tienen región en Yahoo Finance, solo categoría. Sin "
-            "lista curada -escribe un valor Morningstar real, p. ej. "
-            "\"Large Growth\" o \"High Yield Bond\"; es best-effort."
+            "Los fondos no tienen región en Yahoo Finance, solo categoría "
+            "Morningstar -y a diferencia de los ETF, yfinance no valida esos "
+            "valores. Las opciones de abajo son ejemplos que YA se han "
+            "probado y devuelven resultados reales, no una lista completa; "
+            "elige \"Otra\" para escribir cualquier otro valor a tu riesgo."
         )
         universo_descubrir = None
-        categoria_libre = st.text_input("Categoría Morningstar", key="categoria_fondo_descubrir")
-        categorias_sel = [categoria_libre.strip()] if categoria_libre.strip() else []
+        opcion_fondo = st.selectbox(
+            "Categoría Morningstar",
+            CATEGORIAS_FONDO_EJEMPLO + ["Otra (escribir)"],
+            key="categoria_fondo_descubrir",
+        )
+        if opcion_fondo == "Otra (escribir)":
+            categoria_libre = st.text_input(
+                "Escribe la categoría Morningstar exacta",
+                key="categoria_fondo_libre",
+                help='P. ej. "Foreign Large Growth" o "Multisector Bond".',
+            )
+            categorias_sel = [categoria_libre.strip()] if categoria_libre.strip() else []
+        else:
+            categorias_sel = [opcion_fondo]
 
     max_catalogo = st.slider("Máx. resultados por categoría", 5, 100, 15, step=5, key="max_catalogo")
 
@@ -177,13 +330,27 @@ if modo == "Lista manual":
         t.strip().upper() for t in texto.replace(",", "\n").splitlines() if t.strip()
     ]
     resolver_tickers = lambda: tickers_pendientes  # noqa: E731
-else:
+elif modo == "Universo Yahoo":
     universo_nombre = st.sidebar.selectbox("Universo predefinido", sorted(UNIVERSOS_YAHOO))
     max_por_bucket = st.sidebar.slider(
         "Máx. resultados por (región × sector)", 5, 250, 25, step=5,
         help="Cuota de CADA consulta región×sector, no el total del universo.",
     )
     resolver_tickers = lambda: _tickers_universo_cacheado(universo_nombre, max_por_bucket)  # noqa: E731
+else:  # "universo.txt (el de la Action)"
+    if RUTA_UNIVERSO_TXT.exists():
+        tickers_universo_txt = [
+            t.strip().upper() for t in RUTA_UNIVERSO_TXT.read_text(encoding="utf-8").splitlines()
+            if t.strip()
+        ]
+        st.sidebar.caption(
+            f"{len(tickers_universo_txt)} tickers -la misma lista que usa la Action "
+            "semanal de GitHub (`.github/workflows/screener_semanal.yml`)."
+        )
+        resolver_tickers = lambda: tickers_universo_txt  # noqa: E731
+    else:
+        st.sidebar.error(f"No se encontró {RUTA_UNIVERSO_TXT} en esta carpeta.")
+        resolver_tickers = lambda: []  # noqa: E731
 
 if st.sidebar.button("🔄 Descargar y calcular", type="primary"):
     tickers = resolver_tickers()
