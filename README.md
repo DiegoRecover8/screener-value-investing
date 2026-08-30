@@ -44,6 +44,9 @@ motivo de descarte auditable si no pasa.
    el retorno TWR y el drawdown máximo real de cada candidata desde que
    apareció por primera vez, sobre precio de cierre ajustado y sin sesgo
    retrospectivo, acumulando el resultado en `seguimiento_candidatas.csv`.
+7. **`prompt_llm.py`** convierte las candidatas actuales en un prompt listo
+   para copiar y pegar en cualquier LLM, con instrucciones explícitas para
+   que resuma datos sin inventar una tesis de inversión (ver más abajo).
 
 ## Uso
 
@@ -211,6 +214,25 @@ también corre `ejecutar_seguimiento.py`, que:
 python ejecutar_seguimiento.py journal_candidatos.csv seguimiento_candidatas.csv
 ```
 
+### Prompt de interpretación para tu LLM (Fase 5)
+
+El roadmap original planteaba integrar la API de Claude para una
+interpretación cualitativa. En vez de atarse a un proveedor concreto -que
+exigiría una API key, facturación aparte (ninguna suscripción de consumo
+tipo ChatGPT Plus o Gemini Pro incluye créditos de API) y mantenimiento
+frente a cambios de precios/SDK-, `prompt_llm.py` genera un **prompt listo
+para copiar y pegar** en el asistente que prefieras: Claude, ChatGPT,
+Gemini o cualquier otro. Coste $0, sin API key, sin dependencia de
+proveedor.
+
+En el dashboard, justo debajo de la tabla de resultados, aparece un cuadro
+con el prompt ya formateado a partir de las candidatas que superan los
+umbrales actuales -se regenera solo si mueves un slider, sin volver a
+consultar Yahoo Finance. El prompt incluye instrucciones explícitas para
+que el LLM **resuma las métricas ya calculadas, nunca invente una tesis de
+inversión ni recomiende comprar o vender**, y reproduce el mismo
+disclaimer que el resto de la herramienta.
+
 ## Metodología
 
 ### Métricas
@@ -317,6 +339,9 @@ en el ranking, pero conservan sus métricas y motivos de descarte en el CSV.
       pasadas: retorno TWR y drawdown máximo sobre precio de cierre
       ajustado desde su primera aparición, sin look-ahead bias, acumulado
       semana a semana en `seguimiento_candidatas.csv`.
-- [ ] Fase 5 (opcional) — interpretación cualitativa en lenguaje natural de
-      las métricas ya calculadas vía la API de Claude, sin generar tesis de
-      inversión propias.
+- [x] Fase 5 — interpretación cualitativa de las candidatas: en vez de
+      integrar una API concreta, `prompt_llm.py` genera un prompt listo
+      para copiar y pegar en el LLM que prefieras (Claude, ChatGPT, Gemini
+      u otro), a coste $0 y sin atarse a ningún proveedor, con
+      instrucciones explícitas para resumir datos sin inventar una tesis
+      de inversión.

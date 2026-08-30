@@ -17,6 +17,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+from prompt_llm import generar_prompt_interpretacion
 from screener_value import (
     DISCLAIMER,
     UMBRALES,
@@ -330,6 +331,21 @@ st.download_button(
     file_name="candidatos_filtrados.csv",
     mime="text/csv",
 )
+
+# --- Prompt para interpretar las candidatas con un LLM -----------------------
+st.subheader("🤖 Prompt para interpretar con tu LLM")
+if n_candidatas == 0:
+    st.caption(
+        "No hay candidatas con los umbrales actuales -relaja algún slider en "
+        "la barra lateral si quieres generar un prompt de interpretación."
+    )
+else:
+    st.caption(
+        "Copia esto y pégalo en Claude, ChatGPT, Gemini o el asistente que "
+        "prefieras. Solo pide un resumen descriptivo de las métricas ya "
+        "calculadas -nunca una recomendación de compra o venta."
+    )
+    st.code(generar_prompt_interpretacion(candidatas), language=None)
 
 st.divider()
 st.caption(DISCLAIMER)
