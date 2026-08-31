@@ -1,1 +1,2 @@
 snapshot_id,fecha_ejecucion,semana_iso,origen,oficial,revision,tickers_solicitados,resultados_brutos,descargas_correctas,errores_descarga,deduplicados,empresas_evaluadas,candidatas,tasa_exito_descarga,umbral_exito_minimo
+snap_20260831T081523783305Z,2026-08-31T08:15:23.783305+00:00,2026-W36,workflow_dispatch,False,1,205,205,205,0,19,186,1,1.0,0.8
