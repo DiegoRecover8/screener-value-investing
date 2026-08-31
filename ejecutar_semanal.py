@@ -14,6 +14,8 @@ Uso: python ejecutar_semanal.py <archivo_tickers.txt> [ruta_journal.csv]
        [ruta_ejecuciones.csv]
      python ejecutar_semanal.py --universo-activo [ruta_journal.csv]
        [ruta_ejecuciones.csv]
+     python ejecutar_semanal.py --universo-id <uv_...> [ruta_journal.csv]
+       [ruta_ejecuciones.csv]  # solo pruebas no oficiales
 """
 
 from __future__ import annotations
@@ -40,6 +42,7 @@ from universos_versionados import (
     calcular_hash_universo,
     cargar_tickers,
     cargar_universo_activo,
+    cargar_universo_registrado,
 )
 
 
@@ -67,20 +70,34 @@ def _metadatos_github() -> dict[str, str]:
     }
 
 
-def _resolver_universo(argumento: str) -> tuple[list[str], dict[str, str]]:
+def _resolver_universo(
+    argumento: str,
+    universe_id: str | None = None,
+) -> tuple[list[str], dict[str, str]]:
     """Resuelve el universo oficial o identifica una lista ad hoc por su hash."""
+    ruta_manifest = Path(os.environ.get(
+        "SCREENER_MANIFEST", str(RUTA_MANIFEST_DEFECTO),
+    ))
+    ruta_espejo = Path(os.environ.get(
+        "SCREENER_UNIVERSO_ESPEJO", str(RUTA_ESPEJO_DEFECTO),
+    ))
     if argumento == "--universo-activo":
-        ruta_manifest = Path(os.environ.get(
-            "SCREENER_MANIFEST", str(RUTA_MANIFEST_DEFECTO),
-        ))
-        ruta_espejo = Path(os.environ.get(
-            "SCREENER_UNIVERSO_ESPEJO", str(RUTA_ESPEJO_DEFECTO),
-        ))
         activo = cargar_universo_activo(ruta_manifest, ruta_espejo)
         return list(activo.tickers), {
             "universe_id": activo.universe_id,
             "universe_sha256": activo.sha256,
             "universe_path": activo.ruta.as_posix(),
+        }
+    if argumento == "--universo-id":
+        if universe_id is None:
+            raise ErrorUniversoVersionado("--universo-id exige un ID")
+        registrado = cargar_universo_registrado(
+            universe_id, ruta_manifest, ruta_espejo,
+        )
+        return list(registrado.tickers), {
+            "universe_id": registrado.universe_id,
+            "universe_sha256": registrado.sha256,
+            "universe_path": registrado.ruta.as_posix(),
         }
 
     ruta = Path(argumento)
@@ -97,23 +114,39 @@ def main() -> None:
     if len(sys.argv) < 2:
         print(
             f"Uso: python {Path(__file__).name} "
-            "<archivo_tickers.txt|--universo-activo> "
+            "<archivo_tickers.txt|--universo-activo|--universo-id ID> "
             "[ruta_journal.csv] [ruta_ejecuciones.csv]"
         )
         sys.exit(1)
 
     argumento_universo = sys.argv[1]
-    ruta_journal = sys.argv[2] if len(sys.argv) > 2 else RUTA_JOURNAL_DEFECTO
-    ruta_ejecuciones = sys.argv[3] if len(sys.argv) > 3 else RUTA_EJECUCIONES_DEFECTO
+    if argumento_universo == "--universo-id":
+        if len(sys.argv) < 3:
+            raise ErrorUniversoVersionado("--universo-id exige un ID")
+        universe_id = sys.argv[2]
+        indice_rutas = 3
+    else:
+        universe_id = None
+        indice_rutas = 2
+    ruta_journal = (
+        sys.argv[indice_rutas]
+        if len(sys.argv) > indice_rutas else RUTA_JOURNAL_DEFECTO
+    )
+    ruta_ejecuciones = (
+        sys.argv[indice_rutas + 1]
+        if len(sys.argv) > indice_rutas + 1 else RUTA_EJECUCIONES_DEFECTO
+    )
     origen = os.environ.get(
         "SCREENER_ORIGEN", os.environ.get("GITHUB_EVENT_NAME", "local"),
     )
     oficial = _variable_booleana("SCREENER_OFICIAL")
-    tickers, metadatos_universo = _resolver_universo(argumento_universo)
-    if oficial and metadatos_universo["universe_id"].startswith("adhoc_"):
+    tickers, metadatos_universo = _resolver_universo(
+        argumento_universo, universe_id,
+    )
+    if oficial and argumento_universo != "--universo-activo":
         raise ErrorUniversoVersionado(
             "una ejecución oficial exige --universo-activo; "
-            "las listas ad hoc solo pueden usarse como prueba"
+            "las listas ad hoc y los IDs explícitos solo pueden usarse como prueba"
         )
 
     resultado = ejecutar(tickers, salida_csv="candidatos.csv")

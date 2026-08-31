@@ -17,6 +17,11 @@ name: Screener semanal
         options:
           - prueba
           - oficial
+      universo_prueba:
+        description: "universe_id opcional para probar un draft (vacío = activo)"
+        required: false
+        default: ""
+        type: string
 
 # Una ejecución nueva espera a que termine la activa. Nunca se cancela una
 # descarga que ya podría estar a punto de escribir el histórico.
@@ -32,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     # El screener suele tardar unos minutos; este límite evita runners
     # bloqueados durante horas si Yahoo o una dependencia dejan de responder.
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Descargar el repositorio
         uses: actions/checkout@v5
@@ -49,11 +54,24 @@ jobs:
       - name: Ejecutar tests (no seguir si el motor está roto)
         run: python -m pytest -q
 
-      - name: Ejecutar el screener sobre el universo oficial activo
-        run: python ejecutar_semanal.py --universo-activo journal_candidatos.csv
+      - name: Ejecutar el screener sobre el universo seleccionado
+        run: |
+          if [[ -n "$SCREENER_UNIVERSO_PRUEBA" ]]; then
+            if [[ "$SCREENER_OFICIAL" == "true" ]]; then
+              echo "Un universe_id explícito solo se puede ejecutar en modo prueba"
+              exit 1
+            fi
+            python ejecutar_semanal.py \
+              --universo-id "$SCREENER_UNIVERSO_PRUEBA" \
+              journal_candidatos.csv
+          else
+            python ejecutar_semanal.py \
+              --universo-activo journal_candidatos.csv
+          fi
         env:
           SCREENER_ORIGEN: ${{ github.event_name }}
           SCREENER_OFICIAL: ${{ github.event_name == 'schedule' || inputs.modo == 'oficial' }}
+          SCREENER_UNIVERSO_PRUEBA: ${{ inputs.universo_prueba }}
 
       - name: Calcular rendimiento de las candidatas trackeadas
         if: ${{ github.event_name == 'schedule' || inputs.modo == 'oficial' }}

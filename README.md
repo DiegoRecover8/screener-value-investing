@@ -168,9 +168,16 @@ El workflow usa el grupo de concurrencia `screener-historico` con
 `cancel-in-progress: false`: una ejecución activa nunca se cancela a mitad de
 la descarga y otra debe esperar antes de hacer checkout y escribir. Esto
 evita que dos Actions partan del mismo CSV y compitan al hacer `git push`.
-Además, limita cada job a 20 minutos para no dejar un runner bloqueado y
+Además, limita cada job a 30 minutos para no dejar un runner bloqueado y
 activa la caché de `pip` de `setup-python`; la instalación sigue verificando
 `requirements.txt`, pero puede reutilizar descargas en ejecuciones posteriores.
+
+Una ejecución manual permite indicar opcionalmente `universo_prueba`. Si se
+escribe el ID de un universo registrado, por ejemplo `uv_2026q3_r02`, la
+Action lo evalúa conservando ese ID y su hash en el control. Esta opción exige
+`modo: prueba`: un ID explícito nunca puede declararse oficial ni cambia el
+universo activo. Con el campo vacío, tanto las pruebas normales como las
+ejecuciones oficiales siguen usando el universo `active`.
 
 ### Universos oficiales versionados
 

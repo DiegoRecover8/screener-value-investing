@@ -34,7 +34,9 @@ class TestEjecucionSemanal(unittest.TestCase):
             str(Path(tmp) / "ejecuciones.csv"),
         ]
 
-    def _crear_universo_activo(self, tmp: str) -> tuple[Path, Path]:
+    def _crear_universo_activo(
+        self, tmp: str, con_draft: bool = False,
+    ) -> tuple[Path, Path]:
         tickers = [f"T{i}" for i in range(10)]
         raiz = Path(tmp)
         ruta_universo = raiz / "universos/oficiales/uv_2026q3_r01.csv"
@@ -45,22 +47,44 @@ class TestEjecucionSemanal(unittest.TestCase):
             encoding="utf-8",
         )
         ruta_manifest = raiz / "universos/manifest.json"
+        versiones = [{
+            "universe_id": "uv_2026q3_r01",
+            "path": "oficiales/uv_2026q3_r01.csv",
+            "status": "active",
+            "created_at": "2026-08-31T00:00:00Z",
+            "effective_from": "2026-08-31",
+            "supersedes": None,
+            "asset_type": "equity",
+            "ticker_count": 10,
+            "sha256": calcular_hash_universo(tickers),
+            "selection_method": "test",
+            "notes": "",
+        }]
+        if con_draft:
+            tickers_draft = [f"D{i}" for i in range(10)]
+            ruta_draft = raiz / "universos/oficiales/uv_2026q3_r02.csv"
+            ruta_draft.write_text(
+                ",".join(COLUMNAS_UNIVERSO) + "\n"
+                + "".join(f"{ticker},test,,,\n" for ticker in tickers_draft),
+                encoding="utf-8",
+            )
+            versiones.append({
+                "universe_id": "uv_2026q3_r02",
+                "path": "oficiales/uv_2026q3_r02.csv",
+                "status": "draft",
+                "created_at": "2026-08-31T12:00:00Z",
+                "effective_from": None,
+                "supersedes": "uv_2026q3_r01",
+                "asset_type": "equity",
+                "ticker_count": 10,
+                "sha256": calcular_hash_universo(tickers_draft),
+                "selection_method": "test_draft",
+                "notes": "",
+            })
         ruta_manifest.write_text(json.dumps({
             "schema_version": 1,
             "active_universe_id": "uv_2026q3_r01",
-            "universes": [{
-                "universe_id": "uv_2026q3_r01",
-                "path": "oficiales/uv_2026q3_r01.csv",
-                "status": "active",
-                "created_at": "2026-08-31T00:00:00Z",
-                "effective_from": "2026-08-31",
-                "supersedes": None,
-                "asset_type": "equity",
-                "ticker_count": 10,
-                "sha256": calcular_hash_universo(tickers),
-                "selection_method": "test",
-                "notes": "",
-            }],
+            "universes": versiones,
         }), encoding="utf-8")
         ruta_espejo = raiz / "universo.txt"
         ruta_espejo.write_text("\n".join(tickers) + "\n", encoding="utf-8")
@@ -149,6 +173,64 @@ class TestEjecucionSemanal(unittest.TestCase):
             ):
                 main()
             ejecutar_mock.assert_not_called()
+
+    def test_resuelve_un_draft_registrado_con_su_identidad_en_modo_prueba(self):
+        with TemporaryDirectory() as tmp:
+            manifest, espejo = self._crear_universo_activo(tmp, con_draft=True)
+            argv = [
+                "ejecutar_semanal.py", "--universo-id", "uv_2026q3_r02",
+                str(Path(tmp) / "journal.csv"),
+                str(Path(tmp) / "ejecuciones.csv"),
+            ]
+            with (
+                patch.object(sys, "argv", argv),
+                patch("ejecutar_semanal.ejecutar", return_value=_resultado(0)),
+                patch.dict(os.environ, {
+                    "SCREENER_OFICIAL": "false",
+                    "SCREENER_MANIFEST": str(manifest),
+                    "SCREENER_UNIVERSO_ESPEJO": str(espejo),
+                }),
+            ):
+                main()
+
+            ejecuciones = pd.read_csv(Path(tmp, "ejecuciones.csv"))
+
+        self.assertFalse(bool(ejecuciones["oficial"].iloc[0]))
+        self.assertEqual(ejecuciones["universe_id"].iloc[0], "uv_2026q3_r02")
+        self.assertEqual(
+            ejecuciones["universe_sha256"].iloc[0],
+            calcular_hash_universo([f"D{i}" for i in range(10)]),
+        )
+
+    def test_no_permite_un_id_explicito_en_modo_oficial(self):
+        with TemporaryDirectory() as tmp:
+            manifest, espejo = self._crear_universo_activo(tmp, con_draft=True)
+            argv = [
+                "ejecutar_semanal.py", "--universo-id", "uv_2026q3_r02",
+                str(Path(tmp) / "journal.csv"),
+                str(Path(tmp) / "ejecuciones.csv"),
+            ]
+            with (
+                patch.object(sys, "argv", argv),
+                patch("ejecutar_semanal.ejecutar") as ejecutar_mock,
+                patch.dict(os.environ, {
+                    "SCREENER_OFICIAL": "true",
+                    "SCREENER_MANIFEST": str(manifest),
+                    "SCREENER_UNIVERSO_ESPEJO": str(espejo),
+                }),
+                self.assertRaisesRegex(ValueError, "IDs explícitos"),
+            ):
+                main()
+            ejecutar_mock.assert_not_called()
+
+    def test_workflow_ofrece_prueba_de_draft_y_timeout_ampliado(self):
+        workflow = Path(".github/workflows/screener_semanal.yml").read_text(
+            encoding="utf-8",
+        )
+        self.assertIn("universo_prueba:", workflow)
+        self.assertIn('timeout-minutes: 30', workflow)
+        self.assertIn('--universo-id "$SCREENER_UNIVERSO_PRUEBA"', workflow)
+        self.assertIn('[[ "$SCREENER_OFICIAL" == "true" ]]', workflow)
 
 
 if __name__ == "__main__":

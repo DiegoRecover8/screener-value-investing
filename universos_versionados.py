@@ -251,6 +251,33 @@ def cargar_universo_activo(
     return validar_manifest(ruta_manifest, ruta_espejo)
 
 
+def cargar_universo_registrado(
+    universe_id: str,
+    ruta_manifest: str | Path = RUTA_MANIFEST_DEFECTO,
+    ruta_espejo: str | Path | None = RUTA_ESPEJO_DEFECTO,
+) -> UniversoResuelto:
+    """Resuelve por ID un universo registrado, incluido un draft revisable."""
+    ruta_manifest = Path(ruta_manifest)
+    validar_manifest(ruta_manifest, ruta_espejo)
+    if not PATRON_ID_UNIVERSO.fullmatch(str(universe_id)):
+        raise ErrorUniversoVersionado(f"universe_id no válido: {universe_id!r}")
+    manifest = cargar_manifest(ruta_manifest)
+    version = next(
+        (v for v in manifest["universes"] if v["universe_id"] == universe_id),
+        None,
+    )
+    if version is None:
+        raise ErrorUniversoVersionado(f"universo no registrado: {universe_id}")
+    ruta = _resolver_ruta_manifest(ruta_manifest, version["path"])
+    tickers = cargar_tickers(ruta, exigir_esquema_oficial=True)
+    return UniversoResuelto(
+        universe_id=universe_id,
+        ruta=ruta,
+        tickers=tuple(tickers),
+        sha256=version["sha256"],
+    )
+
+
 def comparar_tickers(origen: Iterable[str], destino: Iterable[str]) -> dict:
     """Devuelve altas, bajas y permanencias entre dos listas."""
     conjunto_origen = set(normalizar_tickers(origen))
