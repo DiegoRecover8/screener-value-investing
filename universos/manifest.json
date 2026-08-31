@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "active_universe_id": "uv_2026q3_r01",
+  "active_universe_id": "uv_2026q3_r02",
   "universes": [
     {
       "universe_id": "uv_2026q3_r01",
       "path": "oficiales/uv_2026q3_r01.csv",
-      "status": "active",
+      "status": "retired",
       "created_at": "2026-08-31T00:00:00Z",
       "effective_from": "2026-08-31",
       "supersedes": null,
@@ -18,9 +18,9 @@
     {
       "universe_id": "uv_2026q3_r02",
       "path": "oficiales/uv_2026q3_r02.csv",
-      "status": "draft",
+      "status": "active",
       "created_at": "2026-08-31T11:36:30.331468+00:00",
-      "effective_from": null,
+      "effective_from": "2026-08-31",
       "supersedes": "uv_2026q3_r01",
       "asset_type": "equity",
       "ticker_count": 670,

@@ -12,6 +12,7 @@ from universos_versionados import (
     calcular_hash_universo,
     cargar_manifest,
     cargar_tickers,
+    cargar_universo_registrado,
     comparar_tickers,
     validar_manifest,
 )
@@ -69,12 +70,15 @@ class TestUniversosVersionados(unittest.TestCase):
         self.assertIn("!universos/oficiales/*.csv", reglas)
         self.assertIn("!universos/descubrimiento/disc_*.csv", reglas)
 
-    def test_manifest_real_registra_exactamente_el_universo_legacy(self):
+    def test_manifest_real_es_integro_y_conserva_exactamente_el_legacy(self):
+        manifest = cargar_manifest()
         activo = validar_manifest()
-        self.assertEqual(activo.universe_id, "uv_2026q3_r01")
-        self.assertEqual(len(activo.tickers), 205)
+        legacy = cargar_universo_registrado("uv_2026q3_r01")
+
+        self.assertEqual(activo.universe_id, manifest["active_universe_id"])
+        self.assertEqual(len(legacy.tickers), 205)
         self.assertEqual(
-            activo.sha256,
+            legacy.sha256,
             "3aadf46d002d1e98dc663ed7e21ae6b1e3a21281df8b4db47905082379c63120",
         )
 
