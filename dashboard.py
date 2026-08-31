@@ -18,7 +18,13 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from journal import RUTA_JOURNAL_DEFECTO, extraer_ultima_ejecucion, leer_journal
+from journal import (
+    RUTA_JOURNAL_DEFECTO,
+    extraer_ultima_ejecucion,
+    leer_ejecuciones,
+    leer_journal,
+    snapshot_ids_oficiales_efectivos,
+)
 from prompt_llm import generar_prompt_interpretacion
 from screener_value import (
     DISCLAIMER,
@@ -182,7 +188,25 @@ def _vista_historico() -> None:
     col1.metric("Última ejecución", ultima_fecha.strftime("%Y-%m-%d %H:%M UTC"))
     col2.metric("Semana", ultima_semana)
     col3.metric("Candidatas en la ejecución", len(candidatas_ultima_ejecucion))
-    st.caption(f"Snapshot: `{ultima_ejecucion['snapshot_id'].iloc[0]}`")
+    snapshot_actual = str(ultima_ejecucion["snapshot_id"].iloc[0])
+    ejecuciones = leer_ejecuciones()
+    control_actual = ejecuciones[ejecuciones.get("snapshot_id") == snapshot_actual]
+    if control_actual.empty:
+        st.caption(f"Snapshot: `{snapshot_actual}` · histórico anterior al control")
+    else:
+        control_actual = control_actual.iloc[0]
+        ids_efectivos = snapshot_ids_oficiales_efectivos(journal, ejecuciones)
+        if snapshot_actual in ids_efectivos:
+            estado = "oficial efectivo"
+        elif bool(control_actual["oficial"]):
+            estado = "oficial sustituido por una revisión posterior"
+        else:
+            estado = "prueba no oficial"
+        st.caption(
+            f"Snapshot: `{snapshot_actual}` · {estado} · "
+            f"origen: {control_actual['origen']} · "
+            f"revisión {int(control_actual['revision'])}"
+        )
 
     columnas_journal = [
         "ticker", "nombre", "sector", "region", "per", "ev_ebit", "roic",

@@ -10,8 +10,10 @@ from journal import extraer_ultima_ejecucion, leer_journal, registrar_ejecucion
 from journal import (
     ErrorIntegridadEjecucion,
     crear_snapshot_id,
+    filtrar_journal_oficial,
     migrar_snapshot_ids_journal,
     registrar_control_integridad,
+    snapshot_ids_oficiales_efectivos,
     validar_integridad_ejecucion,
 )
 
@@ -151,12 +153,50 @@ class TestIntegridadEjecucion(unittest.TestCase):
             ruta = Path(tmp) / "ejecuciones.csv"
             registrar_control_integridad(
                 control, snapshot_id, momento, ruta, origen="schedule",
+                oficial=True,
+            )
+            registrar_control_integridad(
+                control, "snap_revision_2", momento + pd.Timedelta(hours=1), ruta,
+                origen="workflow_dispatch", oficial=False,
             )
             metadatos = pd.read_csv(ruta)
 
         self.assertEqual(metadatos.loc[0, "snapshot_id"], snapshot_id)
         self.assertEqual(metadatos.loc[0, "origen"], "schedule")
         self.assertEqual(metadatos.loc[0, "empresas_evaluadas"], 10)
+        self.assertEqual(list(metadatos["revision"]), [1, 2])
+        self.assertEqual(list(metadatos["oficial"]), [True, False])
+
+    def test_mayor_revision_oficial_sustituye_a_la_anterior_sin_borrarla(self):
+        journal = pd.DataFrame([
+            {"snapshot_id": "legacy", "ticker": "LEGACY"},
+            {"snapshot_id": "oficial-1", "ticker": "ANTERIOR"},
+            {"snapshot_id": "manual-2", "ticker": "PRUEBA"},
+            {"snapshot_id": "oficial-3", "ticker": "VIGENTE"},
+        ])
+        ejecuciones = pd.DataFrame([
+            {
+                "snapshot_id": "oficial-1", "semana_iso": "2026-W35",
+                "oficial": True, "revision": 1,
+                "fecha_ejecucion": "2026-08-24T07:00:00Z",
+            },
+            {
+                "snapshot_id": "manual-2", "semana_iso": "2026-W35",
+                "oficial": False, "revision": 2,
+                "fecha_ejecucion": "2026-08-24T08:00:00Z",
+            },
+            {
+                "snapshot_id": "oficial-3", "semana_iso": "2026-W35",
+                "oficial": True, "revision": 3,
+                "fecha_ejecucion": "2026-08-24T09:00:00Z",
+            },
+        ])
+
+        ids = snapshot_ids_oficiales_efectivos(journal, ejecuciones)
+        filtrado = filtrar_journal_oficial(journal, ejecuciones)
+
+        self.assertEqual(ids, {"legacy", "oficial-3"})
+        self.assertEqual(set(filtrado["ticker"]), {"LEGACY", "VIGENTE"})
 
 
 if __name__ == "__main__":

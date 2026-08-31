@@ -1,12 +1,12 @@
-"""Exporta el histórico (journal + seguimiento) a un JSON para la página
+"""Exporta el histórico oficial y sus controles a un JSON para la página
 estática de histórico (Claude Artifact).
 
 Un Artifact publicado no puede leer los CSV del repo en tiempo real -no es
 un servidor-, así que la página muestra un JSON embebido que se refresca
 pegando la salida de este script cada vez que se quiere actualizar. Es
 pura transformación de datos ya calculados por `journal.py`/`seguimiento.py`,
-sin red, para que ese refresco sea mecánico y no dependa de transcribir
-CSVs a mano.
+sin red. Las pruebas manuales y las revisiones oficiales sustituidas quedan
+auditadas en los CSV, pero no entran en el journal que consume la Bitácora.
 
 Uso: python exportar_historico.py > historico.json
 """
@@ -19,7 +19,12 @@ import sys
 import numpy as np
 import pandas as pd
 
-from journal import extraer_ultima_ejecucion, leer_journal
+from journal import (
+    extraer_ultima_ejecucion,
+    filtrar_journal_oficial,
+    leer_ejecuciones,
+    leer_journal,
+)
 from seguimiento import leer_seguimiento
 
 
@@ -46,7 +51,9 @@ def _filas(df: pd.DataFrame) -> list[dict]:
 
 def construir_export() -> dict:
     """Estructura mínima que necesita la página: sin columnas sobrantes."""
-    journal = leer_journal()
+    journal_completo = leer_journal()
+    ejecuciones = leer_ejecuciones()
+    journal = filtrar_journal_oficial(journal_completo, ejecuciones)
     seguimiento = leer_seguimiento()
     generado_en = pd.Timestamp.now(tz="UTC").isoformat()
 
@@ -57,6 +64,7 @@ def construir_export() -> dict:
             "ultima_semana": None,
             "candidatas_ultima_semana": [],
             "journal": [],
+            "ejecuciones": _filas(ejecuciones),
             "seguimiento": _filas(seguimiento),
         }
 
@@ -76,6 +84,7 @@ def construir_export() -> dict:
         # más reciente, aunque haya otras en la misma semana ISO.
         "candidatas_ultima_semana": _filas(candidatas_ultima_ejecucion),
         "journal": _filas(journal),
+        "ejecuciones": _filas(ejecuciones),
         "seguimiento": _filas(seguimiento),
     }
 

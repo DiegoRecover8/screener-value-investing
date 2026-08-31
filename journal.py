@@ -25,7 +25,8 @@ RUTA_EJECUCIONES_DEFECTO = "ejecuciones_screener.csv"
 UMBRAL_EXITO_DESCARGA = 0.80
 
 COLUMNAS_CONTROL = [
-    "snapshot_id", "fecha_ejecucion", "semana_iso", "origen",
+    "snapshot_id", "fecha_ejecucion", "semana_iso", "origen", "oficial",
+    "revision",
     "tickers_solicitados", "resultados_brutos", "descargas_correctas",
     "errores_descarga", "deduplicados", "empresas_evaluadas", "candidatas",
     "tasa_exito_descarga", "umbral_exito_minimo",
@@ -46,6 +47,15 @@ def _momento_utc(momento) -> pd.Timestamp:
 def crear_snapshot_id(momento) -> str:
     """ID estable y legible para un instante de ejecución UTC."""
     return "snap_" + _momento_utc(momento).strftime("%Y%m%dT%H%M%S%fZ")
+
+
+def _es_verdadero(valor) -> bool:
+    """Interpreta booleanos nativos y serializados en CSV o variables de entorno."""
+    if pd.isna(valor):
+        return False
+    if isinstance(valor, str):
+        return valor.strip().lower() in {"true", "1", "sí", "si", "yes"}
+    return bool(valor)
 
 
 def validar_integridad_ejecucion(
@@ -230,29 +240,106 @@ def registrar_control_integridad(
     momento,
     ruta_ejecuciones: str | Path = RUTA_EJECUCIONES_DEFECTO,
     origen: str = "local",
+    oficial: bool = False,
+    revision: int | None = None,
 ) -> pd.DataFrame:
     """Añade una fila de metadatos auditables para un snapshot válido."""
     momento = _momento_utc(momento)
     iso = momento.isocalendar()
+    semana_iso = f"{iso.year}-W{iso.week:02d}"
+    ruta = Path(ruta_ejecuciones)
+    _validar_cabecera_csv(ruta, COLUMNAS_CONTROL)
+    existentes = leer_ejecuciones(ruta)
+    if snapshot_id in set(existentes.get("snapshot_id", pd.Series(dtype=str)).astype(str)):
+        raise ErrorIntegridadEjecucion(
+            f"el snapshot {snapshot_id} ya existe en {ruta}"
+        )
+    if revision is None:
+        revisiones_semana = pd.to_numeric(
+            existentes.loc[existentes.get("semana_iso") == semana_iso, "revision"],
+            errors="coerce",
+        ) if not existentes.empty else pd.Series(dtype=float)
+        revision = int(revisiones_semana.max()) + 1 if revisiones_semana.notna().any() else 1
+    if revision < 1:
+        raise ErrorIntegridadEjecucion("revision debe ser un entero positivo")
+
     fila = {
         "snapshot_id": snapshot_id,
         "fecha_ejecucion": momento.isoformat(),
-        "semana_iso": f"{iso.year}-W{iso.week:02d}",
+        "semana_iso": semana_iso,
         "origen": origen,
+        "oficial": bool(oficial),
+        "revision": revision,
         **control,
     }
     salida = pd.DataFrame([fila], columns=COLUMNAS_CONTROL)
-    ruta = Path(ruta_ejecuciones)
-    _validar_cabecera_csv(ruta, COLUMNAS_CONTROL)
-    if ruta.exists() and ruta.stat().st_size > 0:
-        existentes = pd.read_csv(ruta, usecols=["snapshot_id"])
-        if snapshot_id in set(existentes["snapshot_id"].astype(str)):
-            raise ErrorIntegridadEjecucion(
-                f"el snapshot {snapshot_id} ya existe en {ruta}"
-            )
     escribir_cabecera = not ruta.exists() or ruta.stat().st_size == 0
     salida.to_csv(ruta, mode="a", index=False, header=escribir_cabecera)
     return salida
+
+
+def leer_ejecuciones(
+    ruta_ejecuciones: str | Path = RUTA_EJECUCIONES_DEFECTO,
+) -> pd.DataFrame:
+    """Lee los controles de snapshots, incluidos archivos aún sin filas."""
+    ruta = Path(ruta_ejecuciones)
+    if not ruta.exists() or ruta.stat().st_size == 0:
+        return pd.DataFrame(columns=COLUMNAS_CONTROL)
+    ejecuciones = pd.read_csv(ruta)
+    if ejecuciones.empty:
+        return pd.DataFrame(columns=COLUMNAS_CONTROL)
+    ejecuciones["fecha_ejecucion"] = pd.to_datetime(
+        ejecuciones["fecha_ejecucion"], utc=True,
+    )
+    ejecuciones["oficial"] = ejecuciones["oficial"].map(_es_verdadero)
+    ejecuciones["revision"] = pd.to_numeric(
+        ejecuciones["revision"], errors="coerce",
+    ).astype("Int64")
+    return ejecuciones
+
+
+def snapshot_ids_oficiales_efectivos(
+    journal: pd.DataFrame,
+    ejecuciones: pd.DataFrame,
+) -> set[str]:
+    """IDs que alimentan señales: una revisión oficial efectiva por semana.
+
+    Si una semana tiene varias ejecuciones marcadas como oficiales, prevalece
+    la de mayor revisión (y, en empate, la más reciente). Los snapshots
+    anteriores a `ejecuciones_screener.csv` se conservan como oficiales
+    legacy para no reescribir el historial ya publicado.
+    """
+    if journal.empty or "snapshot_id" not in journal:
+        return set()
+    ids_journal = set(journal["snapshot_id"].dropna().astype(str))
+    if ejecuciones.empty:
+        return ids_journal
+
+    ids_controlados = set(ejecuciones["snapshot_id"].dropna().astype(str))
+    ids_legacy = ids_journal - ids_controlados
+    oficiales = ejecuciones[ejecuciones["oficial"].map(_es_verdadero)].copy()
+    if oficiales.empty:
+        return ids_legacy
+    oficiales["revision"] = pd.to_numeric(oficiales["revision"], errors="coerce").fillna(0)
+    oficiales["fecha_ejecucion"] = pd.to_datetime(
+        oficiales["fecha_ejecucion"], utc=True,
+    )
+    efectivas = (
+        oficiales.sort_values(["semana_iso", "revision", "fecha_ejecucion"])
+        .groupby("semana_iso", as_index=False).tail(1)
+    )
+    return ids_legacy | set(efectivas["snapshot_id"].astype(str))
+
+
+def filtrar_journal_oficial(
+    journal: pd.DataFrame,
+    ejecuciones: pd.DataFrame,
+) -> pd.DataFrame:
+    """Devuelve solo snapshots legacy u oficiales efectivos."""
+    ids = snapshot_ids_oficiales_efectivos(journal, ejecuciones)
+    if not ids:
+        return journal.iloc[0:0].copy()
+    return journal[journal["snapshot_id"].astype(str).isin(ids)].copy()
 
 
 def leer_journal(ruta_journal: str | Path = RUTA_JOURNAL_DEFECTO) -> pd.DataFrame:

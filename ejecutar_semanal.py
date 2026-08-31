@@ -31,6 +31,13 @@ from journal import (
 from screener_value import ejecutar
 
 
+def _variable_booleana(nombre: str, defecto: bool = False) -> bool:
+    valor = os.environ.get(nombre)
+    if valor is None:
+        return defecto
+    return valor.strip().lower() in {"true", "1", "sí", "si", "yes"}
+
+
 def main() -> None:
     if len(sys.argv) < 2:
         print(
@@ -51,19 +58,25 @@ def main() -> None:
     control = validar_integridad_ejecucion(resultado, len(tickers))
     momento = pd.Timestamp.now(tz="UTC")
     snapshot_id = crear_snapshot_id(momento)
-    origen = os.environ.get("GITHUB_EVENT_NAME", "local")
+    origen = os.environ.get(
+        "SCREENER_ORIGEN", os.environ.get("GITHUB_EVENT_NAME", "local"),
+    )
+    oficial = _variable_booleana("SCREENER_OFICIAL")
 
     filas_nuevas = registrar_ejecucion(
         resultado, ruta_journal, momento=momento, snapshot_id=snapshot_id,
     )
-    registrar_control_integridad(
-        control, snapshot_id, momento, ruta_ejecuciones, origen=origen,
+    metadatos = registrar_control_integridad(
+        control, snapshot_id, momento, ruta_ejecuciones,
+        origen=origen, oficial=oficial,
     )
     print(
         f"\nSnapshot válido {snapshot_id}: {len(filas_nuevas)} empresas, "
         f"{control['descargas_correctas']}/{control['tickers_solicitados']} "
         f"descargas correctas ({control['tasa_exito_descarga']:.1%})."
     )
+    estado = "oficial" if oficial else "prueba no oficial"
+    print(f"Clasificación: {estado}, revisión {metadatos['revision'].iloc[0]}.")
     print(f"Journal: {ruta_journal}\nControl: {ruta_ejecuciones}")
 
 

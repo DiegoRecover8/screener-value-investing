@@ -7,7 +7,22 @@ name: Screener semanal
 "on":
   schedule:
     - cron: "0 7 * * 1"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "Guardar como prueba o como revisión oficial de la semana"
+        required: true
+        default: prueba
+        type: choice
+        options:
+          - prueba
+          - oficial
+
+# Una ejecución nueva espera a que termine la activa. Nunca se cancela una
+# descarga que ya podría estar a punto de escribir el histórico.
+concurrency:
+  group: screener-historico
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -32,15 +47,25 @@ jobs:
 
       - name: Ejecutar el screener sobre universo.txt y actualizar el journal
         run: python ejecutar_semanal.py universo.txt journal_candidatos.csv
+        env:
+          SCREENER_ORIGEN: ${{ github.event_name }}
+          SCREENER_OFICIAL: ${{ github.event_name == 'schedule' || inputs.modo == 'oficial' }}
 
       - name: Calcular rendimiento de las candidatas trackeadas
-        run: python ejecutar_seguimiento.py journal_candidatos.csv seguimiento_candidatas.csv
+        if: ${{ github.event_name == 'schedule' || inputs.modo == 'oficial' }}
+        run: >-
+          python ejecutar_seguimiento.py journal_candidatos.csv
+          seguimiento_candidatas.csv ejecuciones_screener.csv
 
-      - name: Commitear journal, control y seguimiento si cambiaron
+      - name: Exportar la Bitácora desde el mismo snapshot oficial
+        if: ${{ github.event_name == 'schedule' || inputs.modo == 'oficial' }}
+        run: python exportar_historico.py > historico.json
+
+      - name: Commitear journal, control, seguimiento y JSON si cambiaron
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add journal_candidatos.csv ejecuciones_screener.csv seguimiento_candidatas.csv
+          git add journal_candidatos.csv ejecuciones_screener.csv seguimiento_candidatas.csv historico.json
           if git diff --cached --quiet; then
             echo "Sin cambios que commitear"
           else

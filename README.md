@@ -149,7 +149,8 @@ categorías de ETF ya verificadas.
 
 `.github/workflows/screener_semanal.yml` ejecuta el screener cada lunes a
 las 07:00 UTC (y también se puede lanzar a mano desde la pestaña "Actions"
-de GitHub, con `workflow_dispatch`). El flujo es:
+de GitHub, con `workflow_dispatch`). Una ejecución manual obliga a elegir
+entre **prueba** y **oficial**. El flujo es:
 
 1. Corre toda la suite de tests (`pytest` autodescubre cualquier
    `test_*.py`) — si el motor está roto, no se genera ni se commitea nada.
@@ -159,7 +160,14 @@ de GitHub, con `workflow_dispatch`). El flujo es:
 3. Si la ejecución es válida, añade el snapshot al journal y su resumen a
    `ejecuciones_screener.csv`. Si no lo es, la Action falla sin contaminar
    ninguno de los dos históricos.
-4. Commitea journal, control y seguimiento si cambiaron.
+4. Las ejecuciones programadas y las manuales marcadas como oficiales
+   actualizan seguimiento y `historico.json`; las pruebas manuales no.
+5. Commitea todos los archivos que hayan cambiado.
+
+El workflow usa el grupo de concurrencia `screener-historico` con
+`cancel-in-progress: false`: una ejecución activa nunca se cancela a mitad de
+la descarga y otra debe esperar antes de hacer checkout y escribir. Esto
+evita que dos Actions partan del mismo CSV y compitan al hacer `git push`.
 
 **`universo.txt` es una lista fija y versionada, deliberadamente NO
 reconstruida desde Yahoo en cada ejecución.** La Fase 4 (seguimiento
@@ -184,12 +192,19 @@ de descarte, tres columnas de auditoría:
   tienen IDs diferentes.
 
 `ejecuciones_screener.csv` contiene una sola fila por snapshot válido con
-su origen, tickers solicitados, descargas correctas y fallidas, listings
-deduplicados, empresas evaluadas, candidatas y tasa de éxito. Cero candidatas
-no se considera un fallo: lo que bloquea el histórico es una descarga poco
-fiable o una estructura incoherente. Los snapshots anteriores a este control
-tienen `snapshot_id` en el journal, pero no una fila retrospectiva de control,
-porque esos recuentos no pueden reconstruirse con garantía.
+su origen, si fue declarado oficial, su número de revisión, tickers
+solicitados, descargas correctas y fallidas, listings deduplicados, empresas
+evaluadas, candidatas y tasa de éxito. Cada snapshot válido incrementa la
+`revision` de su semana, sea prueba u oficial. Si hay varias revisiones
+marcadas como oficiales, la de mayor número es la **oficial efectiva**; las
+anteriores no se borran, pero dejan de alimentar señales, seguimiento y la
+Bitácora. Cero candidatas no se considera un fallo: lo que bloquea el
+histórico es una descarga poco fiable o una estructura incoherente.
+
+Los snapshots anteriores a este control tienen `snapshot_id` en el journal,
+pero no una fila retrospectiva de control, porque esos recuentos no pueden
+reconstruirse con garantía. Se consideran snapshots oficiales *legacy* para
+conservar el historial ya publicado.
 
 ```bash
 # Ejecutarlo tú mismo, igual que lo hace la Action:
@@ -208,7 +223,9 @@ con qué métricas?". Esta contesta la pregunta que de verdad importa:
 **¿cómo les fue de verdad después?** Cada ejecución semanal de la Action
 también corre `ejecutar_seguimiento.py`, que:
 
-1. Lee `journal_candidatos.csv` e identifica cada transición válida de
+1. Lee `journal_candidatos.csv`, excluye las pruebas y revisiones oficiales
+   sustituidas mediante `ejecuciones_screener.csv`, e identifica cada
+   transición válida de
    `pasa=False` a `pasa=True`. Si el ticker sigue pasando en ejecuciones
    posteriores, conserva la señal original y su fecha de entrada; si deja
    de pasar y más adelante vuelve a hacerlo, abre una señal nueva. Una
@@ -280,13 +297,18 @@ página que se puede compartir sin tener Streamlit corriendo.
 **No se actualiza sola** -un Artifact es una página publicada, no un
 servidor; no puede leer el repo en directo. El refresco es en dos pasos:
 
-1. Una rutina cloud programada (lunes 09:00 UTC, un par de horas después
-   de la Action semanal) ejecuta `exportar_historico.py` y commitea
-   `historico.json` al repo -esta parte sí es automática.
+1. La misma GitHub Action, inmediatamente después del seguimiento de un
+   snapshot oficial, ejecuta `exportar_historico.py` y commitea
+   `historico.json` junto con los CSV. El JSON contiene solo snapshots
+   oficiales efectivos y los controles de ejecución.
 2. Cuando quieras ver la Bitácora al día, pide "actualiza el Artifact del
    histórico": se lee `historico.json` y se republica en la misma URL. Este
    paso sigue siendo manual porque publicar un Artifact solo se puede hacer
-   desde una sesión de Claude Code, no desde una Action ni una rutina cloud.
+   desde una sesión de Claude Code, no desde una Action.
+
+La antigua rutina cloud de las 09:00 UTC ya no es necesaria y debe quedar
+desactivada fuera del repositorio para que no compita con este workflow al
+hacer `git push`.
 
 ```bash
 # Regenerar historico.json a mano en cualquier momento:
@@ -439,8 +461,8 @@ en el ranking, pero conservan sus métricas y motivos de descarte en el CSV.
       de inversión.
 - [x] Extra — Bitácora del Screener: página estática (Claude Artifact) con
       el mismo histórico que la vista "Histórico" del dashboard, refrescada
-      con `exportar_historico.py` (exportación automática semanal vía una
-      rutina cloud, publicación manual). Y gráfico de precio real de
+      con `exportar_historico.py` (exportación dentro de la misma GitHub
+      Action oficial, publicación manual). Y gráfico de precio real de
       TradingView (`tradingview.py`) embebido en el dashboard -no en el
       Artifact, cuya CSP bloquea scripts externos-, con el mapeo de
       tickers verificado símbolo a símbolo contra el widget real.

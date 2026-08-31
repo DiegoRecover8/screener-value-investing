@@ -7,6 +7,7 @@ from tempfile import TemporaryDirectory
 import numpy as np
 import pandas as pd
 
+from journal import filtrar_journal_oficial
 from seguimiento import (
     calcular_rendimiento,
     extraer_candidatas_unicas,
@@ -112,6 +113,45 @@ class TestExtraerCandidatasUnicas(unittest.TestCase):
             self._fila("AAA", "2026-08-15T07:00:00+00:00", True),
         ])
         senales = extraer_senales_candidatas(journal)
+        self.assertEqual(len(senales), 1)
+
+    def test_prueba_manual_no_cierra_ni_reabre_una_senal_oficial(self):
+        journal = pd.DataFrame([
+            self._fila(
+                "AAA", "2026-08-01T07:00:00+00:00", True,
+                snapshot_id="oficial-w31", semana_iso="2026-W31",
+            ),
+            self._fila(
+                "AAA", "2026-08-08T07:00:00+00:00", False,
+                snapshot_id="manual-w32", semana_iso="2026-W32",
+            ),
+            self._fila(
+                "AAA", "2026-08-15T07:00:00+00:00", True,
+                snapshot_id="oficial-w33", semana_iso="2026-W33",
+            ),
+        ])
+        ejecuciones = pd.DataFrame([
+            {
+                "snapshot_id": "oficial-w31", "semana_iso": "2026-W31",
+                "oficial": True, "revision": 1,
+                "fecha_ejecucion": "2026-08-01T07:00:00Z",
+            },
+            {
+                "snapshot_id": "manual-w32", "semana_iso": "2026-W32",
+                "oficial": False, "revision": 1,
+                "fecha_ejecucion": "2026-08-08T07:00:00Z",
+            },
+            {
+                "snapshot_id": "oficial-w33", "semana_iso": "2026-W33",
+                "oficial": True, "revision": 1,
+                "fecha_ejecucion": "2026-08-15T07:00:00Z",
+            },
+        ])
+
+        journal_oficial = filtrar_journal_oficial(journal, ejecuciones)
+        senales = extraer_senales_candidatas(journal_oficial)
+
+        self.assertEqual(list(journal_oficial["pasa"]), [True, True])
         self.assertEqual(len(senales), 1)
 
 

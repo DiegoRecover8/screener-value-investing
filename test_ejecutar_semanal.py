@@ -1,6 +1,7 @@
 """Tests sin red para las barreras de la ejecución semanal."""
 
 import sys
+import os
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -54,6 +55,7 @@ class TestEjecucionSemanal(unittest.TestCase):
             with (
                 patch.object(sys, "argv", self._argv(tmp)),
                 patch("ejecutar_semanal.ejecutar", return_value=_resultado(2)),
+                patch.dict(os.environ, {"SCREENER_OFICIAL": "false"}),
             ):
                 main()
 
@@ -63,6 +65,27 @@ class TestEjecucionSemanal(unittest.TestCase):
         self.assertEqual(journal["snapshot_id"].nunique(), 1)
         self.assertEqual(journal["snapshot_id"].iloc[0], ejecuciones["snapshot_id"].iloc[0])
         self.assertEqual(ejecuciones["tasa_exito_descarga"].iloc[0], 0.8)
+        self.assertFalse(bool(ejecuciones["oficial"].iloc[0]))
+        self.assertEqual(ejecuciones["revision"].iloc[0], 1)
+
+    def test_variable_de_entorno_marca_un_snapshot_oficial(self):
+        with TemporaryDirectory() as tmp:
+            Path(tmp, "universo.txt").write_text(
+                "\n".join(f"T{i}" for i in range(10)), encoding="utf-8",
+            )
+            with (
+                patch.object(sys, "argv", self._argv(tmp)),
+                patch("ejecutar_semanal.ejecutar", return_value=_resultado(0)),
+                patch.dict(os.environ, {
+                    "SCREENER_OFICIAL": "true", "SCREENER_ORIGEN": "schedule",
+                }),
+            ):
+                main()
+
+            ejecuciones = pd.read_csv(Path(tmp, "ejecuciones.csv"))
+
+        self.assertTrue(bool(ejecuciones["oficial"].iloc[0]))
+        self.assertEqual(ejecuciones["origen"].iloc[0], "schedule")
 
 
 if __name__ == "__main__":
