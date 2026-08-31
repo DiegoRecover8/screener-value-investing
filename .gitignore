@@ -13,6 +13,7 @@ fondos*.csv
 # El journal y el seguimiento SÍ se versionan: son el histórico acumulado
 # de las Fases 3/4, no una foto descartable como candidatos.csv.
 !journal_candidatos.csv
+!ejecuciones_screener.csv
 !seguimiento_candidatas.csv
 
 .DS_Store

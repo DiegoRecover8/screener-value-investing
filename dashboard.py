@@ -182,6 +182,7 @@ def _vista_historico() -> None:
     col1.metric("Última ejecución", ultima_fecha.strftime("%Y-%m-%d %H:%M UTC"))
     col2.metric("Semana", ultima_semana)
     col3.metric("Candidatas en la ejecución", len(candidatas_ultima_ejecucion))
+    st.caption(f"Snapshot: `{ultima_ejecucion['snapshot_id'].iloc[0]}`")
 
     columnas_journal = [
         "ticker", "nombre", "sector", "region", "per", "ev_ebit", "roic",
@@ -202,7 +203,7 @@ def _vista_historico() -> None:
     semanas_sel = st.multiselect("Filtrar por semana", semanas)
     vista_journal = journal[journal["semana_iso"].isin(semanas_sel)] if semanas_sel else journal
     st.dataframe(
-        vista_journal[["fecha_ejecucion", "semana_iso"] + columnas_journal]
+        vista_journal[["snapshot_id", "fecha_ejecucion", "semana_iso"] + columnas_journal]
         .sort_values(["fecha_ejecucion", "puntuacion"], ascending=[False, True]),
         hide_index=True, width="stretch",
     )

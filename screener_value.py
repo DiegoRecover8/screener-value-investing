@@ -625,6 +625,9 @@ def ejecutar(tickers: list[str], salida_csv: str = "candidatos.csv") -> pd.DataF
     datos = descargar_fundamentales(tickers)
     metricas = calcular_metricas(datos)
     antes = len(metricas)
+    errores_descarga = int(
+        metricas["error_descarga"].fillna("").astype(str).str.strip().ne("").sum()
+    )
     metricas = deduplicar_listings(metricas)
     if len(metricas) < antes:
         print(f"\nDeduplicado: {antes - len(metricas)} cotizaciones duales colapsadas "
@@ -635,6 +638,11 @@ def ejecutar(tickers: list[str], salida_csv: str = "candidatos.csv") -> pd.DataF
             print(f"  {region:>14s}: {n:5d}  ({n / len(metricas):5.1%})")
     evaluadas = aplicar_filtros(metricas)
     resultado = incorporar_ranking_candidatos(evaluadas)
+    resultado.attrs["control_integridad"] = {
+        "resultados_brutos": antes,
+        "errores_descarga": errores_descarga,
+        "deduplicados": antes - len(metricas),
+    }
     resultado.to_csv(salida_csv, index=False)
 
     candidatas = resultado[resultado["pasa"]]

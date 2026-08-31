@@ -41,10 +41,11 @@ motivo de descarte auditable si no pasa.
 5. **`journal.py`** + **`ejecutar_semanal.py`** + `.github/workflows/screener_semanal.yml`
    automatizan una ejecución semanal sobre `universo.txt` y acumulan el
    resultado en `journal_candidatos.csv` -un histórico, no una foto- con
-   timestamp de cuándo se calculó cada fila (ver más abajo).
+   un `snapshot_id` por ejecución y su control de integridad separado en
+   `ejecuciones_screener.csv` (ver más abajo).
 6. **`seguimiento.py`** + **`ejecutar_seguimiento.py`** miden, cada semana,
-   el retorno TWR y el drawdown máximo real de cada candidata desde que
-   apareció por primera vez, sobre precio de cierre ajustado y sin sesgo
+   el retorno TWR y el drawdown máximo real desde la entrada de cada señal,
+   incluidas las reentradas, sobre precio de cierre ajustado y sin sesgo
    retrospectivo, acumulando el resultado en `seguimiento_candidatas.csv`.
 7. **`prompt_llm.py`** convierte las candidatas actuales en un prompt listo
    para copiar y pegar en cualquier LLM, con instrucciones explícitas para
@@ -153,8 +154,12 @@ de GitHub, con `workflow_dispatch`). El flujo es:
 1. Corre toda la suite de tests (`pytest` autodescubre cualquier
    `test_*.py`) — si el motor está roto, no se genera ni se commitea nada.
 2. Ejecuta `python ejecutar_semanal.py universo.txt journal_candidatos.csv`.
-3. Si `journal_candidatos.csv` cambió, lo commitea y lo pushea de vuelta al
-   repositorio.
+   Antes de escribir, exige una estructura coherente y al menos un 80% de
+   descargas sin error.
+3. Si la ejecución es válida, añade el snapshot al journal y su resumen a
+   `ejecuciones_screener.csv`. Si no lo es, la Action falla sin contaminar
+   ninguno de los dos históricos.
+4. Commitea journal, control y seguimiento si cambiaron.
 
 **`universo.txt` es una lista fija y versionada, deliberadamente NO
 reconstruida desde Yahoo en cada ejecución.** La Fase 4 (seguimiento
@@ -168,12 +173,23 @@ precisamente para decidir qué añadir, no para automatizarlo sin criterio.
 **`journal_candidatos.csv` se AÑADE, nunca se sobrescribe** (a diferencia
 de `candidatos.csv`, que es una foto de la última ejecución y por eso está
 en `.gitignore`). Cada fila lleva, además de todas las métricas y el motivo
-de descarte, dos columnas nuevas:
+de descarte, tres columnas de auditoría:
 
 - `fecha_ejecucion`: timestamp UTC ISO 8601 de cuándo se calculó esa fila
   -no la fecha de las cuentas de la empresa, sino de la propia ejecución.
 - `semana_iso`: semana natural (p. ej. `2026-W35`), para agrupar sin
   depender del día exacto en que corrió el workflow.
+- `snapshot_id`: identificador UTC con precisión de microsegundos compartido
+  por todas las filas de una ejecución. Dos ejecuciones de la misma semana
+  tienen IDs diferentes.
+
+`ejecuciones_screener.csv` contiene una sola fila por snapshot válido con
+su origen, tickers solicitados, descargas correctas y fallidas, listings
+deduplicados, empresas evaluadas, candidatas y tasa de éxito. Cero candidatas
+no se considera un fallo: lo que bloquea el histórico es una descarga poco
+fiable o una estructura incoherente. Los snapshots anteriores a este control
+tienen `snapshot_id` en el journal, pero no una fila retrospectiva de control,
+porque esos recuentos no pueden reconstruirse con garantía.
 
 ```bash
 # Ejecutarlo tú mismo, igual que lo hace la Action:
