@@ -1,14 +1,18 @@
 """Punto de entrada para la ejecución automatizada semanal (GitHub Actions).
 
-A propósito NO reconstruye el universo desde Yahoo cada semana: usa una
-lista de tickers fija y versionada (ver `universo.txt`). Reconstruir el
-universo en cada ejecución produciría un objetivo móvil -la Fase 4
+A propósito NO reconstruye el universo desde Yahoo cada semana: usa la
+versión oficial activa en `universos/manifest.json`. `universo.txt` se
+mantiene como espejo compatible y debe coincidir exactamente con ella.
+Reconstruir el universo en cada ejecución produciría un objetivo móvil -la Fase 4
 (seguimiento longitudinal) necesita comparar la MISMA cesta de candidatas a
 lo largo del tiempo, no una recalculada cada vez con criterios de
-descubrimiento distintos. Ampliar `universo.txt` sigue siendo una decisión
-manual y deliberada, con las herramientas de `universos_yfinance.py`.
+descubrimiento distintos. Activar una versión nueva sigue siendo una decisión
+manual y deliberada, con las herramientas de `universos_yfinance.py` y
+`gestionar_universos.py`.
 
 Uso: python ejecutar_semanal.py <archivo_tickers.txt> [ruta_journal.csv]
+       [ruta_ejecuciones.csv]
+     python ejecutar_semanal.py --universo-activo [ruta_journal.csv]
        [ruta_ejecuciones.csv]
 """
 
@@ -29,6 +33,14 @@ from journal import (
     validar_integridad_ejecucion,
 )
 from screener_value import ejecutar
+from universos_versionados import (
+    RUTA_ESPEJO_DEFECTO,
+    RUTA_MANIFEST_DEFECTO,
+    ErrorUniversoVersionado,
+    calcular_hash_universo,
+    cargar_tickers,
+    cargar_universo_activo,
+)
 
 
 def _variable_booleana(nombre: str, defecto: bool = False) -> bool:
@@ -55,37 +67,67 @@ def _metadatos_github() -> dict[str, str]:
     }
 
 
+def _resolver_universo(argumento: str) -> tuple[list[str], dict[str, str]]:
+    """Resuelve el universo oficial o identifica una lista ad hoc por su hash."""
+    if argumento == "--universo-activo":
+        ruta_manifest = Path(os.environ.get(
+            "SCREENER_MANIFEST", str(RUTA_MANIFEST_DEFECTO),
+        ))
+        ruta_espejo = Path(os.environ.get(
+            "SCREENER_UNIVERSO_ESPEJO", str(RUTA_ESPEJO_DEFECTO),
+        ))
+        activo = cargar_universo_activo(ruta_manifest, ruta_espejo)
+        return list(activo.tickers), {
+            "universe_id": activo.universe_id,
+            "universe_sha256": activo.sha256,
+            "universe_path": activo.ruta.as_posix(),
+        }
+
+    ruta = Path(argumento)
+    tickers = cargar_tickers(ruta)
+    hash_universo = calcular_hash_universo(tickers)
+    return tickers, {
+        "universe_id": f"adhoc_{hash_universo[:12]}",
+        "universe_sha256": hash_universo,
+        "universe_path": ruta.as_posix(),
+    }
+
+
 def main() -> None:
     if len(sys.argv) < 2:
         print(
-            f"Uso: python {Path(__file__).name} <archivo_tickers.txt> "
+            f"Uso: python {Path(__file__).name} "
+            "<archivo_tickers.txt|--universo-activo> "
             "[ruta_journal.csv] [ruta_ejecuciones.csv]"
         )
         sys.exit(1)
 
-    archivo_tickers = sys.argv[1]
+    argumento_universo = sys.argv[1]
     ruta_journal = sys.argv[2] if len(sys.argv) > 2 else RUTA_JOURNAL_DEFECTO
     ruta_ejecuciones = sys.argv[3] if len(sys.argv) > 3 else RUTA_EJECUCIONES_DEFECTO
-
-    tickers = [
-        linea.strip() for linea in Path(archivo_tickers).read_text(encoding="utf-8").splitlines()
-        if linea.strip()
-    ]
-    resultado = ejecutar(tickers, salida_csv="candidatos.csv")
-    control = validar_integridad_ejecucion(resultado, len(tickers))
-    momento = pd.Timestamp.now(tz="UTC")
-    snapshot_id = crear_snapshot_id(momento)
     origen = os.environ.get(
         "SCREENER_ORIGEN", os.environ.get("GITHUB_EVENT_NAME", "local"),
     )
     oficial = _variable_booleana("SCREENER_OFICIAL")
+    tickers, metadatos_universo = _resolver_universo(argumento_universo)
+    if oficial and metadatos_universo["universe_id"].startswith("adhoc_"):
+        raise ErrorUniversoVersionado(
+            "una ejecución oficial exige --universo-activo; "
+            "las listas ad hoc solo pueden usarse como prueba"
+        )
+
+    resultado = ejecutar(tickers, salida_csv="candidatos.csv")
+    control = validar_integridad_ejecucion(resultado, len(tickers))
+    momento = pd.Timestamp.now(tz="UTC")
+    snapshot_id = crear_snapshot_id(momento)
 
     filas_nuevas = registrar_ejecucion(
         resultado, ruta_journal, momento=momento, snapshot_id=snapshot_id,
     )
     metadatos = registrar_control_integridad(
         control, snapshot_id, momento, ruta_ejecuciones,
-        origen=origen, oficial=oficial, **_metadatos_github(),
+        origen=origen, oficial=oficial,
+        **_metadatos_github(), **metadatos_universo,
     )
     print(
         f"\nSnapshot válido {snapshot_id}: {len(filas_nuevas)} empresas, "
@@ -94,6 +136,10 @@ def main() -> None:
     )
     estado = "oficial" if oficial else "prueba no oficial"
     print(f"Clasificación: {estado}, revisión {metadatos['revision'].iloc[0]}.")
+    print(
+        f"Universo: {metadatos_universo['universe_id']} "
+        f"({metadatos_universo['universe_sha256'][:12]})."
+    )
     print(f"Journal: {ruta_journal}\nControl: {ruta_ejecuciones}")
 
 

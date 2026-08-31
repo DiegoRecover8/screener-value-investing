@@ -49,8 +49,8 @@ jobs:
       - name: Ejecutar tests (no seguir si el motor está roto)
         run: python -m pytest -q
 
-      - name: Ejecutar el screener sobre universo.txt y actualizar el journal
-        run: python ejecutar_semanal.py universo.txt journal_candidatos.csv
+      - name: Ejecutar el screener sobre el universo oficial activo
+        run: python ejecutar_semanal.py --universo-activo journal_candidatos.csv
         env:
           SCREENER_ORIGEN: ${{ github.event_name }}
           SCREENER_OFICIAL: ${{ github.event_name == 'schedule' || inputs.modo == 'oficial' }}

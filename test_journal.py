@@ -12,6 +12,7 @@ from journal import (
     crear_snapshot_id,
     filtrar_journal_oficial,
     migrar_snapshot_ids_journal,
+    migrar_esquema_control,
     migrar_trazabilidad_github_control,
     registrar_control_integridad,
     snapshot_ids_oficiales_efectivos,
@@ -157,6 +158,8 @@ class TestIntegridadEjecucion(unittest.TestCase):
                 oficial=True, github_run_id="123", github_run_attempt="2",
                 github_run_url="https://github.com/acme/screener/actions/runs/123",
                 github_sha="abc123",
+                universe_id="uv_2026q3_r01", universe_sha256="a" * 64,
+                universe_path="universos/oficiales/uv_2026q3_r01.csv",
             )
             registrar_control_integridad(
                 control, "snap_revision_2", momento + pd.Timedelta(hours=1), ruta,
@@ -176,6 +179,20 @@ class TestIntegridadEjecucion(unittest.TestCase):
             "https://github.com/acme/screener/actions/runs/123",
         )
         self.assertEqual(metadatos.loc[0, "github_sha"], "abc123")
+        self.assertEqual(metadatos.loc[0, "universe_id"], "uv_2026q3_r01")
+        self.assertEqual(metadatos.loc[0, "universe_sha256"], "a" * 64)
+
+    def test_control_oficial_exige_identidad_completa_del_universo(self):
+        control = validar_integridad_ejecucion(self._resultado(10), 10)
+        with TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(
+                ErrorIntegridadEjecucion, "universo versionado",
+            ):
+                registrar_control_integridad(
+                    control, "snap_sin_universo",
+                    pd.Timestamp("2026-08-24T07:00:00Z"),
+                    Path(tmp) / "ejecuciones.csv", oficial=True,
+                )
 
     def test_migra_control_antiguo_sin_alterar_la_fila_publicada(self):
         cabecera = (
@@ -197,9 +214,31 @@ class TestIntegridadEjecucion(unittest.TestCase):
             texto_migrado = ruta.read_text(encoding="utf-8")
             metadatos = pd.read_csv(ruta)
 
-        self.assertIn(fila.rstrip("\n") + ",,,,\n", texto_migrado)
+        self.assertIn(fila.rstrip("\n") + ",,,,,,,\n", texto_migrado)
         self.assertTrue(metadatos["github_run_id"].isna().all())
         self.assertTrue(metadatos["github_run_url"].isna().all())
+        self.assertTrue(metadatos["universe_id"].isna().all())
+
+    def test_migra_control_con_github_anadiendo_solo_campos_de_universo(self):
+        cabecera = (
+            "snapshot_id,fecha_ejecucion,semana_iso,origen,oficial,revision,"
+            "tickers_solicitados,resultados_brutos,descargas_correctas,"
+            "errores_descarga,deduplicados,empresas_evaluadas,candidatas,"
+            "tasa_exito_descarga,umbral_exito_minimo,github_run_id,"
+            "github_run_attempt,github_run_url,github_sha\n"
+        )
+        fila = (
+            "snap_actual,2026-08-31T08:39:03+00:00,2026-W36,"
+            "workflow_dispatch,False,2,205,205,205,0,19,186,1,1.0,0.8,"
+            "123,1,https://github.com/acme/screener/actions/runs/123,abc\n"
+        )
+        with TemporaryDirectory() as tmp:
+            ruta = Path(tmp) / "ejecuciones.csv"
+            ruta.write_text(cabecera + fila, encoding="utf-8")
+            self.assertTrue(migrar_esquema_control(ruta))
+            texto = ruta.read_text(encoding="utf-8")
+
+        self.assertIn(fila.rstrip("\n") + ",,,\n", texto)
 
     def test_mayor_revision_oficial_sustituye_a_la_anterior_sin_borrarla(self):
         journal = pd.DataFrame([

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "active_universe_id": "uv_2026q3_r01",
+  "universes": [
+    {
+      "universe_id": "uv_2026q3_r01",
+      "path": "oficiales/uv_2026q3_r01.csv",
+      "status": "active",
+      "created_at": "2026-08-31T00:00:00Z",
+      "effective_from": "2026-08-31",
+      "supersedes": null,
+      "asset_type": "equity",
+      "ticker_count": 205,
+      "sha256": "3aadf46d002d1e98dc663ed7e21ae6b1e3a21281df8b4db47905082379c63120",
+      "selection_method": "legacy_manual",
+      "notes": "Migración inicial exacta desde universo.txt"
+    }
+  ]
+}

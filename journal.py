@@ -34,7 +34,14 @@ COLUMNAS_CONTROL_BASE = [
 COLUMNAS_TRAZABILIDAD_GITHUB = [
     "github_run_id", "github_run_attempt", "github_run_url", "github_sha",
 ]
-COLUMNAS_CONTROL = COLUMNAS_CONTROL_BASE + COLUMNAS_TRAZABILIDAD_GITHUB
+COLUMNAS_UNIVERSO_CONTROL = [
+    "universe_id", "universe_sha256", "universe_path",
+]
+COLUMNAS_CONTROL = (
+    COLUMNAS_CONTROL_BASE
+    + COLUMNAS_TRAZABILIDAD_GITHUB
+    + COLUMNAS_UNIVERSO_CONTROL
+)
 
 
 class ErrorIntegridadEjecucion(ValueError):
@@ -188,14 +195,14 @@ def migrar_snapshot_ids_journal(
     return True
 
 
-def migrar_trazabilidad_github_control(
+def migrar_esquema_control(
     ruta_ejecuciones: str | Path = RUTA_EJECUCIONES_DEFECTO,
 ) -> bool:
-    """Añade trazabilidad GitHub a un control antiguo sin alterar sus valores.
+    """Añade columnas auditables nuevas sin alterar valores ya publicados.
 
-    Las ejecuciones previas no pueden asociarse retrospectivamente a un run
-    con garantía, por lo que reciben campos vacíos. El reemplazo es atómico y
-    conserva literalmente cada fila ya publicada.
+    Se admiten los dos esquemas históricos del proyecto: anterior a la
+    trazabilidad GitHub y anterior a los universos versionados. Los campos
+    que no pueden reconstruirse con garantía quedan vacíos.
     """
     ruta = Path(ruta_ejecuciones)
     if not ruta.exists() or ruta.stat().st_size == 0:
@@ -208,12 +215,18 @@ def migrar_trazabilidad_github_control(
     filas = list(csv.reader(io.StringIO(texto)))
     if not filas:
         return False
-    if filas[0] == COLUMNAS_CONTROL:
+    cabecera = filas[0]
+    if cabecera == COLUMNAS_CONTROL:
         return False
-    if filas[0] != COLUMNAS_CONTROL_BASE:
+    esquemas_anteriores = [
+        COLUMNAS_CONTROL_BASE,
+        COLUMNAS_CONTROL_BASE + COLUMNAS_TRAZABILIDAD_GITHUB,
+    ]
+    if cabecera not in esquemas_anteriores:
         raise ErrorIntegridadEjecucion(
             f"esquema incompatible en {ruta}: se esperaban "
-            f"{COLUMNAS_CONTROL_BASE} o {COLUMNAS_CONTROL}, pero contiene {filas[0]}"
+            f"uno de {esquemas_anteriores + [COLUMNAS_CONTROL]}, "
+            f"pero contiene {cabecera}"
         )
     if len(lineas) != len(filas):
         raise ErrorIntegridadEjecucion(
@@ -221,6 +234,7 @@ def migrar_trazabilidad_github_control(
             "no se puede migrar preservando literalmente sus filas"
         )
 
+    columnas_ausentes = COLUMNAS_CONTROL[len(cabecera):]
     with NamedTemporaryFile(
         "w", delete=False, dir=ruta.parent, newline="", encoding="utf-8",
     ) as temporal:
@@ -228,9 +242,9 @@ def migrar_trazabilidad_github_control(
             cuerpo = linea.rstrip("\r\n")
             salto = linea[len(cuerpo):]
             sufijo = (
-                "," + ",".join(COLUMNAS_TRAZABILIDAD_GITHUB)
+                "," + ",".join(columnas_ausentes)
                 if indice == 0
-                else "," * len(COLUMNAS_TRAZABILIDAD_GITHUB)
+                else "," * len(columnas_ausentes)
             )
             temporal.write(f"{cuerpo}{sufijo}{salto}")
         ruta_temporal = Path(temporal.name)
@@ -238,6 +252,13 @@ def migrar_trazabilidad_github_control(
     os.chmod(ruta_temporal, modo_original)
     os.replace(ruta_temporal, ruta)
     return True
+
+
+def migrar_trazabilidad_github_control(
+    ruta_ejecuciones: str | Path = RUTA_EJECUCIONES_DEFECTO,
+) -> bool:
+    """Alias compatible para el nombre usado antes del esquema general."""
+    return migrar_esquema_control(ruta_ejecuciones)
 
 
 def _validar_cabecera_csv(ruta: Path, columnas_esperadas: list[str]) -> None:
@@ -302,14 +323,31 @@ def registrar_control_integridad(
     github_run_attempt: str = "",
     github_run_url: str = "",
     github_sha: str = "",
+    universe_id: str = "",
+    universe_sha256: str = "",
+    universe_path: str = "",
 ) -> pd.DataFrame:
     """Añade una fila de metadatos auditables para un snapshot válido."""
     momento = _momento_utc(momento)
     iso = momento.isocalendar()
     semana_iso = f"{iso.year}-W{iso.week:02d}"
     ruta = Path(ruta_ejecuciones)
-    migrar_trazabilidad_github_control(ruta)
+    migrar_esquema_control(ruta)
     _validar_cabecera_csv(ruta, COLUMNAS_CONTROL)
+    campos_universo = [universe_id, universe_sha256, universe_path]
+    if any(campos_universo) and not all(campos_universo):
+        raise ErrorIntegridadEjecucion(
+            "la identidad del universo debe incluir id, sha256 y ruta"
+        )
+    if universe_sha256 and (
+        len(universe_sha256) != 64
+        or any(c not in "0123456789abcdef" for c in universe_sha256.lower())
+    ):
+        raise ErrorIntegridadEjecucion("universe_sha256 no es un SHA-256 válido")
+    if oficial and not universe_id.startswith("uv_"):
+        raise ErrorIntegridadEjecucion(
+            "un snapshot oficial exige un universo versionado registrado"
+        )
     existentes = leer_ejecuciones(ruta)
     if snapshot_id in set(existentes.get("snapshot_id", pd.Series(dtype=str)).astype(str)):
         raise ErrorIntegridadEjecucion(
@@ -336,6 +374,9 @@ def registrar_control_integridad(
         "github_run_attempt": github_run_attempt,
         "github_run_url": github_run_url,
         "github_sha": github_sha,
+        "universe_id": universe_id,
+        "universe_sha256": universe_sha256,
+        "universe_path": universe_path,
     }
     salida = pd.DataFrame([fila], columns=COLUMNAS_CONTROL)
     escribir_cabecera = not ruta.exists() or ruta.stat().st_size == 0

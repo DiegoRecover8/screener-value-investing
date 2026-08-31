@@ -39,7 +39,7 @@ motivo de descarte auditable si no pasa.
    motivos de descarte y gráficos de composición del universo por región y
    sector.
 5. **`journal.py`** + **`ejecutar_semanal.py`** + `.github/workflows/screener_semanal.yml`
-   automatizan una ejecución semanal sobre `universo.txt` y acumulan el
+   automatizan una ejecución semanal sobre el universo oficial activo y acumulan el
    resultado en `journal_candidatos.csv` -un histórico, no una foto- con
    un `snapshot_id` por ejecución y su control de integridad separado en
    `ejecuciones_screener.csv` (ver más abajo).
@@ -154,7 +154,7 @@ entre **prueba** y **oficial**. El flujo es:
 
 1. Corre toda la suite de tests (`pytest` autodescubre cualquier
    `test_*.py`) — si el motor está roto, no se genera ni se commitea nada.
-2. Ejecuta `python ejecutar_semanal.py universo.txt journal_candidatos.csv`.
+2. Ejecuta `python ejecutar_semanal.py --universo-activo journal_candidatos.csv`.
    Antes de escribir, exige una estructura coherente y al menos un 80% de
    descargas sin error.
 3. Si la ejecución es válida, añade el snapshot al journal y su resumen a
@@ -172,14 +172,39 @@ Además, limita cada job a 20 minutos para no dejar un runner bloqueado y
 activa la caché de `pip` de `setup-python`; la instalación sigue verificando
 `requirements.txt`, pero puede reutilizar descargas en ejecuciones posteriores.
 
-**`universo.txt` es una lista fija y versionada, deliberadamente NO
-reconstruida desde Yahoo en cada ejecución.** La Fase 4 (seguimiento
-longitudinal) necesita comparar la evolución de la MISMA cesta de
-candidatas a lo largo de las semanas; si el universo se recalculase cada
-vez con `universos_yfinance.py`, cada ejecución compararía cosas distintas
-y el histórico dejaría de ser interpretable. Amplía `universo.txt` a mano
-—las herramientas de descubrimiento de la sección anterior sirven
-precisamente para decidir qué añadir, no para automatizarlo sin criterio.
+### Universos oficiales versionados
+
+La Action no reconstruye el universo desde Yahoo cada semana. Resuelve la
+única versión `active` de `universos/manifest.json`, valida su recuento y su
+SHA-256, y exige que `universo.txt` sea todavía un espejo exacto durante la
+transición. La versión inicial `uv_2026q3_r01` contiene sin cambios los 205
+tickers legacy.
+
+Los CSV bajo `universos/oficiales/` son inmutables una vez activados. Para
+añadir o retirar empresas se crea una versión `draft`, se compara y después se
+activa; la anterior pasa a `retired`, pero nunca se borra. Los resultados
+amplios de Yahoo pertenecen a `universos/descubrimiento/` y nunca se convierten
+automáticamente en universo oficial.
+
+```bash
+# Comprobar manifest, hash, recuento y espejo legacy
+python gestionar_universos.py validar
+
+# Ver la versión que utilizará la próxima Action
+python gestionar_universos.py mostrar-activo
+
+# Comparar una versión registrada con un CSV o TXT de descubrimiento
+python gestionar_universos.py comparar uv_2026q3_r01 ruta/nueva_lista.csv
+
+# Activar una versión draft ya registrada y actualizar universo.txt
+python gestionar_universos.py activar uv_2026q4_r01
+```
+
+El hash se calcula sobre la pertenencia canónica: tickers normalizados,
+únicos y ordenados. Así, cambiar el orden no crea otro universo, pero añadir o
+retirar un ticker sí. Una ejecución oficial exige `--universo-activo`; una
+lista pasada directamente al CLI se identifica como `adhoc_<hash>` y solo
+puede guardarse como prueba no oficial.
 
 **`journal_candidatos.csv` se AÑADE, nunca se sobrescribe** (a diferencia
 de `candidatos.csv`, que es una foto de la última ejecución y por eso está
@@ -200,7 +225,10 @@ solicitados, descargas correctas y fallidas, listings deduplicados, empresas
 evaluadas, candidatas y tasa de éxito. En GitHub también guarda `github_run_id`,
 `github_run_attempt`, `github_run_url` y `github_sha`, para enlazar el snapshot
 con el run exacto, distinguir sus reintentos y saber qué commit se ejecutó;
-en ejecuciones locales esos campos quedan vacíos. Cada snapshot válido incrementa la
+en ejecuciones locales esos campos quedan vacíos. `universe_id`,
+`universe_sha256` y `universe_path` congelan además la lista exacta que se
+evaluó. Las ejecuciones anteriores a este modelo dejan esos tres campos vacíos
+porque no se reconstruyen metadatos retrospectivos sin garantía. Cada snapshot válido incrementa la
 `revision` de su semana, sea prueba u oficial. Si hay varias revisiones
 marcadas como oficiales, la de mayor número es la **oficial efectiva**; las
 anteriores no se borran, pero dejan de alimentar señales, seguimiento y la
@@ -214,7 +242,10 @@ conservar el historial ya publicado.
 
 ```bash
 # Ejecutarlo tú mismo, igual que lo hace la Action:
-python ejecutar_semanal.py universo.txt journal_candidatos.csv
+python ejecutar_semanal.py --universo-activo journal_candidatos.csv
+
+# Prueba ad hoc (nunca puede marcarse oficial):
+python ejecutar_semanal.py mi_lista.txt journal_prueba.csv control_prueba.csv
 ```
 
 Para que la Action funcione en tu propio fork necesitas: el repositorio en
