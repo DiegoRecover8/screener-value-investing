@@ -206,6 +206,42 @@ retirar un ticker sí. Una ejecución oficial exige `--universo-activo`; una
 lista pasada directamente al CLI se identifica como `adhoc_<hash>` y solo
 puede guardarse como prueba no oficial.
 
+#### Universo amplio de descubrimiento
+
+`generar_descubrimiento.py` construye una lista amplia sin tocar el manifest
+ni el universo activo. El perfil inicial recorre 22 regiones desarrolladas y
+los 9 sectores compatibles con el screener: solicita hasta 30 empresas por
+sector en EE. UU., 15 en los mercados grandes, 10 en los medianos y 6 en los
+menores. Su capacidad teórica es 2.070 resultados antes de deduplicar; no es
+una ponderación de cartera, sino una forma de dar profundidad a los mercados
+grandes sin dejar fuera los pequeños.
+
+```bash
+python generar_descubrimiento.py
+```
+
+Cada ejecución guarda:
+
+- `disc_<timestamp>.csv`: tickers únicos con país, sector, posición y cuota
+  del bucket que los descubrió.
+- `disc_<timestamp>.json`: configuración, SHA-256, recuentos, cobertura,
+  fallos y diferencias frente al universo oficial activo.
+- `checkpoint_disc_<timestamp>.json`: estado local después de cada bucket.
+  Se elimina al publicar un snapshot válido y no se versiona.
+
+El generador reintenta cada bucket dos veces y exige al menos un 90 % de
+buckets correctos. Si no alcanza ese umbral, no publica un snapshot parcial y
+devuelve la ruta exacta para continuar sin repetir lo ya descargado:
+
+```bash
+python generar_descubrimiento.py \
+  --reanudar universos/descubrimiento/checkpoint_disc_<timestamp>.json
+```
+
+Un snapshot de descubrimiento nunca se activa automáticamente. Primero se
+revisa y compara; solo una selección deliberada puede convertirse después en
+un CSV `draft` bajo `universos/oficiales/`.
+
 **`journal_candidatos.csv` se AÑADE, nunca se sobrescribe** (a diferencia
 de `candidatos.csv`, que es una foto de la última ejecución y por eso está
 en `.gitignore`). Cada fila lleva, además de todas las métricas y el motivo

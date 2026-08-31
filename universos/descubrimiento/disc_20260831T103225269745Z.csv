@@ -1,0 +1,1420 @@
+ticker,tipo_activo,region_descubrimiento,sector_descubrimiento,rank_bucket,cuota_bucket,fuente,fecha_descubrimiento
+NVDA,accion,us,Technology,1,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AAPL,accion,us,Technology,2,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MSFT,accion,us,Technology,3,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TSM,accion,us,Technology,4,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AVGO,accion,us,Technology,5,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SKHY,accion,us,Technology,6,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MU,accion,us,Technology,7,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMD,accion,us,Technology,8,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ASML,accion,us,Technology,9,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+INTC,accion,us,Technology,10,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PLTR,accion,us,Technology,11,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ORCL,accion,us,Technology,12,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CSCO,accion,us,Technology,13,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LRCX,accion,us,Technology,14,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMAT,accion,us,Technology,15,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PANW,accion,us,Technology,16,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DELL,accion,us,Technology,17,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SAP,accion,us,Technology,18,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ARM,accion,us,Technology,19,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ANET,accion,us,Technology,20,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TXN,accion,us,Technology,21,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KLAC,accion,us,Technology,22,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CRWD,accion,us,Technology,23,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IBM,accion,us,Technology,24,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SNDK,accion,us,Technology,25,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CRM,accion,us,Technology,26,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHOP,accion,us,Technology,27,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MRVL,accion,us,Technology,28,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+APH,accion,us,Technology,29,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STX,accion,us,Technology,30,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SPCX,accion,us,Industrials,1,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CAT,accion,us,Industrials,2,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CYATY,accion,us,Industrials,3,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GE,accion,us,Industrials,4,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RTX,accion,us,Industrials,5,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SIEGY,accion,us,Industrials,6,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GEV,accion,us,Industrials,7,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SBGSY,accion,us,Industrials,8,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EADSY,accion,us,Industrials,9,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UNP,accion,us,Industrials,10,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABBNY,accion,us,Industrials,11,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RYCEY,accion,us,Industrials,12,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DE,accion,us,Industrials,13,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BA,accion,us,Industrials,14,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SAFRY,accion,us,Industrials,15,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ETN,accion,us,Industrials,16,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HTHIY,accion,us,Industrials,17,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SMERY,accion,us,Industrials,18,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LMT,accion,us,Industrials,19,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PH,accion,us,Industrials,20,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MTSUY,accion,us,Industrials,21,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HWM,accion,us,Industrials,22,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ATLKY,accion,us,Industrials,23,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GD,accion,us,Industrials,24,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VRT,accion,us,Industrials,25,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TT,accion,us,Industrials,26,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CSX,accion,us,Industrials,27,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ITOCY,accion,us,Industrials,28,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PWR,accion,us,Industrials,29,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MMM,accion,us,Industrials,30,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LLY,accion,us,Healthcare,1,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+JNJ,accion,us,Healthcare,2,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABBV,accion,us,Healthcare,3,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MRK,accion,us,Healthcare,4,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UNH,accion,us,Healthcare,5,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RHHBY,accion,us,Healthcare,6,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NVS,accion,us,Healthcare,7,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AZN,accion,us,Healthcare,8,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMGN,accion,us,Healthcare,9,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TMO,accion,us,Healthcare,10,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NVO,accion,us,Healthcare,11,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABT,accion,us,Healthcare,12,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GILD,accion,us,Healthcare,13,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PFE,accion,us,Healthcare,14,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DHR,accion,us,Healthcare,15,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VRTX,accion,us,Healthcare,16,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BMY,accion,us,Healthcare,17,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ISRG,accion,us,Healthcare,18,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SYK,accion,us,Healthcare,19,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CVS,accion,us,Healthcare,20,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MDT,accion,us,Healthcare,21,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SNY,accion,us,Healthcare,22,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MCK,accion,us,Healthcare,23,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GSK,accion,us,Healthcare,24,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HCA,accion,us,Healthcare,25,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ESLOY,accion,us,Healthcare,26,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELV,accion,us,Healthcare,27,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+REGN,accion,us,Healthcare,28,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CI,accion,us,Healthcare,29,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CHGCY,accion,us,Healthcare,30,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMZN,accion,us,Consumer Cyclical,1,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TSLA,accion,us,Consumer Cyclical,2,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HD,accion,us,Consumer Cyclical,3,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BABAF,accion,us,Consumer Cyclical,4,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BABA,accion,us,Consumer Cyclical,5,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LVMUY,accion,us,Consumer Cyclical,6,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TOYOF,accion,us,Consumer Cyclical,7,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TM,accion,us,Consumer Cyclical,8,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IDEXY,accion,us,Consumer Cyclical,9,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MCD,accion,us,Consumer Cyclical,10,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BKNG,accion,us,Consumer Cyclical,11,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TJX,accion,us,Consumer Cyclical,12,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CFRUY,accion,us,Consumer Cyclical,13,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FRCOY,accion,us,Consumer Cyclical,14,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SBUX,accion,us,Consumer Cyclical,15,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PDD,accion,us,Consumer Cyclical,16,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LOW,accion,us,Consumer Cyclical,17,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABNB,accion,us,Consumer Cyclical,18,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BYDDF,accion,us,Consumer Cyclical,19,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BYDDY,accion,us,Consumer Cyclical,20,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DASH,accion,us,Consumer Cyclical,21,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MELI,accion,us,Consumer Cyclical,22,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MGCLY,accion,us,Consumer Cyclical,23,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PROSY,accion,us,Consumer Cyclical,24,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MAR,accion,us,Consumer Cyclical,25,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GM,accion,us,Consumer Cyclical,26,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RCL,accion,us,Consumer Cyclical,27,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RACE,accion,us,Consumer Cyclical,28,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ROST,accion,us,Consumer Cyclical,29,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SE,accion,us,Consumer Cyclical,30,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WMT,accion,us,Consumer Defensive,1,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+COST,accion,us,Consumer Defensive,2,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KO,accion,us,Consumer Defensive,3,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PG,accion,us,Consumer Defensive,4,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PM,accion,us,Consumer Defensive,5,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NSRGY,accion,us,Consumer Defensive,6,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LRLCY,accion,us,Consumer Defensive,7,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PEP,accion,us,Consumer Defensive,8,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BUD,accion,us,Consumer Defensive,9,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UL,accion,us,Consumer Defensive,10,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BTI,accion,us,Consumer Defensive,11,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MO,accion,us,Consumer Defensive,12,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MNST,accion,us,Consumer Defensive,13,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MDLZ,accion,us,Consumer Defensive,14,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TGT,accion,us,Consumer Defensive,15,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CL,accion,us,Consumer Defensive,16,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DEO,accion,us,Consumer Defensive,17,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LBLCF,accion,us,Consumer Defensive,18,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WMMVY,accion,us,Consumer Defensive,19,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CCEP,accion,us,Consumer Defensive,20,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DANOY,accion,us,Consumer Defensive,21,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HEINY,accion,us,Consumer Defensive,22,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RBGLY,accion,us,Consumer Defensive,23,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABEV,accion,us,Consumer Defensive,24,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KDP,accion,us,Consumer Defensive,25,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FMX,accion,us,Consumer Defensive,26,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ADM,accion,us,Consumer Defensive,27,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SYY,accion,us,Consumer Defensive,28,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TSCDY,accion,us,Consumer Defensive,29,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EL,accion,us,Consumer Defensive,30,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GOOGL,accion,us,Communication Services,1,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GOOG,accion,us,Communication Services,2,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+META,accion,us,Communication Services,3,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TCEHY,accion,us,Communication Services,4,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NFLX,accion,us,Communication Services,5,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VZ,accion,us,Communication Services,6,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TMUS,accion,us,Communication Services,7,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DIS,accion,us,Communication Services,8,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SFTBY,accion,us,Communication Services,9,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+T,accion,us,Communication Services,10,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DTEGY,accion,us,Communication Services,11,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RCRUY,accion,us,Communication Services,12,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SPOT,accion,us,Communication Services,13,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+APP,accion,us,Communication Services,14,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CMCSA,accion,us,Communication Services,15,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NTTYY,accion,us,Communication Services,16,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NTES,accion,us,Communication Services,17,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WBD,accion,us,Communication Services,18,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SOBKY,accion,us,Communication Services,19,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMX,accion,us,Communication Services,20,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KDDIY,accion,us,Communication Services,21,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NTDOY,accion,us,Communication Services,22,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NBIS,accion,us,Communication Services,23,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ORANY,accion,us,Communication Services,24,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TTWO,accion,us,Communication Services,25,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LYV,accion,us,Communication Services,26,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VOD,accion,us,Communication Services,27,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TLGPY,accion,us,Communication Services,28,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CHT,accion,us,Communication Services,29,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BIDU,accion,us,Communication Services,30,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+XOM,accion,us,Energy,1,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CVX,accion,us,Energy,2,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHEL,accion,us,Energy,3,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TTE,accion,us,Energy,4,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+COP,accion,us,Energy,5,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PBR,accion,us,Energy,6,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PBR-A,accion,us,Energy,7,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENB,accion,us,Energy,8,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BP,accion,us,Energy,9,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MPC,accion,us,Energy,10,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VLO,accion,us,Energy,11,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CNQ,accion,us,Energy,12,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EQNR,accion,us,Energy,13,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PSX,accion,us,Energy,14,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WMB,accion,us,Energy,15,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SLB,accion,us,Energy,16,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EPD,accion,us,Energy,17,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SU,accion,us,Energy,18,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+E,accion,us,Energy,19,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EOG,accion,us,Energy,20,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ET,accion,us,Energy,21,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KMI,accion,us,Energy,22,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TRP,accion,us,Energy,23,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BKR,accion,us,Energy,24,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TRGP,accion,us,Energy,25,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MPLX,accion,us,Energy,26,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OKE,accion,us,Energy,27,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OXY,accion,us,Energy,28,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LNG,accion,us,Energy,29,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CVE,accion,us,Energy,30,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BHPLF,accion,us,Basic Materials,1,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BHP,accion,us,Basic Materials,2,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LIN,accion,us,Basic Materials,3,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SCCO,accion,us,Basic Materials,4,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RIO,accion,us,Basic Materials,5,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NEM,accion,us,Basic Materials,6,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AIQUY,accion,us,Basic Materials,7,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FCX,accion,us,Basic Materials,8,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AEM,accion,us,Basic Materials,9,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GLNCY,accion,us,Basic Materials,10,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHW,accion,us,Basic Materials,11,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ECL,accion,us,Basic Materials,12,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+B,accion,us,Basic Materials,13,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WPM,accion,us,Basic Materials,14,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHECY,accion,us,Basic Materials,15,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+APD,accion,us,Basic Materials,16,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VALE,accion,us,Basic Materials,17,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CRH,accion,us,Basic Materials,18,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NGLOY,accion,us,Basic Materials,19,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AU,accion,us,Basic Materials,20,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NUE,accion,us,Basic Materials,21,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MT,accion,us,Basic Materials,22,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CTVA,accion,us,Basic Materials,23,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BASFY,accion,us,Basic Materials,24,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FNV,accion,us,Basic Materials,25,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HCMLY,accion,us,Basic Materials,26,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GFI,accion,us,Basic Materials,27,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SXYAY,accion,us,Basic Materials,28,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MLM,accion,us,Basic Materials,29,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KGC,accion,us,Basic Materials,30,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NEE,accion,us,Utilities,1,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENLAY,accion,us,Utilities,2,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SO,accion,us,Utilities,3,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CEG,accion,us,Utilities,4,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DUK,accion,us,Utilities,5,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NGG,accion,us,Utilities,6,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENGIY,accion,us,Utilities,7,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AEP,accion,us,Utilities,8,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+D,accion,us,Utilities,9,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SRE,accion,us,Utilities,10,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EONGY,accion,us,Utilities,11,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ETR,accion,us,Utilities,12,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+XEL,accion,us,Utilities,13,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VST,accion,us,Utilities,14,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EXC,accion,us,Utilities,15,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SSEZY,accion,us,Utilities,16,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ED,accion,us,Utilities,17,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PCG,accion,us,Utilities,18,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PEG,accion,us,Utilities,19,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WEC,accion,us,Utilities,20,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AEE,accion,us,Utilities,21,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DTE,accion,us,Utilities,22,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DNNGY,accion,us,Utilities,23,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ATO,accion,us,Utilities,24,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FTS,accion,us,Utilities,25,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AWK,accion,us,Utilities,26,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EIX,accion,us,Utilities,27,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ES,accion,us,Utilities,28,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FE,accion,us,Utilities,29,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CNP,accion,us,Utilities,30,30,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NVDA.NE,accion,ca,Technology,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NVDA.TO,accion,ca,Technology,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AAPL.TO,accion,ca,Technology,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MSFT.NE,accion,ca,Technology,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MSFT.TO,accion,ca,Technology,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AVGO.NE,accion,ca,Technology,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMD.NE,accion,ca,Technology,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMD.TO,accion,ca,Technology,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PLTR.NE,accion,ca,Technology,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ORAC.NE,accion,ca,Technology,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+INTC.NE,accion,ca,Technology,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MU.NE,accion,ca,Technology,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHOP.TO,accion,ca,Technology,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UBER.NE,accion,ca,Technology,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CLS.TO,accion,ca,Technology,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CP.TO,accion,ca,Industrials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CNR.TO,accion,ca,Industrials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TRI.TO,accion,ca,Industrials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WCN.TO,accion,ca,Industrials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BBD-B.TO,accion,ca,Industrials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WSP.TO,accion,ca,Industrials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RBA.TO,accion,ca,Industrials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GFL.TO,accion,ca,Industrials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TIH.TO,accion,ca,Industrials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TFII.TO,accion,ca,Industrials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ATRL.TO,accion,ca,Industrials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FTT.TO,accion,ca,Industrials,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STN.TO,accion,ca,Industrials,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CAE.TO,accion,ca,Industrials,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EFN.TO,accion,ca,Industrials,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UNH.NE,accion,ca,Healthcare,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PFE.NE,accion,ca,Healthcare,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+APTX.TO,accion,ca,Healthcare,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CURA.TO,accion,ca,Healthcare,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BHC.TO,accion,ca,Healthcare,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EXE.TO,accion,ca,Healthcare,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SIA.TO,accion,ca,Healthcare,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GTII.CN,accion,ca,Healthcare,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CRON.TO,accion,ca,Healthcare,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WELL.TO,accion,ca,Healthcare,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TLRY.TO,accion,ca,Healthcare,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VHI.TO,accion,ca,Healthcare,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ACB.TO,accion,ca,Healthcare,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PAIN.V,accion,ca,Healthcare,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CRDL.TO,accion,ca,Healthcare,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMZN.NE,accion,ca,Consumer Cyclical,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMZN.TO,accion,ca,Consumer Cyclical,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TSLA.TO,accion,ca,Consumer Cyclical,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TSLA.NE,accion,ca,Consumer Cyclical,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ATD.TO,accion,ca,Consumer Cyclical,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+QSR.TO,accion,ca,Consumer Cyclical,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MG.TO,accion,ca,Consumer Cyclical,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LULU.NE,accion,ca,Consumer Cyclical,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CCL-B.TO,accion,ca,Consumer Cyclical,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ATZ.TO,accion,ca,Consumer Cyclical,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GIL.TO,accion,ca,Consumer Cyclical,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CTC-A.TO,accion,ca,Consumer Cyclical,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GRGD.TO,accion,ca,Consumer Cyclical,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LNR.TO,accion,ca,Consumer Cyclical,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TOY.TO,accion,ca,Consumer Cyclical,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+L.TO,accion,ca,Consumer Defensive,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WN.TO,accion,ca,Consumer Defensive,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MRU.TO,accion,ca,Consumer Defensive,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SAP.TO,accion,ca,Consumer Defensive,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EMP-A.TO,accion,ca,Consumer Defensive,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MFI.TO,accion,ca,Consumer Defensive,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+JWEL.TO,accion,ca,Consumer Defensive,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RSI.TO,accion,ca,Consumer Defensive,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DOL.TO,accion,ca,Consumer Defensive,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NWC.TO,accion,ca,Consumer Defensive,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PBH.TO,accion,ca,Consumer Defensive,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GOOG.TO,accion,ca,Communication Services,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GOOG.NE,accion,ca,Communication Services,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NFLX.NE,accion,ca,Communication Services,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+META.NE,accion,ca,Communication Services,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+META.TO,accion,ca,Communication Services,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BCE.TO,accion,ca,Communication Services,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RCI-B.TO,accion,ca,Communication Services,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+T.TO,accion,ca,Communication Services,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+QBR-B.TO,accion,ca,Communication Services,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CCA.TO,accion,ca,Communication Services,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CGX.TO,accion,ca,Communication Services,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENB.TO,accion,ca,Energy,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CNQ.TO,accion,ca,Energy,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SU.TO,accion,ca,Energy,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TRP.TO,accion,ca,Energy,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IMO.TO,accion,ca,Energy,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CVE.TO,accion,ca,Energy,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CCO.TO,accion,ca,Energy,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PPL.TO,accion,ca,Energy,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OVV.TO,accion,ca,Energy,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TOU.TO,accion,ca,Energy,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WCP.TO,accion,ca,Energy,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ARX.TO,accion,ca,Energy,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALA.TO,accion,ca,Energy,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SOBO.TO,accion,ca,Energy,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+U-UN.TO,accion,ca,Energy,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AEM.TO,accion,ca,Basic Materials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABX.TO,accion,ca,Basic Materials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WPM.TO,accion,ca,Basic Materials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FNV.TO,accion,ca,Basic Materials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+K.TO,accion,ca,Basic Materials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NTR.TO,accion,ca,Basic Materials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TECK-B.TO,accion,ca,Basic Materials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FM.TO,accion,ca,Basic Materials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LUN.TO,accion,ca,Basic Materials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PAAS.TO,accion,ca,Basic Materials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CDE.TO,accion,ca,Basic Materials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LUG.TO,accion,ca,Basic Materials,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AGI.TO,accion,ca,Basic Materials,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EDV.TO,accion,ca,Basic Materials,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EQX.TO,accion,ca,Basic Materials,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FTS.TO,accion,ca,Utilities,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+H.TO,accion,ca,Utilities,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BIP-UN.TO,accion,ca,Utilities,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EMA.TO,accion,ca,Utilities,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CU.TO,accion,ca,Utilities,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BEP-UN.TO,accion,ca,Utilities,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CPX.TO,accion,ca,Utilities,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ACO-X.TO,accion,ca,Utilities,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BEPC.TO,accion,ca,Utilities,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BIPC.TO,accion,ca,Utilities,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AQN.TO,accion,ca,Utilities,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TA.TO,accion,ca,Utilities,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RGSI.TO,accion,ca,Utilities,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SPB.TO,accion,ca,Utilities,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NPI.TO,accion,ca,Utilities,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0R1I.IL,accion,gb,Technology,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0R2V.L,accion,gb,Technology,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0QYP.L,accion,gb,Technology,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0R2T.IL,accion,gb,Technology,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SGEL.XC,accion,gb,Technology,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SGE.L,accion,gb,Technology,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WISEL.XC,accion,gb,Technology,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WISE.L,accion,gb,Technology,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0QB8.IL,accion,gb,Technology,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CCC.L,accion,gb,Technology,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SCT.L,accion,gb,Technology,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0R24.L,accion,gb,Technology,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0O87.IL,accion,gb,Technology,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0NW4.IL,accion,gb,Technology,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OXIG.L,accion,gb,Technology,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RRL.XC,accion,gb,Industrials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RR.L,accion,gb,Industrials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BA.L,accion,gb,Industrials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BAL.XC,accion,gb,Industrials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RELL.XC,accion,gb,Industrials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+REL.L,accion,gb,Industrials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EXPNL.XC,accion,gb,Industrials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EXPN.L,accion,gb,Industrials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0RYA.IL,accion,gb,Industrials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SUNB.L,accion,gb,Industrials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IAG.L,accion,gb,Industrials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HLMAL.XC,accion,gb,Industrials,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0XXT.IL,accion,gb,Industrials,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0XXV.IL,accion,gb,Industrials,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DPLM.L,accion,gb,Industrials,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AZN.L,accion,gb,Healthcare,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GSKL.XC,accion,gb,Healthcare,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GSK.L,accion,gb,Healthcare,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HLNL.XC,accion,gb,Healthcare,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HLN.L,accion,gb,Healthcare,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0QIU.IL,accion,gb,Healthcare,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SN.L,accion,gb,Healthcare,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CTEC.L,accion,gb,Healthcare,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HIKL.XC,accion,gb,Healthcare,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HIK.L,accion,gb,Healthcare,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0QOK.IL,accion,gb,Healthcare,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0QLR.IL,accion,gb,Healthcare,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ONT.L,accion,gb,Healthcare,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ONTL.XC,accion,gb,Healthcare,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0Q1N.L,accion,gb,Healthcare,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TYT.L,accion,gb,Consumer Cyclical,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NXT.L,accion,gb,Consumer Cyclical,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0R0X.L,accion,gb,Consumer Cyclical,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MKS.L,accion,gb,Consumer Cyclical,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MKSL.XC,accion,gb,Consumer Cyclical,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KGFL.XC,accion,gb,Consumer Cyclical,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KGF.L,accion,gb,Consumer Cyclical,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BTRW.L,accion,gb,Consumer Cyclical,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HWDN.L,accion,gb,Consumer Cyclical,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HWDNL.XC,accion,gb,Consumer Cyclical,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+JDL.XC,accion,gb,Consumer Cyclical,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+JD.L,accion,gb,Consumer Cyclical,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WTBL.XC,accion,gb,Consumer Cyclical,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WTB.L,accion,gb,Consumer Cyclical,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BRBYL.XC,accion,gb,Consumer Cyclical,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ULVR.L,accion,gb,Consumer Defensive,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BATS.L,accion,gb,Consumer Defensive,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DGE.L,accion,gb,Consumer Defensive,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DGEL.XC,accion,gb,Consumer Defensive,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CCEP.L,accion,gb,Consumer Defensive,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RKT.L,accion,gb,Consumer Defensive,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TSCO.L,accion,gb,Consumer Defensive,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IMBL.XC,accion,gb,Consumer Defensive,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IMB.L,accion,gb,Consumer Defensive,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CCH.L,accion,gb,Consumer Defensive,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABF.L,accion,gb,Consumer Defensive,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MICC.L,accion,gb,Consumer Defensive,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BNZLL.XC,accion,gb,Consumer Defensive,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BNZL.L,accion,gb,Consumer Defensive,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SBRYL.XC,accion,gb,Consumer Defensive,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0RIH.L,accion,gb,Communication Services,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VODL.XC,accion,gb,Communication Services,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VOD.L,accion,gb,Communication Services,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BT-A.L,accion,gb,Communication Services,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AAF.L,accion,gb,Communication Services,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+INF.L,accion,gb,Communication Services,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PSONL.XC,accion,gb,Communication Services,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PSON.L,accion,gb,Communication Services,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AUTOL.XC,accion,gb,Communication Services,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WPP.L,accion,gb,Communication Services,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AUTO.L,accion,gb,Communication Services,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RMVL.XC,accion,gb,Communication Services,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RMV.L,accion,gb,Communication Services,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ZEG.L,accion,gb,Communication Services,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ITVL.XC,accion,gb,Communication Services,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHEL.L,accion,gb,Energy,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BP.L,accion,gb,Energy,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BPL.XC,accion,gb,Energy,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0M2Z.IL,accion,gb,Energy,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DCC.L,accion,gb,Energy,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ITHL.XC,accion,gb,Energy,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ITH.L,accion,gb,Energy,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SEPL.L,accion,gb,Energy,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HBR.L,accion,gb,Energy,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0M5J.IL,accion,gb,Energy,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TTE.L,accion,gb,Energy,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+YCA.L,accion,gb,Energy,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENOG.L,accion,gb,Energy,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0OGK.IL,accion,gb,Energy,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SQZ.L,accion,gb,Energy,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BHPL.XC,accion,gb,Basic Materials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BHP.L,accion,gb,Basic Materials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RIO.L,accion,gb,Basic Materials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RIOL.XC,accion,gb,Basic Materials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GLEN.L,accion,gb,Basic Materials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AAL.L,accion,gb,Basic Materials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ANTO.L,accion,gb,Basic Materials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ANTOL.XC,accion,gb,Basic Materials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FRESL.XC,accion,gb,Basic Materials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+S32L.XC,accion,gb,Basic Materials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+S32.L,accion,gb,Basic Materials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EDVL.XC,accion,gb,Basic Materials,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EDV.L,accion,gb,Basic Materials,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GGP.L,accion,gb,Basic Materials,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MNDI.L,accion,gb,Basic Materials,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NG.L,accion,gb,Utilities,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NGL.XC,accion,gb,Utilities,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SSE.L,accion,gb,Utilities,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UU.L,accion,gb,Utilities,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SVT.L,accion,gb,Utilities,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SVTL.XC,accion,gb,Utilities,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CNA.L,accion,gb,Utilities,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CNAL.XC,accion,gb,Utilities,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DRXL.XC,accion,gb,Utilities,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DRX.L,accion,gb,Utilities,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UKW.L,accion,gb,Utilities,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PNNL.XC,accion,gb,Utilities,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PNN.L,accion,gb,Utilities,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TRIG.L,accion,gb,Utilities,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0HIT.IL,accion,gb,Utilities,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LOGN.SW,accion,ch,Technology,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TEMN.SW,accion,ch,Technology,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SWON.SW,accion,ch,Technology,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMS.SW,accion,ch,Technology,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABBN.SW,accion,ch,Industrials,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SCHP.SW,accion,ch,Industrials,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KNIN.SW,accion,ch,Industrials,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SGSN.SW,accion,ch,Industrials,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ACLN.SW,accion,ch,Industrials,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GF.SW,accion,ch,Industrials,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ADEN.SW,accion,ch,Industrials,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SRAIL.SW,accion,ch,Industrials,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OERL.SW,accion,ch,Industrials,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AERO.SW,accion,ch,Industrials,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ROP.SW,accion,ch,Healthcare,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NOVNEE.SW,accion,ch,Healthcare,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NOVN.SW,accion,ch,Healthcare,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LONN.SW,accion,ch,Healthcare,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GALD.SW,accion,ch,Healthcare,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SDZ.SW,accion,ch,Healthcare,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALC.SW,accion,ch,Healthcare,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STMN.SW,accion,ch,Healthcare,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SOON.SW,accion,ch,Healthcare,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BANB.SW,accion,ch,Healthcare,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CFR.SW,accion,ch,Consumer Cyclical,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AVOL.SW,accion,ch,Consumer Cyclical,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SIGN.SW,accion,ch,Consumer Cyclical,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NESN.SW,accion,ch,Consumer Defensive,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SUNN.SW,accion,ch,Communication Services,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HOLN.SW,accion,ch,Basic Materials,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SIKA.SW,accion,ch,Basic Materials,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DSFIR.SW,accion,ch,Basic Materials,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMRZ.SW,accion,ch,Basic Materials,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CLN.SW,accion,ch,Basic Materials,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMRZE.SW,accion,ch,Basic Materials,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NVD.DE,accion,de,Technology,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SAP.DE,accion,de,Technology,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+3CP.F,accion,de,Technology,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IFX.DE,accion,de,Technology,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NOA3.DE,accion,de,Technology,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MS51.DE,accion,de,Technology,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NEM.DE,accion,de,Technology,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IOS.DE,accion,de,Technology,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AIXA.DE,accion,de,Technology,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WAF.DE,accion,de,Technology,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+JEN.DE,accion,de,Technology,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SMHN.DE,accion,de,Technology,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KTN.DE,accion,de,Technology,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TMV.DE,accion,de,Technology,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BC8.DE,accion,de,Technology,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SIE.DE,accion,de,Industrials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AIR.DE,accion,de,Industrials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RRU.DE,accion,de,Industrials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENR.DE,accion,de,Industrials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DHL.DE,accion,de,Industrials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RHM.DE,accion,de,Industrials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DTG.DE,accion,de,Industrials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MTX.DE,accion,de,Industrials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8TRA.DE,accion,de,Industrials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HAG.DE,accion,de,Industrials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LHA.DE,accion,de,Industrials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TKA.DE,accion,de,Industrials,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NDX1.DE,accion,de,Industrials,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NDA.DE,accion,de,Industrials,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FRA.DE,accion,de,Industrials,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NOV.DE,accion,de,Healthcare,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MRK.DE,accion,de,Healthcare,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BAYN.DE,accion,de,Healthcare,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHL.DE,accion,de,Healthcare,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FME.DE,accion,de,Healthcare,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+QIA.DE,accion,de,Healthcare,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AFX.DE,accion,de,Healthcare,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RDC.DE,accion,de,Healthcare,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GXI.DE,accion,de,Healthcare,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EUZ.DE,accion,de,Healthcare,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EVT.DE,accion,de,Healthcare,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FRE.DE,accion,de,Healthcare,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MBG.DE,accion,de,Consumer Cyclical,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+P911.DE,accion,de,Consumer Cyclical,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VOW3.DE,accion,de,Consumer Cyclical,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BMW.DE,accion,de,Consumer Cyclical,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ADS.DE,accion,de,Consumer Cyclical,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8TI.DE,accion,de,Consumer Cyclical,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KBX.DE,accion,de,Consumer Cyclical,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DHER.DE,accion,de,Consumer Cyclical,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PAH3.DE,accion,de,Consumer Cyclical,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHA0.DE,accion,de,Consumer Cyclical,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ZAL.DE,accion,de,Consumer Cyclical,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AG1.DE,accion,de,Consumer Cyclical,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMV0.DE,accion,de,Consumer Cyclical,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TUI1.DE,accion,de,Consumer Cyclical,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BOSS.DE,accion,de,Consumer Cyclical,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HEN3.DE,accion,de,Consumer Defensive,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BEI.DE,accion,de,Consumer Defensive,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SZU.DE,accion,de,Consumer Defensive,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HFG.DE,accion,de,Consumer Defensive,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DTE.DE,accion,de,Communication Services,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EVD.DE,accion,de,Communication Services,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+G24.DE,accion,de,Communication Services,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UTDI.DE,accion,de,Communication Services,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FNTN.DE,accion,de,Communication Services,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SAX.DE,accion,de,Communication Services,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PSM.DE,accion,de,Communication Services,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BVB.DE,accion,de,Communication Services,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BPE5.DE,accion,de,Energy,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BAS.DE,accion,de,Basic Materials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HEI.DE,accion,de,Basic Materials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SY1.DE,accion,de,Basic Materials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BNR.DE,accion,de,Basic Materials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EVK.DE,accion,de,Basic Materials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALI1.DE,accion,de,Basic Materials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SZG.DE,accion,de,Basic Materials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VBK.DE,accion,de,Basic Materials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LXS.DE,accion,de,Basic Materials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SDF.DE,accion,de,Basic Materials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SGL.DE,accion,de,Basic Materials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NNGF.DE,accion,de,Utilities,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EOAN.DE,accion,de,Utilities,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RWE.DE,accion,de,Utilities,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STMPA.PA,accion,fr,Technology,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DSY.PA,accion,fr,Technology,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CAP.PA,accion,fr,Technology,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RXL.PA,accion,fr,Technology,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SOI.PA,accion,fr,Technology,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OVH.PA,accion,fr,Technology,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+XFAB.PA,accion,fr,Technology,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WLN.PA,accion,fr,Technology,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AL2SI.PA,accion,fr,Technology,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ATO.PA,accion,fr,Technology,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALRIB.PA,accion,fr,Technology,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALKAL.PA,accion,fr,Technology,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EKI.PA,accion,fr,Technology,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SU.PA,accion,fr,Industrials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AIR.PA,accion,fr,Industrials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SAF.PA,accion,fr,Industrials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DG.PA,accion,fr,Industrials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HO.PA,accion,fr,Industrials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SGO.PA,accion,fr,Industrials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LR.PA,accion,fr,Industrials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VIE.PA,accion,fr,Industrials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EN.PA,accion,fr,Industrials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BVI.PA,accion,fr,Industrials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ADP.PA,accion,fr,Industrials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FGR.PA,accion,fr,Industrials,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GET.PA,accion,fr,Industrials,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AYV.PA,accion,fr,Industrials,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SW.PA,accion,fr,Industrials,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SAN.PA,accion,fr,Healthcare,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EL.PA,accion,fr,Healthcare,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IPN.PA,accion,fr,Healthcare,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ERF.PA,accion,fr,Healthcare,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BIM.PA,accion,fr,Healthcare,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABVX.PA,accion,fr,Healthcare,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EMEIS.PA,accion,fr,Healthcare,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NANO.PA,accion,fr,Healthcare,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CLARI.PA,accion,fr,Healthcare,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IVA.PA,accion,fr,Healthcare,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DBV.PA,accion,fr,Healthcare,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GNFT.PA,accion,fr,Healthcare,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VLA.PA,accion,fr,Healthcare,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALCLS.PA,accion,fr,Healthcare,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALMDT.PA,accion,fr,Healthcare,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MC.PA,accion,fr,Consumer Cyclical,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KER.PA,accion,fr,Consumer Cyclical,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ML.PA,accion,fr,Consumer Cyclical,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STLAP.PA,accion,fr,Consumer Cyclical,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AC.PA,accion,fr,Consumer Cyclical,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RNO.PA,accion,fr,Consumer Cyclical,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FDJU.PA,accion,fr,Consumer Cyclical,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FR.PA,accion,fr,Consumer Cyclical,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OPM.PA,accion,fr,Consumer Cyclical,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FRVIA.PA,accion,fr,Consumer Cyclical,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELIOR.PA,accion,fr,Consumer Cyclical,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OR.PA,accion,fr,Consumer Defensive,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BN.PA,accion,fr,Consumer Defensive,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RI.PA,accion,fr,Consumer Defensive,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CA.PA,accion,fr,Consumer Defensive,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ORA.PA,accion,fr,Communication Services,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BOL.PA,accion,fr,Communication Services,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DEC.PA,accion,fr,Communication Services,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SESG.PA,accion,fr,Communication Services,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MMT.PA,accion,fr,Communication Services,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TFI.PA,accion,fr,Communication Services,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PUB.PA,accion,fr,Communication Services,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UBI.PA,accion,fr,Communication Services,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TTE.PA,accion,fr,Energy,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TE.PA,accion,fr,Energy,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RUI.PA,accion,fr,Energy,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MAU.PA,accion,fr,Energy,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AI.PA,accion,fr,Basic Materials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VK.PA,accion,fr,Basic Materials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AKE.PA,accion,fr,Basic Materials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENGI.PA,accion,fr,Utilities,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VLTSA.PA,accion,fr,Utilities,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ASML.AS,accion,nl,Technology,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ASM.AS,accion,nl,Technology,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ADYEN.AS,accion,nl,Technology,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BESI.AS,accion,nl,Technology,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TOM2.AS,accion,nl,Technology,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+REN.AS,accion,nl,Industrials,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EXO.AS,accion,nl,Industrials,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CSG.AS,accion,nl,Industrials,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WKL.AS,accion,nl,Industrials,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+INPST.AS,accion,nl,Industrials,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RAND.AS,accion,nl,Industrials,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AALB.AS,accion,nl,Industrials,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ARCAD.AS,accion,nl,Industrials,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BAMNB.AS,accion,nl,Industrials,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+THEON.AS,accion,nl,Industrials,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PHIA.AS,accion,nl,Healthcare,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PRX.AS,accion,nl,Consumer Cyclical,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BFIT.AS,accion,nl,Consumer Cyclical,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UNA.AS,accion,nl,Consumer Defensive,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HEIA.AS,accion,nl,Consumer Defensive,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AD.AS,accion,nl,Consumer Defensive,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HEIO.AS,accion,nl,Consumer Defensive,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MICC.AS,accion,nl,Consumer Defensive,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FFARM.AS,accion,nl,Consumer Defensive,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UMG.AS,accion,nl,Communication Services,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KPN.AS,accion,nl,Communication Services,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHELL.AS,accion,nl,Energy,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SBMO.AS,accion,nl,Energy,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VPK.AS,accion,nl,Energy,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FUR.AS,accion,nl,Energy,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MT.AS,accion,nl,Basic Materials,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DSFIR.AS,accion,nl,Basic Materials,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AKZA.AS,accion,nl,Basic Materials,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IMCD.AS,accion,nl,Basic Materials,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+APAM.AS,accion,nl,Basic Materials,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CRBN.AS,accion,nl,Basic Materials,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMG.AS,accion,nl,Basic Materials,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AVTX.AS,accion,nl,Basic Materials,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OCI.AS,accion,nl,Basic Materials,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UMI.BR,accion,be,Industrials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UCB.BR,accion,be,Healthcare,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABI.BR,accion,be,Consumer Defensive,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ONTEX.BR,accion,be,Consumer Defensive,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PROX.BR,accion,be,Communication Services,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CMBT.BR,accion,be,Energy,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SYENS.BR,accion,be,Basic Materials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AZE.BR,accion,be,Basic Materials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SOLB.BR,accion,be,Basic Materials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ATS.VI,accion,at,Technology,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OMV.VI,accion,at,Energy,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VOE.VI,accion,at,Basic Materials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WIE.VI,accion,at,Basic Materials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VER.VI,accion,at,Utilities,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RYA.IR,accion,ie,Industrials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IR5B.IR,accion,ie,Industrials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KRX.IR,accion,ie,Industrials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UPR.IR,accion,ie,Healthcare,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+C5H.IR,accion,ie,Consumer Cyclical,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GVR.IR,accion,ie,Consumer Cyclical,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KRZ.IR,accion,ie,Consumer Defensive,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GL9.IR,accion,ie,Consumer Defensive,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMS.MC,accion,es,Technology,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IDR.MC,accion,es,Technology,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMP.MC,accion,es,Technology,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DOM.MC,accion,es,Technology,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AENA.MC,accion,es,Industrials,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FER.MC,accion,es,Industrials,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ACS.MC,accion,es,Industrials,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IAG.MC,accion,es,Industrials,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ANA.MC,accion,es,Industrials,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LOG.MC,accion,es,Industrials,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SCYR.MC,accion,es,Industrials,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TRE.MC,accion,es,Industrials,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PSG.MC,accion,es,Industrials,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TSK.MC,accion,es,Industrials,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GRF.MC,accion,es,Healthcare,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ROVI.MC,accion,es,Healthcare,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALM.MC,accion,es,Healthcare,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FAE.MC,accion,es,Healthcare,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ORY.MC,accion,es,Healthcare,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GRF-P.MC,accion,es,Healthcare,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FDR.MC,accion,es,Consumer Cyclical,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CIRSA.MC,accion,es,Consumer Cyclical,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MEL.MC,accion,es,Consumer Cyclical,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HBX.MC,accion,es,Consumer Cyclical,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GEST.MC,accion,es,Consumer Cyclical,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EDR.MC,accion,es,Consumer Cyclical,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ITX.MC,accion,es,Consumer Cyclical,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PUIG.MC,accion,es,Consumer Defensive,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TEF.MC,accion,es,Communication Services,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DIGIS.MC,accion,es,Communication Services,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+A3M.MC,accion,es,Communication Services,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+REP.MC,accion,es,Energy,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ACX.MC,accion,es,Basic Materials,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENC.MC,accion,es,Basic Materials,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TUB.MC,accion,es,Basic Materials,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MTS.MC,accion,es,Basic Materials,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IBE.MC,accion,es,Utilities,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELE.MC,accion,es,Utilities,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NTGY.MC,accion,es,Utilities,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RED.MC,accion,es,Utilities,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ANE.MC,accion,es,Utilities,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENG.MC,accion,es,Utilities,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SLR.MC,accion,es,Utilities,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CTT.LS,accion,pt,Industrials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EGL.LS,accion,pt,Industrials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+JMT.LS,accion,pt,Consumer Defensive,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SON.LS,accion,pt,Consumer Defensive,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NOS.LS,accion,pt,Communication Services,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GALP.LS,accion,pt,Energy,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NVG.LS,accion,pt,Basic Materials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALTR.LS,accion,pt,Basic Materials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+COR.LS,accion,pt,Basic Materials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EDP.LS,accion,pt,Utilities,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EDPR.LS,accion,pt,Utilities,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RENE.LS,accion,pt,Utilities,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1NOKIA.MI,accion,it,Technology,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STMMI.MI,accion,it,Technology,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TPRO.MI,accion,it,Technology,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NEXI.MI,accion,it,Technology,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+REY.MI,accion,it,Technology,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IOT.MI,accion,it,Technology,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PRT.MI,accion,it,Technology,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DAL.MI,accion,it,Technology,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PST.MI,accion,it,Industrials,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PRY.MI,accion,it,Industrials,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LDO.MI,accion,it,Industrials,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1CNHI.MI,accion,it,Industrials,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FCT.MI,accion,it,Industrials,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MAIRE.MI,accion,it,Industrials,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IP.MI,accion,it,Industrials,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IVG.MI,accion,it,Industrials,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENAV.MI,accion,it,Industrials,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WBD.MI,accion,it,Industrials,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+REC.MI,accion,it,Healthcare,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DIA.MI,accion,it,Healthcare,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMP.MI,accion,it,Healthcare,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RACE.MI,accion,it,Consumer Cyclical,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STLAM.MI,accion,it,Consumer Cyclical,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MONC.MI,accion,it,Consumer Cyclical,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PIRC.MI,accion,it,Consumer Cyclical,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DLG.MI,accion,it,Consumer Cyclical,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BC.MI,accion,it,Consumer Cyclical,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LTMC.MI,accion,it,Consumer Cyclical,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TGYM.MI,accion,it,Consumer Cyclical,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SFER.MI,accion,it,Consumer Cyclical,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OVS.MI,accion,it,Consumer Cyclical,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CPR.MI,accion,it,Consumer Defensive,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MARR.MI,accion,it,Consumer Defensive,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TIT.MI,accion,it,Communication Services,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MFEB.MI,accion,it,Communication Services,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MFEA.MI,accion,it,Communication Services,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+JUVE.MI,accion,it,Communication Services,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MN.MI,accion,it,Communication Services,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CAI.MI,accion,it,Communication Services,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENI.MI,accion,it,Energy,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TEN.MI,accion,it,Energy,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GSP.MI,accion,it,Energy,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SPM.MI,accion,it,Energy,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BZU.MI,accion,it,Basic Materials,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CEM.MI,accion,it,Basic Materials,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ENEL.MI,accion,it,Utilities,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TRN.MI,accion,it,Utilities,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SRG.MI,accion,it,Utilities,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IG.MI,accion,it,Utilities,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+A2A.MI,accion,it,Utilities,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HER.MI,accion,it,Utilities,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ACE.MI,accion,it,Utilities,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ERG.MI,accion,it,Utilities,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IRE.MI,accion,it,Utilities,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ASC.MI,accion,it,Utilities,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NETC.CO,accion,dk,Technology,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DSV.CO,accion,dk,Industrials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VWS.CO,accion,dk,Industrials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ISS.CO,accion,dk,Industrials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ROCK-B.CO,accion,dk,Industrials,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FLS.CO,accion,dk,Industrials,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DADC.CO,accion,dk,Industrials,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NOVO-B.CO,accion,dk,Healthcare,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GMAB.CO,accion,dk,Healthcare,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+COLO-B.CO,accion,dk,Healthcare,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DEMANT.CO,accion,dk,Healthcare,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALK-B.CO,accion,dk,Healthcare,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HLUN-B.CO,accion,dk,Healthcare,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PNDORA.CO,accion,dk,Consumer Cyclical,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MATAS.CO,accion,dk,Consumer Cyclical,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RBREW.CO,accion,dk,Consumer Defensive,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BIOMAR.CO,accion,dk,Consumer Defensive,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STG.CO,accion,dk,Consumer Defensive,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CARL-B.CO,accion,dk,Consumer Defensive,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TRMD-A.CO,accion,dk,Energy,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NSIS-B.CO,accion,dk,Basic Materials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ORSTED.CO,accion,dk,Utilities,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NOKIA-SEK.ST,accion,se,Technology,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ERIC-B.ST,accion,se,Technology,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HEXA-B.ST,accion,se,Technology,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SILEX.ST,accion,se,Technology,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NCAB.ST,accion,se,Technology,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VIT-B.ST,accion,se,Technology,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HTRO.ST,accion,se,Technology,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HANZA.ST,accion,se,Technology,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SIVE.ST,accion,se,Technology,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+YUBICO.ST,accion,se,Technology,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABB.ST,accion,se,Industrials,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ATCO-A.ST,accion,se,Industrials,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ATCO-B.ST,accion,se,Industrials,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VOLV-B.ST,accion,se,Industrials,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SAND.ST,accion,se,Industrials,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SAAB-B.ST,accion,se,Industrials,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EPI-A.ST,accion,se,Industrials,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EPI-B.ST,accion,se,Industrials,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALFA.ST,accion,se,Industrials,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8TRA.ST,accion,se,Industrials,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AZN.ST,accion,se,Healthcare,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SOBI.ST,accion,se,Healthcare,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GETI-B.ST,accion,se,Healthcare,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SECT-B.ST,accion,se,Healthcare,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CAMX.ST,accion,se,Healthcare,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ASKER.ST,accion,se,Healthcare,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BIOA-B.ST,accion,se,Healthcare,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EKTA-B.ST,accion,se,Healthcare,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALIF-B.ST,accion,se,Healthcare,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VIMIAN.ST,accion,se,Healthcare,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HM-B.ST,accion,se,Consumer Cyclical,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EVO.ST,accion,se,Consumer Cyclical,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STE-R.ST,accion,se,Consumer Cyclical,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VOLCAR-B.ST,accion,se,Consumer Cyclical,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ASMDEE-B.ST,accion,se,Consumer Cyclical,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELUX-B.ST,accion,se,Consumer Cyclical,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+THULE.ST,accion,se,Consumer Cyclical,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHOT.ST,accion,se,Consumer Cyclical,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RUSTA.ST,accion,se,Consumer Cyclical,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BETS-B.ST,accion,se,Consumer Cyclical,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ESSITY-B.ST,accion,se,Consumer Defensive,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AXFO.ST,accion,se,Consumer Defensive,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AAK.ST,accion,se,Consumer Defensive,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CLA-B.ST,accion,se,Consumer Defensive,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SECARE.ST,accion,se,Consumer Defensive,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VIVA.ST,accion,se,Consumer Defensive,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HUMBLE.ST,accion,se,Consumer Defensive,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MSON-B.ST,accion,se,Consumer Defensive,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TELIA.ST,accion,se,Communication Services,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TEL2-B.ST,accion,se,Communication Services,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SINCH.ST,accion,se,Communication Services,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HACK.ST,accion,se,Communication Services,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EMBRAC-B.ST,accion,se,Communication Services,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MTG-B.ST,accion,se,Communication Services,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PDX.ST,accion,se,Communication Services,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HEM.ST,accion,se,Communication Services,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STORY-B.ST,accion,se,Communication Services,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BAHN-B.ST,accion,se,Communication Services,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IPCO.ST,accion,se,Energy,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MER.ST,accion,se,Energy,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LUMI.ST,accion,se,Basic Materials,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LUG.ST,accion,se,Basic Materials,2,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BOL.ST,accion,se,Basic Materials,3,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SSAB-A.ST,accion,se,Basic Materials,4,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SCA-B.ST,accion,se,Basic Materials,5,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HOLM-B.ST,accion,se,Basic Materials,6,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALLEI.ST,accion,se,Basic Materials,7,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BILL.ST,accion,se,Basic Materials,8,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GRNG.ST,accion,se,Basic Materials,9,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VISC.ST,accion,se,Basic Materials,10,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ORRON.ST,accion,se,Utilities,1,10,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NOD.OL,accion,no,Technology,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KIT.OL,accion,no,Technology,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NORBT.OL,accion,no,Technology,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PEXIP.OL,accion,no,Technology,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BOUV.OL,accion,no,Technology,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NAPA.OL,accion,no,Technology,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KOG.OL,accion,no,Industrials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WAWI.OL,accion,no,Industrials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AUTO.OL,accion,no,Industrials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HAFNI.OL,accion,no,Industrials,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HAUTO.OL,accion,no,Industrials,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DOFG.OL,accion,no,Industrials,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CRNA.OL,accion,no,Healthcare,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TRMED.OL,accion,no,Healthcare,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NYKD.OL,accion,no,Healthcare,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELO.OL,accion,no,Consumer Cyclical,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SATS.OL,accion,no,Consumer Cyclical,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BOHUS.OL,accion,no,Consumer Cyclical,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KOA.OL,accion,no,Consumer Cyclical,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+XPLRA.OL,accion,no,Consumer Cyclical,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELIMP.OL,accion,no,Consumer Cyclical,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MOWI.OL,accion,no,Consumer Defensive,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ORK.OL,accion,no,Consumer Defensive,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SALM.OL,accion,no,Consumer Defensive,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LSG.OL,accion,no,Consumer Defensive,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AUSS.OL,accion,no,Consumer Defensive,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EPR.OL,accion,no,Consumer Defensive,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TEL.OL,accion,no,Communication Services,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VEND.OL,accion,no,Communication Services,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LINK.OL,accion,no,Communication Services,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EQNR.OL,accion,no,Energy,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AKRBP.OL,accion,no,Energy,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VAR.OL,accion,no,Energy,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SUBC.OL,accion,no,Energy,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CMBTO.OL,accion,no,Energy,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BWLPG.OL,accion,no,Energy,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NHY.OL,accion,no,Basic Materials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+YAR.OL,accion,no,Basic Materials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELK.OL,accion,no,Basic Materials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NSKOG.OL,accion,no,Basic Materials,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GOLDR.OL,accion,no,Basic Materials,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BCS.OL,accion,no,Basic Materials,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SCATC.OL,accion,no,Utilities,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELMRA.OL,accion,no,Utilities,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CLOUD.OL,accion,no,Utilities,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MGN.OL,accion,no,Utilities,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NOKIA.HE,accion,fi,Technology,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IQMX.HE,accion,fi,Technology,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TIETO.HE,accion,fi,Technology,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+QTCOM.HE,accion,fi,Technology,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FSECURE.HE,accion,fi,Technology,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KNEBV.HE,accion,fi,Industrials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WRT1V.HE,accion,fi,Industrials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+METSO.HE,accion,fi,Industrials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KCR.HE,accion,fi,Industrials,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VALMT.HE,accion,fi,Industrials,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FIA1S.HE,accion,fi,Industrials,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ORNBV.HE,accion,fi,Healthcare,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TTALO.HE,accion,fi,Healthcare,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STERV.HE,accion,fi,Consumer Cyclical,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HUH1V.HE,accion,fi,Consumer Cyclical,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TYRES.HE,accion,fi,Consumer Cyclical,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PUUILO.HE,accion,fi,Consumer Cyclical,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+METSB.HE,accion,fi,Consumer Cyclical,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KESKOB.HE,accion,fi,Consumer Defensive,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TOKMAN.HE,accion,fi,Consumer Defensive,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TELIA1.HE,accion,fi,Communication Services,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELISA.HE,accion,fi,Communication Services,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NESTE.HE,accion,fi,Energy,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UPM.HE,accion,fi,Basic Materials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SSABBH.HE,accion,fi,Basic Materials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OUT1V.HE,accion,fi,Basic Materials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+KEMIRA.HE,accion,fi,Basic Materials,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FORTUM.HE,accion,fi,Utilities,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+285A.T,accion,jp,Technology,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8035.T,accion,jp,Technology,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6857.T,accion,jp,Technology,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6758.T,accion,jp,Technology,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6861.T,accion,jp,Technology,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6981.T,accion,jp,Technology,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6752.T,accion,jp,Technology,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6702.T,accion,jp,Technology,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6701.T,accion,jp,Technology,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6146.T,accion,jp,Technology,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6723.T,accion,jp,Technology,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6762.T,accion,jp,Technology,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4062.T,accion,jp,Technology,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7751.T,accion,jp,Technology,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5016.T,accion,jp,Technology,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6501.T,accion,jp,Industrials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8058.T,accion,jp,Industrials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8001.T,accion,jp,Industrials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8031.T,accion,jp,Industrials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7011.T,accion,jp,Industrials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6503.T,accion,jp,Industrials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5803.T,accion,jp,Industrials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8053.T,accion,jp,Industrials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8002.T,accion,jp,Industrials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8015.T,accion,jp,Industrials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6301.T,accion,jp,Industrials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6367.T,accion,jp,Industrials,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6954.T,accion,jp,Industrials,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6971.T,accion,jp,Industrials,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6273.T,accion,jp,Industrials,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4519.T,accion,jp,Healthcare,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4502.T,accion,jp,Healthcare,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7741.T,accion,jp,Healthcare,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4578.T,accion,jp,Healthcare,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4568.T,accion,jp,Healthcare,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4503.T,accion,jp,Healthcare,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4543.T,accion,jp,Healthcare,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4507.T,accion,jp,Healthcare,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7733.T,accion,jp,Healthcare,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4151.T,accion,jp,Healthcare,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4523.T,accion,jp,Healthcare,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2413.T,accion,jp,Healthcare,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6869.T,accion,jp,Healthcare,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4528.T,accion,jp,Healthcare,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+3391.T,accion,jp,Healthcare,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7203.T,accion,jp,Consumer Cyclical,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9983.T,accion,jp,Consumer Cyclical,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5802.T,accion,jp,Consumer Cyclical,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7267.T,accion,jp,Consumer Cyclical,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5108.T,accion,jp,Consumer Cyclical,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4661.T,accion,jp,Consumer Cyclical,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6902.T,accion,jp,Consumer Cyclical,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7269.T,accion,jp,Consumer Cyclical,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4689.T,accion,jp,Consumer Cyclical,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8267.T,accion,jp,Consumer Cyclical,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7832.T,accion,jp,Consumer Cyclical,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7936.T,accion,jp,Consumer Cyclical,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7453.T,accion,jp,Consumer Cyclical,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1928.T,accion,jp,Consumer Cyclical,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7270.T,accion,jp,Consumer Cyclical,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2914.T,accion,jp,Consumer Defensive,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2802.T,accion,jp,Consumer Defensive,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+3382.T,accion,jp,Consumer Defensive,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4452.T,accion,jp,Consumer Defensive,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2502.T,accion,jp,Consumer Defensive,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2503.T,accion,jp,Consumer Defensive,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7532.T,accion,jp,Consumer Defensive,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8113.T,accion,jp,Consumer Defensive,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2801.T,accion,jp,Consumer Defensive,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4911.T,accion,jp,Consumer Defensive,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2587.T,accion,jp,Consumer Defensive,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2269.T,accion,jp,Consumer Defensive,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2875.T,accion,jp,Consumer Defensive,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2897.T,accion,jp,Consumer Defensive,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2267.T,accion,jp,Consumer Defensive,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9984.T,accion,jp,Communication Services,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6098.T,accion,jp,Communication Services,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9432.T,accion,jp,Communication Services,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9434.T,accion,jp,Communication Services,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9433.T,accion,jp,Communication Services,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+7974.T,accion,jp,Communication Services,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9766.T,accion,jp,Communication Services,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+3659.T,accion,jp,Communication Services,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9697.T,accion,jp,Communication Services,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9602.T,accion,jp,Communication Services,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9684.T,accion,jp,Communication Services,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4324.T,accion,jp,Communication Services,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9401.T,accion,jp,Communication Services,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9404.T,accion,jp,Communication Services,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2371.T,accion,jp,Communication Services,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1605.T,accion,jp,Energy,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5020.T,accion,jp,Energy,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5019.T,accion,jp,Energy,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5021.T,accion,jp,Energy,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6269.T,accion,jp,Energy,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1662.T,accion,jp,Energy,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1518.T,accion,jp,Energy,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1514.T,accion,jp,Energy,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9535.T,accion,jp,Energy,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5010.T,accion,jp,Energy,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4063.T,accion,jp,Basic Materials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5401.T,accion,jp,Basic Materials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4004.T,accion,jp,Basic Materials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5713.T,accion,jp,Basic Materials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4612.T,accion,jp,Basic Materials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4091.T,accion,jp,Basic Materials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6988.T,accion,jp,Basic Materials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4188.T,accion,jp,Basic Materials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5411.T,accion,jp,Basic Materials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4021.T,accion,jp,Basic Materials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4005.T,accion,jp,Basic Materials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4042.T,accion,jp,Basic Materials,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5406.T,accion,jp,Basic Materials,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4183.T,accion,jp,Basic Materials,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4182.T,accion,jp,Basic Materials,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9503.T,accion,jp,Utilities,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9532.T,accion,jp,Utilities,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9502.T,accion,jp,Utilities,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9531.T,accion,jp,Utilities,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9508.T,accion,jp,Utilities,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9501.T,accion,jp,Utilities,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9513.T,accion,jp,Utilities,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9506.T,accion,jp,Utilities,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9533.T,accion,jp,Utilities,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9507.T,accion,jp,Utilities,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9504.T,accion,jp,Utilities,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+8174.T,accion,jp,Utilities,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9509.T,accion,jp,Utilities,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9505.T,accion,jp,Utilities,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1663.T,accion,jp,Utilities,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+XYZ.AX,accion,au,Technology,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+XRO.AX,accion,au,Technology,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WTC.AX,accion,au,Technology,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TNE.AX,accion,au,Technology,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NXT.AX,accion,au,Technology,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CDA.AX,accion,au,Technology,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NWL.AX,accion,au,Technology,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+360.AX,accion,au,Technology,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MP1.AX,accion,au,Technology,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DDR.AX,accion,au,Technology,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DTL.AX,accion,au,Technology,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SLX.AX,accion,au,Technology,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BVS.AX,accion,au,Technology,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PXA.AX,accion,au,Technology,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELS.AX,accion,au,Technology,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BXB.AX,accion,au,Industrials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SGH.AX,accion,au,Industrials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+QAN.AX,accion,au,Industrials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AIA.AX,accion,au,Industrials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IFT.AX,accion,au,Industrials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALQ.AX,accion,au,Industrials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+REH.AX,accion,au,Industrials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALX.AX,accion,au,Industrials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AZJ.AX,accion,au,Industrials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CWY.AX,accion,au,Industrials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VNT.AX,accion,au,Industrials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DOW.AX,accion,au,Industrials,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NWH.AX,accion,au,Industrials,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RWC.AX,accion,au,Industrials,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SRL.AX,accion,au,Industrials,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RMD.AX,accion,au,Healthcare,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SIG.AX,accion,au,Healthcare,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FPH.AX,accion,au,Healthcare,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PME.AX,accion,au,Healthcare,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RHC.AX,accion,au,Healthcare,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHL.AX,accion,au,Healthcare,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+COH.AX,accion,au,Healthcare,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ANN.AX,accion,au,Healthcare,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TLX.AX,accion,au,Healthcare,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EBO.AX,accion,au,Healthcare,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MSB.AX,accion,au,Healthcare,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NEU.AX,accion,au,Healthcare,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PYC.AX,accion,au,Healthcare,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+4DX.AX,accion,au,Healthcare,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+REG.AX,accion,au,Healthcare,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WES.AX,accion,au,Consumer Cyclical,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALL.AX,accion,au,Consumer Cyclical,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AMC.AX,accion,au,Consumer Cyclical,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TLC.AX,accion,au,Consumer Cyclical,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LNW.AX,accion,au,Consumer Cyclical,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+JBH.AX,accion,au,Consumer Cyclical,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+APE.AX,accion,au,Consumer Cyclical,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HVN.AX,accion,au,Consumer Cyclical,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BRG.AX,accion,au,Consumer Cyclical,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SUL.AX,accion,au,Consumer Cyclical,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LOV.AX,accion,au,Consumer Cyclical,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GYG.AX,accion,au,Consumer Cyclical,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FLT.AX,accion,au,Consumer Cyclical,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+DMP.AX,accion,au,Consumer Cyclical,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PMV.AX,accion,au,Consumer Cyclical,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+COL.AX,accion,au,Consumer Defensive,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EDV.AX,accion,au,Consumer Defensive,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+A2M.AX,accion,au,Consumer Defensive,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TWE.AX,accion,au,Consumer Defensive,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MTS.AX,accion,au,Consumer Defensive,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BGA.AX,accion,au,Consumer Defensive,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CBO.AX,accion,au,Consumer Defensive,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GNC.AX,accion,au,Consumer Defensive,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ELD.AX,accion,au,Consumer Defensive,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RIC.AX,accion,au,Consumer Defensive,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ING.AX,accion,au,Consumer Defensive,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SHV.AX,accion,au,Consumer Defensive,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WOW.AX,accion,au,Consumer Defensive,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NWS.AX,accion,au,Communication Services,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+REA.AX,accion,au,Communication Services,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CAR.AX,accion,au,Communication Services,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TPG.AX,accion,au,Communication Services,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SEK.AX,accion,au,Communication Services,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CNU.AX,accion,au,Communication Services,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EVT.AX,accion,au,Communication Services,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SLC.AX,accion,au,Communication Services,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ABB.AX,accion,au,Communication Services,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TUA.AX,accion,au,Communication Services,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IGL.AX,accion,au,Communication Services,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+TLS.AX,accion,au,Communication Services,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WDS.AX,accion,au,Energy,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ALD.AX,accion,au,Energy,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NXG.AX,accion,au,Energy,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+YAL.AX,accion,au,Energy,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WHC.AX,accion,au,Energy,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PDN.AX,accion,au,Energy,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NHC.AX,accion,au,Energy,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+WOR.AX,accion,au,Energy,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VEA.AX,accion,au,Energy,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BMN.AX,accion,au,Energy,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+STO.AX,accion,au,Energy,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BHP.AX,accion,au,Basic Materials,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RIO.AX,accion,au,Basic Materials,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NEM.AX,accion,au,Basic Materials,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FMG.AX,accion,au,Basic Materials,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NST.AX,accion,au,Basic Materials,5,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EVN.AX,accion,au,Basic Materials,6,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+JHX.AX,accion,au,Basic Materials,7,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+S32.AX,accion,au,Basic Materials,8,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AAI.AX,accion,au,Basic Materials,9,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PLS.AX,accion,au,Basic Materials,10,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LYC.AX,accion,au,Basic Materials,11,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MIN.AX,accion,au,Basic Materials,12,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CSC.AX,accion,au,Basic Materials,13,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SFR.AX,accion,au,Basic Materials,14,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GMD.AX,accion,au,Basic Materials,15,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ORG.AX,accion,au,Utilities,1,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+APA.AX,accion,au,Utilities,2,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AGL.AX,accion,au,Utilities,3,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+LGI.AX,accion,au,Utilities,4,15,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VGL.NZ,accion,nz,Technology,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AIA.NZ,accion,nz,Industrials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+IFT.NZ,accion,nz,Industrials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+POT.NZ,accion,nz,Industrials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FRW.NZ,accion,nz,Industrials,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SKL.NZ,accion,nz,Industrials,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NPH.NZ,accion,nz,Industrials,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FPH.NZ,accion,nz,Healthcare,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EBO.NZ,accion,nz,Healthcare,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+RYM.NZ,accion,nz,Healthcare,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SUM.NZ,accion,nz,Healthcare,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+THL.NZ,accion,nz,Consumer Cyclical,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FCG.NZ,accion,nz,Consumer Defensive,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+ATM.NZ,accion,nz,Consumer Defensive,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SCL.NZ,accion,nz,Consumer Defensive,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SAN.NZ,accion,nz,Consumer Defensive,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SPK.NZ,accion,nz,Communication Services,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CNU.NZ,accion,nz,Communication Services,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+SKT.NZ,accion,nz,Communication Services,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CHI.NZ,accion,nz,Energy,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+FBU.NZ,accion,nz,Basic Materials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VSL.NZ,accion,nz,Basic Materials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MEL.NZ,accion,nz,Utilities,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+MCY.NZ,accion,nz,Utilities,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+CEN.NZ,accion,nz,Utilities,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+VCT.NZ,accion,nz,Utilities,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+GNE.NZ,accion,nz,Utilities,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+UGBD.SI,accion,sg,Technology,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+V03.SI,accion,sg,Technology,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AWX.SI,accion,sg,Technology,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AIY.SI,accion,sg,Technology,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+558.SI,accion,sg,Technology,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+PCT.SI,accion,sg,Technology,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+S63.SI,accion,sg,Industrials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+C6L.SI,accion,sg,Industrials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+BN4.SI,accion,sg,Industrials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+J36.SI,accion,sg,Industrials,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HCCD.SI,accion,sg,Industrials,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+C07.SI,accion,sg,Industrials,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+T14.SI,accion,sg,Healthcare,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+H02.SI,accion,sg,Healthcare,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HBBD.SI,accion,sg,Consumer Cyclical,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+NIO.SI,accion,sg,Consumer Cyclical,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+H22.SI,accion,sg,Consumer Cyclical,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+AGS.SI,accion,sg,Consumer Cyclical,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+F34.SI,accion,sg,Consumer Defensive,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+EB5.SI,accion,sg,Consumer Defensive,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+D01.SI,accion,sg,Consumer Defensive,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+F03.SI,accion,sg,Consumer Defensive,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+OV8.SI,accion,sg,Consumer Defensive,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+P8Z.SI,accion,sg,Consumer Defensive,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+Z77.SI,accion,sg,Communication Services,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+HTCD.SI,accion,sg,Communication Services,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+Z74.SI,accion,sg,Communication Services,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+5E2.SI,accion,sg,Energy,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+U96.SI,accion,sg,Utilities,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+3308.HK,accion,hk,Technology,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1810.HK,accion,hk,Technology,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0981.HK,accion,hk,Technology,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2513.HK,accion,hk,Technology,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2475.HK,accion,hk,Technology,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0992.HK,accion,hk,Technology,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+3750.HK,accion,hk,Industrials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0019.HK,accion,hk,Industrials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0267.HK,accion,hk,Industrials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0001.HK,accion,hk,Industrials,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1919.HK,accion,hk,Industrials,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0669.HK,accion,hk,Industrials,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2359.HK,accion,hk,Healthcare,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+6160.HK,accion,hk,Healthcare,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1276.HK,accion,hk,Healthcare,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+3692.HK,accion,hk,Healthcare,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2269.HK,accion,hk,Healthcare,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1801.HK,accion,hk,Healthcare,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9988.HK,accion,hk,Consumer Cyclical,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1211.HK,accion,hk,Consumer Cyclical,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0300.HK,accion,hk,Consumer Cyclical,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+3690.HK,accion,hk,Consumer Cyclical,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9618.HK,accion,hk,Consumer Cyclical,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2338.HK,accion,hk,Consumer Cyclical,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9633.HK,accion,hk,Consumer Defensive,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2714.HK,accion,hk,Consumer Defensive,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+3288.HK,accion,hk,Consumer Defensive,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0288.HK,accion,hk,Consumer Defensive,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1768.HK,accion,hk,Consumer Defensive,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9980.HK,accion,hk,Consumer Defensive,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0700.HK,accion,hk,Communication Services,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0941.HK,accion,hk,Communication Services,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9999.HK,accion,hk,Communication Services,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0728.HK,accion,hk,Communication Services,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+9888.HK,accion,hk,Communication Services,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0762.HK,accion,hk,Communication Services,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0857.HK,accion,hk,Energy,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0883.HK,accion,hk,Energy,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1088.HK,accion,hk,Energy,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0386.HK,accion,hk,Energy,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1898.HK,accion,hk,Energy,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1171.HK,accion,hk,Energy,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2899.HK,accion,hk,Basic Materials,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2259.HK,accion,hk,Basic Materials,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+3993.HK,accion,hk,Basic Materials,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1378.HK,accion,hk,Basic Materials,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+2600.HK,accion,hk,Basic Materials,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0358.HK,accion,hk,Basic Materials,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0002.HK,accion,hk,Utilities,1,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1038.HK,accion,hk,Utilities,2,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+1816.HK,accion,hk,Utilities,3,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0003.HK,accion,hk,Utilities,4,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0006.HK,accion,hk,Utilities,5,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00
+0836.HK,accion,hk,Utilities,6,6,yfinance.screen,2026-08-31T10:32:25.269745+00:00

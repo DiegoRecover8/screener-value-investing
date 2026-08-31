@@ -19,6 +19,11 @@ fondos*.csv
 # Los universos oficiales son entradas inmutables del pipeline, no salidas
 # temporales. Deben viajar con el manifest para que la Action pueda validarlos.
 !universos/oficiales/*.csv
+!universos/descubrimiento/disc_*.csv
+
+# Estado local reanudable; al completar se elimina y los resultados finales
+# sí quedan disponibles para versionar.
+universos/descubrimiento/checkpoint_*.json
 
 .DS_Store
 .claude/
