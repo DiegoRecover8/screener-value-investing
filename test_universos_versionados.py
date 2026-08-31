@@ -64,6 +64,10 @@ def _crear_registro(raiz: Path, con_draft: bool = False):
 
 
 class TestUniversosVersionados(unittest.TestCase):
+    def test_gitignore_no_excluye_los_universos_oficiales(self):
+        reglas = Path(".gitignore").read_text(encoding="utf-8").splitlines()
+        self.assertIn("!universos/oficiales/*.csv", reglas)
+
     def test_manifest_real_registra_exactamente_el_universo_legacy(self):
         activo = validar_manifest()
         self.assertEqual(activo.universe_id, "uv_2026q3_r01")

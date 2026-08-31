@@ -16,5 +16,9 @@ fondos*.csv
 !ejecuciones_screener.csv
 !seguimiento_candidatas.csv
 
+# Los universos oficiales son entradas inmutables del pipeline, no salidas
+# temporales. Deben viajar con el manifest para que la Action pueda validarlos.
+!universos/oficiales/*.csv
+
 .DS_Store
 .claude/
