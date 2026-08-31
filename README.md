@@ -29,12 +29,11 @@ motivo de descarte auditable si no pasa.
    cada ticker, calcula las métricas, aplica los filtros de `UMBRALES` y
    genera un ranking tipo Magic Formula sobre las candidatas que los superan
    todos.
-3. **`test_screener.py`** cubre el cálculo de métricas con datos sintéticos,
-   sin red — incluye regresiones explícitas de los dos bugs reales
-   corregidos durante el desarrollo (ver más abajo). `test_journal.py`,
-   `test_seguimiento.py` y `test_prompt_llm.py` hacen lo mismo para sus
-   módulos respectivos; los cuatro corren sin red y `pytest` los
-   autodescubre juntos.
+3. **Los archivos `test_*.py`** cubren con datos sintéticos y sin red el
+   motor, el journal, las señales y su seguimiento, el prompt LLM, el mapeo
+   de TradingView y la exportación del histórico. Incluyen regresiones
+   explícitas de bugs reales corregidos durante el desarrollo, y `pytest`
+   los autodescubre juntos.
 4. **`dashboard.py`** es un panel interactivo en Streamlit sobre el mismo
    motor: sliders para ajustar `UMBRALES` en vivo, tabla filtrable con los
    motivos de descarte y gráficos de composición del universo por región y
@@ -193,13 +192,13 @@ con qué métricas?". Esta contesta la pregunta que de verdad importa:
 **¿cómo les fue de verdad después?** Cada ejecución semanal de la Action
 también corre `ejecutar_seguimiento.py`, que:
 
-1. Lee `journal_candidatos.csv` y se queda con la **primera** vez que cada
-   ticker apareció como candidata (`pasa=True`). Si vuelve a aparecer en
-   semanas posteriores sin haber dejado de serlo, no abre una entrada
-   nueva -sigue siendo la misma señal original, con la misma fecha de
-   entrada. Un ticker que deja de ser candidata y vuelve a serlo meses
-   después sí generaría una señal nueva, porque el contexto fundamental ya
-   cambió.
+1. Lee `journal_candidatos.csv` e identifica cada transición válida de
+   `pasa=False` a `pasa=True`. Si el ticker sigue pasando en ejecuciones
+   posteriores, conserva la señal original y su fecha de entrada; si deja
+   de pasar y más adelante vuelve a hacerlo, abre una señal nueva. Una
+   descarga fallida o la ausencia del ticker en un snapshot no cuentan como
+   salida. Cada señal se identifica por `(ticker, fecha_entrada)`, sin
+   cambiar el esquema del CSV existente.
 2. Descarga el **precio de cierre ajustado** (splits + dividendos,
    `auto_adjust=True` de yfinance) desde esa fecha de entrada hasta hoy.
 3. Calcula el retorno **encadenando los retornos diarios** (TWR: `∏(1+r_t)
@@ -412,9 +411,10 @@ en el ranking, pero conservan sus métricas y motivos de descarte en el CSV.
       con qué métricas, con timestamp de cuándo se calculó cada fila.
 - [x] Fase 4 — seguimiento longitudinal (`seguimiento.py`,
       `ejecutar_seguimiento.py`) del rendimiento real de las candidatas
-      pasadas: retorno TWR y drawdown máximo sobre precio de cierre
-      ajustado desde su primera aparición, sin look-ahead bias, acumulado
-      semana a semana en `seguimiento_candidatas.csv`.
+      pasadas: retorno TWR y drawdown máximo sobre precio de cierre ajustado
+      desde la entrada de cada señal, incluidas reentradas después de dejar de
+      pasar los filtros, sin look-ahead bias y acumulado semana a semana en
+      `seguimiento_candidatas.csv`.
 - [x] Fase 5 — interpretación cualitativa de las candidatas: en vez de
       integrar una API concreta, `prompt_llm.py` genera un prompt listo
       para copiar y pegar en el LLM que prefieras (Claude, ChatGPT, Gemini

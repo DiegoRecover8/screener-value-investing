@@ -19,7 +19,7 @@ import sys
 import numpy as np
 import pandas as pd
 
-from journal import leer_journal
+from journal import extraer_ultima_ejecucion, leer_journal
 from seguimiento import leer_seguimiento
 
 
@@ -60,17 +60,21 @@ def construir_export() -> dict:
             "seguimiento": _filas(seguimiento),
         }
 
-    ultima_semana = journal["semana_iso"].max()
-    ultima_ejecucion = journal["fecha_ejecucion"].max()
-    candidatas_ultima_semana = journal[
-        (journal["semana_iso"] == ultima_semana) & (journal["pasa"].astype(bool))
+    filas_ultima_ejecucion = extraer_ultima_ejecucion(journal)
+    ultima_ejecucion = filas_ultima_ejecucion["fecha_ejecucion"].iloc[0]
+    ultima_semana = filas_ultima_ejecucion["semana_iso"].iloc[0]
+    candidatas_ultima_ejecucion = filas_ultima_ejecucion[
+        filas_ultima_ejecucion["pasa"].astype(bool)
     ]
 
     return {
         "generado_en": generado_en,
         "ultima_ejecucion": ultima_ejecucion.isoformat(),
         "ultima_semana": ultima_semana,
-        "candidatas_ultima_semana": _filas(candidatas_ultima_semana),
+        # Se conserva el nombre de la clave para no romper la Bitácora ya
+        # publicada; su contenido corresponde estrictamente a la ejecución
+        # más reciente, aunque haya otras en la misma semana ISO.
+        "candidatas_ultima_semana": _filas(candidatas_ultima_ejecucion),
         "journal": _filas(journal),
         "seguimiento": _filas(seguimiento),
     }

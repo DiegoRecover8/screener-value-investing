@@ -1,7 +1,7 @@
 """Punto de entrada del seguimiento longitudinal (Fase 4, GitHub Actions).
 
-Lee journal_candidatos.csv, extrae la primera aparición de cada candidata
-única, descarga su precio ajustado desde esa fecha y registra el
+Lee journal_candidatos.csv, extrae cada episodio en que un ticker pasa a ser
+candidata, descarga su precio ajustado desde esa fecha y registra el
 rendimiento (retorno TWR, drawdown máximo) en seguimiento_candidatas.csv
 -otro histórico que se AÑADE cada semana, nunca se sobrescribe.
 
@@ -16,7 +16,7 @@ from journal import RUTA_JOURNAL_DEFECTO, leer_journal
 from seguimiento import (
     RUTA_SEGUIMIENTO_DEFECTO,
     evaluar_seguimiento,
-    extraer_candidatas_unicas,
+    extraer_senales_candidatas,
     registrar_seguimiento,
 )
 
@@ -26,12 +26,12 @@ def main() -> None:
     ruta_seguimiento = sys.argv[2] if len(sys.argv) > 2 else RUTA_SEGUIMIENTO_DEFECTO
 
     journal = leer_journal(ruta_journal)
-    candidatas = extraer_candidatas_unicas(journal)
+    candidatas = extraer_senales_candidatas(journal)
     if candidatas.empty:
         print("Sin candidatas históricas en el journal todavía; nada que trackear.")
         return
 
-    print(f"Calculando rendimiento de {len(candidatas)} candidatas únicas...")
+    print(f"Calculando rendimiento de {len(candidatas)} señales candidatas...")
     rendimientos = evaluar_seguimiento(candidatas)
     filas = registrar_seguimiento(rendimientos, ruta_seguimiento)
     print(f"\n{len(filas)} filas añadidas a {ruta_seguimiento}\n")

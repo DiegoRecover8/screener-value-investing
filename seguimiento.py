@@ -17,7 +17,10 @@ DISCIPLINA CONTRA EL SESGO RETROSPECTIVO (look-ahead bias):
    información que todavía no existía cuando se emitió la señal.
 3. Si un ticker vuelve a aparecer como candidata en semanas posteriores sin
    haber dejado de serlo, no se abre una entrada nueva: sigue siendo la
-   misma señal original, con la misma fecha de entrada.
+   misma señal original, con la misma fecha de entrada. Si existe una
+   observación válida intermedia con `pasa=False`, la siguiente candidatura
+   sí abre una señal nueva. Una descarga fallida o la ausencia del ticker en
+   un snapshot no se interpretan como una salida.
 """
 
 from __future__ import annotations
@@ -35,21 +38,60 @@ COLUMNAS_CANDIDATA = [
 ]
 
 
-def extraer_candidatas_unicas(journal: pd.DataFrame) -> pd.DataFrame:
-    """Una fila por ticker: su primera aparición como candidata (pasa=True).
+def _es_verdadero(valor) -> bool:
+    """Interpreta booleanos procedentes tanto de pandas como de un CSV."""
+    if pd.isna(valor):
+        return False
+    if isinstance(valor, str):
+        return valor.strip().lower() in {"true", "1", "sí", "si"}
+    return bool(valor)
 
-    Reapariciones posteriores del mismo ticker no generan una entrada
-    nueva -ver disciplina anti-look-ahead en el docstring del módulo.
+
+def extraer_senales_candidatas(journal: pd.DataFrame) -> pd.DataFrame:
+    """Una fila por episodio en que un ticker se convierte en candidata.
+
+    Una secuencia ``True, True`` es una sola señal; ``True, False, True``
+    contiene dos. Solo las observaciones válidas cambian el estado: un fallo
+    de descarga conserva el estado anterior y un ticker ausente de una
+    ejecución ni siquiera aparece en su secuencia. La pareja
+    ``(ticker, fecha_entrada)`` identifica la señal sin cambiar el esquema
+    existente de ``seguimiento_candidatas.csv``.
     """
     if journal.empty:
         return pd.DataFrame(columns=COLUMNAS_CANDIDATA)
-    candidatas = journal[journal["pasa"].astype(bool)].copy()
-    if candidatas.empty:
+
+    observaciones = journal.copy()
+    observaciones["fecha_ejecucion"] = pd.to_datetime(
+        observaciones["fecha_ejecucion"], utc=True,
+    )
+    observaciones = observaciones.sort_values(
+        ["ticker", "fecha_ejecucion"], kind="stable",
+    )
+
+    indices_entrada = []
+    for _, grupo in observaciones.groupby("ticker", sort=False):
+        senal_activa = False
+        for indice, fila in grupo.iterrows():
+            error = fila.get("error_descarga", "")
+            if pd.notna(error) and str(error).strip():
+                continue
+            pasa = _es_verdadero(fila.get("pasa", False))
+            if pasa and not senal_activa:
+                indices_entrada.append(indice)
+            senal_activa = pasa
+
+    if not indices_entrada:
         return pd.DataFrame(columns=COLUMNAS_CANDIDATA)
-    candidatas["fecha_ejecucion"] = pd.to_datetime(candidatas["fecha_ejecucion"])
-    idx_primera = candidatas.groupby("ticker")["fecha_ejecucion"].idxmin()
-    primeras = candidatas.loc[idx_primera].rename(columns={"fecha_ejecucion": "fecha_entrada"})
-    return primeras[COLUMNAS_CANDIDATA].reset_index(drop=True)
+
+    entradas = observaciones.loc[indices_entrada].rename(
+        columns={"fecha_ejecucion": "fecha_entrada"},
+    )
+    return entradas[COLUMNAS_CANDIDATA].reset_index(drop=True)
+
+
+def extraer_candidatas_unicas(journal: pd.DataFrame) -> pd.DataFrame:
+    """Alias compatible: devuelve señales únicas, no solo tickers únicos."""
+    return extraer_senales_candidatas(journal)
 
 
 def calcular_rendimiento(precios: pd.Series) -> dict:
@@ -127,7 +169,7 @@ def descargar_precios_ajustados(
 
 
 def evaluar_seguimiento(candidatas: pd.DataFrame) -> pd.DataFrame:  # pragma: no cover - red
-    """Descarga precios y calcula rendimiento para cada candidata única.
+    """Descarga precios y calcula rendimiento para cada señal candidata.
 
     Conserva también los fallos de descarga (ticker deslistado, sin datos)
     en vez de abortar el resto, igual que `descargar_fundamentales`.

@@ -6,7 +6,7 @@ from tempfile import TemporaryDirectory
 
 import pandas as pd
 
-from journal import leer_journal, registrar_ejecucion
+from journal import extraer_ultima_ejecucion, leer_journal, registrar_ejecucion
 
 
 def _resultado_ejemplo(tickers=("AAA", "BBB")):
@@ -55,6 +55,25 @@ class TestJournal(unittest.TestCase):
 
     def test_leer_journal_inexistente_devuelve_vacio(self):
         self.assertTrue(leer_journal("/ruta/que/no/existe/journal.csv").empty)
+
+    def test_ultima_ejecucion_no_mezcla_snapshots_de_la_misma_semana(self):
+        primera = _resultado_ejemplo(("ANTIGUA", "BBB"))
+        primera["pasa"] = [True, False]
+        segunda = _resultado_ejemplo(("NUEVA", "DDD"))
+        segunda["pasa"] = [True, False]
+
+        with TemporaryDirectory() as tmp:
+            ruta = Path(tmp) / "journal.csv"
+            registrar_ejecucion(
+                primera, ruta, momento=pd.Timestamp("2026-08-24T07:00:00Z"),
+            )
+            registrar_ejecucion(
+                segunda, ruta, momento=pd.Timestamp("2026-08-24T10:00:00Z"),
+            )
+            ultima = extraer_ultima_ejecucion(leer_journal(ruta))
+
+        self.assertEqual(set(ultima["ticker"]), {"NUEVA", "DDD"})
+        self.assertEqual(ultima["fecha_ejecucion"].nunique(), 1)
 
 
 if __name__ == "__main__":

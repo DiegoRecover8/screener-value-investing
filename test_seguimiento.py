@@ -10,6 +10,7 @@ import pandas as pd
 from seguimiento import (
     calcular_rendimiento,
     extraer_candidatas_unicas,
+    extraer_senales_candidatas,
     leer_seguimiento,
     registrar_seguimiento,
 )
@@ -83,6 +84,35 @@ class TestExtraerCandidatasUnicas(unittest.TestCase):
     def test_ninguna_candidata_en_el_journal(self):
         journal = pd.DataFrame([self._fila("BBB", "2026-08-01T07:00:00+00:00", False)])
         self.assertTrue(extraer_candidatas_unicas(journal).empty)
+
+    def test_reentrada_despues_de_dejar_de_pasar_abre_otra_senal(self):
+        journal = pd.DataFrame([
+            self._fila("AAA", "2026-08-01T07:00:00+00:00", True),
+            self._fila("AAA", "2026-08-08T07:00:00+00:00", True),
+            self._fila("AAA", "2026-08-15T07:00:00+00:00", False),
+            self._fila("AAA", "2026-08-22T07:00:00+00:00", True),
+        ])
+        senales = extraer_senales_candidatas(journal)
+        self.assertEqual(len(senales), 2)
+        self.assertEqual(
+            list(senales["fecha_entrada"]),
+            [
+                pd.Timestamp("2026-08-01T07:00:00+00:00"),
+                pd.Timestamp("2026-08-22T07:00:00+00:00"),
+            ],
+        )
+
+    def test_error_de_descarga_no_cierra_una_senal(self):
+        journal = pd.DataFrame([
+            self._fila("AAA", "2026-08-01T07:00:00+00:00", True),
+            self._fila(
+                "AAA", "2026-08-08T07:00:00+00:00", False,
+                error_descarga="Timeout: Yahoo no responde",
+            ),
+            self._fila("AAA", "2026-08-15T07:00:00+00:00", True),
+        ])
+        senales = extraer_senales_candidatas(journal)
+        self.assertEqual(len(senales), 1)
 
 
 class TestRegistrarSeguimiento(unittest.TestCase):

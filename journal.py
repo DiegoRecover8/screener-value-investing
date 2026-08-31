@@ -54,3 +54,19 @@ def leer_journal(ruta_journal: str | Path = RUTA_JOURNAL_DEFECTO) -> pd.DataFram
     if not ruta.exists():
         return pd.DataFrame()
     return pd.read_csv(ruta, parse_dates=["fecha_ejecucion"])
+
+
+def extraer_ultima_ejecucion(journal: pd.DataFrame) -> pd.DataFrame:
+    """Devuelve solo las filas del snapshot con el timestamp más reciente.
+
+    Una semana ISO puede contener varias ejecuciones (por ejemplo, una prueba
+    manual y la Action programada). Por eso la última ejecución se identifica
+    por ``fecha_ejecucion`` exacta y no por ``semana_iso``.
+    """
+    if journal.empty:
+        return journal.copy()
+    fechas = pd.to_datetime(journal["fecha_ejecucion"], utc=True)
+    mascara = fechas.eq(fechas.max())
+    ultima = journal.loc[mascara].copy()
+    ultima["fecha_ejecucion"] = fechas.loc[mascara]
+    return ultima

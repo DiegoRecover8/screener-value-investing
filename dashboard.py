@@ -18,7 +18,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from journal import RUTA_JOURNAL_DEFECTO, leer_journal
+from journal import RUTA_JOURNAL_DEFECTO, extraer_ultima_ejecucion, leer_journal
 from prompt_llm import generar_prompt_interpretacion
 from screener_value import (
     DISCLAIMER,
@@ -171,16 +171,17 @@ def _vista_historico() -> None:
         )
         return
 
-    ultima_semana = journal["semana_iso"].max()
-    ultima_fecha = journal["fecha_ejecucion"].max()
-    candidatas_ultima_semana = journal[
-        (journal["semana_iso"] == ultima_semana) & (journal["pasa"].astype(bool))
+    ultima_ejecucion = extraer_ultima_ejecucion(journal)
+    ultima_fecha = ultima_ejecucion["fecha_ejecucion"].iloc[0]
+    ultima_semana = ultima_ejecucion["semana_iso"].iloc[0]
+    candidatas_ultima_ejecucion = ultima_ejecucion[
+        ultima_ejecucion["pasa"].astype(bool)
     ]
 
     col1, col2, col3 = st.columns(3)
     col1.metric("Última ejecución", ultima_fecha.strftime("%Y-%m-%d %H:%M UTC"))
     col2.metric("Semana", ultima_semana)
-    col3.metric("Candidatas esa semana", len(candidatas_ultima_semana))
+    col3.metric("Candidatas en la ejecución", len(candidatas_ultima_ejecucion))
 
     columnas_journal = [
         "ticker", "nombre", "sector", "region", "per", "ev_ebit", "roic",
@@ -188,11 +189,11 @@ def _vista_historico() -> None:
     ]
 
     st.markdown("#### Candidatas de la última ejecución")
-    if candidatas_ultima_semana.empty:
+    if candidatas_ultima_ejecucion.empty:
         st.caption("Ninguna candidata en la última ejecución.")
     else:
         st.dataframe(
-            candidatas_ultima_semana[columnas_journal].sort_values("puntuacion"),
+            candidatas_ultima_ejecucion[columnas_journal].sort_values("puntuacion"),
             hide_index=True, width="stretch",
         )
 
@@ -227,8 +228,10 @@ def _vista_historico() -> None:
         )
         return
 
+    claves_senal = ["ticker", "fecha_entrada"]
     ultimo_snapshot = (
-        seguimiento.sort_values("fecha_calculo").groupby("ticker", as_index=False).tail(1)
+        seguimiento.sort_values("fecha_calculo")
+        .groupby(claves_senal, as_index=False, dropna=False).tail(1)
     )
     st.dataframe(
         ultimo_snapshot[[
@@ -247,13 +250,18 @@ def _vista_historico() -> None:
         file_name=RUTA_SEGUIMIENTO_DEFECTO, mime="text/csv",
     )
 
-    tickers_con_historia = seguimiento.groupby("ticker").size()
-    tickers_con_historia = tickers_con_historia[tickers_con_historia > 1]
-    if not tickers_con_historia.empty:
-        ticker_evolucion = st.selectbox(
-            "Ver evolución semanal de un ticker", sorted(tickers_con_historia.index),
+    seguimiento = seguimiento.copy()
+    seguimiento["senal"] = (
+        seguimiento["ticker"].astype(str) + " · entrada "
+        + seguimiento["fecha_entrada"].dt.strftime("%Y-%m-%d")
+    )
+    senales_con_historia = seguimiento.groupby("senal").size()
+    senales_con_historia = senales_con_historia[senales_con_historia > 1]
+    if not senales_con_historia.empty:
+        senal_evolucion = st.selectbox(
+            "Ver evolución semanal de una señal", sorted(senales_con_historia.index),
         )
-        serie = seguimiento[seguimiento["ticker"] == ticker_evolucion]
+        serie = seguimiento[seguimiento["senal"] == senal_evolucion]
         grafico = (
             alt.Chart(serie)
             .mark_line(point=True, color=AZUL)
