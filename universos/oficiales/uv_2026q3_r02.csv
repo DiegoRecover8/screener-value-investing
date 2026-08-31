@@ -1,0 +1,671 @@
+ticker,origen_inclusion,region_descubrimiento,sector_descubrimiento,nota
+NVDA,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=12
+AAPL,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=12
+MSFT,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=12
+TSM,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=12
+AVGO,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=12
+SKHY,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=12
+MU,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=7; cuota_seleccion=12
+AMD,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=8; cuota_seleccion=12
+ASML,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=9; cuota_seleccion=12
+INTC,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=10; cuota_seleccion=12
+PLTR,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=11; cuota_seleccion=12
+ORCL,balanced_rank_v1:cuota_base,us,Technology,disc_20260831T103225269745Z; rank_bucket=12; cuota_seleccion=12
+SPCX,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=12
+CAT,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=12
+CYATY,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=12
+GE,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=12
+RTX,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=12
+SIEGY,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=12
+GEV,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=7; cuota_seleccion=12
+SBGSY,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=8; cuota_seleccion=12
+EADSY,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=9; cuota_seleccion=12
+UNP,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=10; cuota_seleccion=12
+ABBNY,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=11; cuota_seleccion=12
+RYCEY,balanced_rank_v1:cuota_base,us,Industrials,disc_20260831T103225269745Z; rank_bucket=12; cuota_seleccion=12
+LLY,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=12
+JNJ,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=12
+ABBV,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=12
+MRK,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=12
+UNH,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=12
+RHHBY,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=12
+NVS,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=7; cuota_seleccion=12
+AZN,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=8; cuota_seleccion=12
+AMGN,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=9; cuota_seleccion=12
+TMO,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=10; cuota_seleccion=12
+NVO,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=11; cuota_seleccion=12
+ABT,balanced_rank_v1:cuota_base,us,Healthcare,disc_20260831T103225269745Z; rank_bucket=12; cuota_seleccion=12
+AMZN,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=12
+TSLA,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=12
+HD,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=12
+BABAF,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=12
+BABA,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=12
+LVMUY,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=12
+TOYOF,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=7; cuota_seleccion=12
+TM,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=8; cuota_seleccion=12
+IDEXY,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=9; cuota_seleccion=12
+MCD,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=10; cuota_seleccion=12
+BKNG,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=11; cuota_seleccion=12
+TJX,balanced_rank_v1:cuota_base,us,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=12; cuota_seleccion=12
+WMT,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=12
+COST,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=12
+KO,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=12
+PG,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=12
+PM,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=12
+NSRGY,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=12
+LRLCY,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=7; cuota_seleccion=12
+PEP,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=8; cuota_seleccion=12
+BUD,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=9; cuota_seleccion=12
+UL,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=10; cuota_seleccion=12
+BTI,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=11; cuota_seleccion=12
+MO,balanced_rank_v1:cuota_base,us,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=12; cuota_seleccion=12
+GOOGL,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=12
+GOOG,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=12
+META,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=12
+TCEHY,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=12
+NFLX,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=12
+VZ,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=12
+TMUS,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=7; cuota_seleccion=12
+DIS,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=8; cuota_seleccion=12
+SFTBY,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=9; cuota_seleccion=12
+T,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=10; cuota_seleccion=12
+DTEGY,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=11; cuota_seleccion=12
+RCRUY,balanced_rank_v1:cuota_base,us,Communication Services,disc_20260831T103225269745Z; rank_bucket=12; cuota_seleccion=12
+XOM,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=12
+CVX,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=12
+SHEL,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=12
+TTE,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=12
+COP,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=12
+PBR,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=12
+PBR-A,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=7; cuota_seleccion=12
+ENB,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=8; cuota_seleccion=12
+BP,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=9; cuota_seleccion=12
+MPC,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=10; cuota_seleccion=12
+VLO,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=11; cuota_seleccion=12
+CNQ,balanced_rank_v1:cuota_base,us,Energy,disc_20260831T103225269745Z; rank_bucket=12; cuota_seleccion=12
+BHPLF,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=12
+BHP,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=12
+LIN,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=12
+SCCO,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=12
+RIO,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=12
+NEM,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=12
+AIQUY,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=7; cuota_seleccion=12
+FCX,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=8; cuota_seleccion=12
+AEM,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=9; cuota_seleccion=12
+GLNCY,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=10; cuota_seleccion=12
+SHW,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=11; cuota_seleccion=12
+ECL,balanced_rank_v1:cuota_base,us,Basic Materials,disc_20260831T103225269745Z; rank_bucket=12; cuota_seleccion=12
+NEE,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=12
+ENLAY,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=12
+SO,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=12
+CEG,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=12
+DUK,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=12
+NGG,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=12
+ENGIY,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=7; cuota_seleccion=12
+AEP,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=8; cuota_seleccion=12
+D,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=9; cuota_seleccion=12
+SRE,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=10; cuota_seleccion=12
+EONGY,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=11; cuota_seleccion=12
+ETR,balanced_rank_v1:cuota_base,us,Utilities,disc_20260831T103225269745Z; rank_bucket=12; cuota_seleccion=12
+NVDA.NE,balanced_rank_v1:cuota_base,ca,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+NVDA.TO,balanced_rank_v1:cuota_base,ca,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+AAPL.TO,balanced_rank_v1:cuota_base,ca,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+MSFT.NE,balanced_rank_v1:cuota_base,ca,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+MSFT.TO,balanced_rank_v1:cuota_base,ca,Technology,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+AVGO.NE,balanced_rank_v1:cuota_base,ca,Technology,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+CP.TO,balanced_rank_v1:cuota_base,ca,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+CNR.TO,balanced_rank_v1:cuota_base,ca,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+TRI.TO,balanced_rank_v1:cuota_base,ca,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+WCN.TO,balanced_rank_v1:cuota_base,ca,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+BBD-B.TO,balanced_rank_v1:cuota_base,ca,Industrials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+WSP.TO,balanced_rank_v1:cuota_base,ca,Industrials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+UNH.NE,balanced_rank_v1:cuota_base,ca,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+PFE.NE,balanced_rank_v1:cuota_base,ca,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+APTX.TO,balanced_rank_v1:cuota_base,ca,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+CURA.TO,balanced_rank_v1:cuota_base,ca,Healthcare,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+BHC.TO,balanced_rank_v1:cuota_base,ca,Healthcare,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+EXE.TO,balanced_rank_v1:cuota_base,ca,Healthcare,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+AMZN.NE,balanced_rank_v1:cuota_base,ca,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+AMZN.TO,balanced_rank_v1:cuota_base,ca,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+TSLA.TO,balanced_rank_v1:cuota_base,ca,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+TSLA.NE,balanced_rank_v1:cuota_base,ca,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+ATD.TO,balanced_rank_v1:cuota_base,ca,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+QSR.TO,balanced_rank_v1:cuota_base,ca,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+L.TO,balanced_rank_v1:cuota_base,ca,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+WN.TO,balanced_rank_v1:cuota_base,ca,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+MRU.TO,balanced_rank_v1:cuota_base,ca,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+SAP.TO,balanced_rank_v1:cuota_base,ca,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+EMP-A.TO,balanced_rank_v1:cuota_base,ca,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+MFI.TO,balanced_rank_v1:cuota_base,ca,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+GOOG.TO,balanced_rank_v1:cuota_base,ca,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+GOOG.NE,balanced_rank_v1:cuota_base,ca,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+NFLX.NE,balanced_rank_v1:cuota_base,ca,Communication Services,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+META.NE,balanced_rank_v1:cuota_base,ca,Communication Services,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+META.TO,balanced_rank_v1:cuota_base,ca,Communication Services,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+BCE.TO,balanced_rank_v1:cuota_base,ca,Communication Services,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+ENB.TO,balanced_rank_v1:cuota_base,ca,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+CNQ.TO,balanced_rank_v1:cuota_base,ca,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+SU.TO,balanced_rank_v1:cuota_base,ca,Energy,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+TRP.TO,balanced_rank_v1:cuota_base,ca,Energy,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+IMO.TO,balanced_rank_v1:cuota_base,ca,Energy,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+CVE.TO,balanced_rank_v1:cuota_base,ca,Energy,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+AEM.TO,balanced_rank_v1:cuota_base,ca,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+ABX.TO,balanced_rank_v1:cuota_base,ca,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+WPM.TO,balanced_rank_v1:cuota_base,ca,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+FNV.TO,balanced_rank_v1:cuota_base,ca,Basic Materials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+K.TO,balanced_rank_v1:cuota_base,ca,Basic Materials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+NTR.TO,balanced_rank_v1:cuota_base,ca,Basic Materials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+FTS.TO,balanced_rank_v1:cuota_base,ca,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+H.TO,balanced_rank_v1:cuota_base,ca,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+BIP-UN.TO,balanced_rank_v1:cuota_base,ca,Utilities,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+EMA.TO,balanced_rank_v1:cuota_base,ca,Utilities,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+CU.TO,balanced_rank_v1:cuota_base,ca,Utilities,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+BEP-UN.TO,balanced_rank_v1:cuota_base,ca,Utilities,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+0R1I.IL,balanced_rank_v1:cuota_base,gb,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+0R2V.L,balanced_rank_v1:cuota_base,gb,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+0QYP.L,balanced_rank_v1:cuota_base,gb,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+0R2T.IL,balanced_rank_v1:cuota_base,gb,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+SGEL.XC,balanced_rank_v1:cuota_base,gb,Technology,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+SGE.L,balanced_rank_v1:cuota_base,gb,Technology,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+RRL.XC,balanced_rank_v1:cuota_base,gb,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+RR.L,balanced_rank_v1:cuota_base,gb,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+BA.L,balanced_rank_v1:cuota_base,gb,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+BAL.XC,balanced_rank_v1:cuota_base,gb,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+RELL.XC,balanced_rank_v1:cuota_base,gb,Industrials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+REL.L,balanced_rank_v1:cuota_base,gb,Industrials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+AZN.L,balanced_rank_v1:cuota_base,gb,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+GSKL.XC,balanced_rank_v1:cuota_base,gb,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+GSK.L,balanced_rank_v1:cuota_base,gb,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+HLNL.XC,balanced_rank_v1:cuota_base,gb,Healthcare,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+HLN.L,balanced_rank_v1:cuota_base,gb,Healthcare,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+0QIU.IL,balanced_rank_v1:cuota_base,gb,Healthcare,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+TYT.L,balanced_rank_v1:cuota_base,gb,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+NXT.L,balanced_rank_v1:cuota_base,gb,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+0R0X.L,balanced_rank_v1:cuota_base,gb,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+MKS.L,balanced_rank_v1:cuota_base,gb,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+MKSL.XC,balanced_rank_v1:cuota_base,gb,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+KGFL.XC,balanced_rank_v1:cuota_base,gb,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+ULVR.L,balanced_rank_v1:cuota_base,gb,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+BATS.L,balanced_rank_v1:cuota_base,gb,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+DGE.L,balanced_rank_v1:cuota_base,gb,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+DGEL.XC,balanced_rank_v1:cuota_base,gb,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+CCEP.L,balanced_rank_v1:cuota_base,gb,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+RKT.L,balanced_rank_v1:cuota_base,gb,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+0RIH.L,balanced_rank_v1:cuota_base,gb,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+VODL.XC,balanced_rank_v1:cuota_base,gb,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+VOD.L,balanced_rank_v1:cuota_base,gb,Communication Services,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+BT-A.L,balanced_rank_v1:cuota_base,gb,Communication Services,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+AAF.L,balanced_rank_v1:cuota_base,gb,Communication Services,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+INF.L,balanced_rank_v1:cuota_base,gb,Communication Services,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+SHEL.L,balanced_rank_v1:cuota_base,gb,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+BP.L,balanced_rank_v1:cuota_base,gb,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+BPL.XC,balanced_rank_v1:cuota_base,gb,Energy,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+0M2Z.IL,balanced_rank_v1:cuota_base,gb,Energy,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+DCC.L,balanced_rank_v1:cuota_base,gb,Energy,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+ITHL.XC,balanced_rank_v1:cuota_base,gb,Energy,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+BHPL.XC,balanced_rank_v1:cuota_base,gb,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+BHP.L,balanced_rank_v1:cuota_base,gb,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+RIO.L,balanced_rank_v1:cuota_base,gb,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+RIOL.XC,balanced_rank_v1:cuota_base,gb,Basic Materials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+GLEN.L,balanced_rank_v1:cuota_base,gb,Basic Materials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+AAL.L,balanced_rank_v1:cuota_base,gb,Basic Materials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+NG.L,balanced_rank_v1:cuota_base,gb,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+NGL.XC,balanced_rank_v1:cuota_base,gb,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+SSE.L,balanced_rank_v1:cuota_base,gb,Utilities,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+UU.L,balanced_rank_v1:cuota_base,gb,Utilities,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+SVT.L,balanced_rank_v1:cuota_base,gb,Utilities,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+SVTL.XC,balanced_rank_v1:cuota_base,gb,Utilities,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+LOGN.SW,balanced_rank_v1:cuota_base,ch,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+TEMN.SW,balanced_rank_v1:cuota_base,ch,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+SWON.SW,balanced_rank_v1:cuota_base,ch,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+AMS.SW,balanced_rank_v1:cuota_base,ch,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+ABBN.SW,balanced_rank_v1:cuota_base,ch,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+SCHP.SW,balanced_rank_v1:cuota_base,ch,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+KNIN.SW,balanced_rank_v1:cuota_base,ch,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+SGSN.SW,balanced_rank_v1:cuota_base,ch,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+ROP.SW,balanced_rank_v1:cuota_base,ch,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+NOVNEE.SW,balanced_rank_v1:cuota_base,ch,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+NOVN.SW,balanced_rank_v1:cuota_base,ch,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+LONN.SW,balanced_rank_v1:cuota_base,ch,Healthcare,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+CFR.SW,balanced_rank_v1:cuota_base,ch,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+AVOL.SW,balanced_rank_v1:cuota_base,ch,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+SIGN.SW,balanced_rank_v1:cuota_base,ch,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+NESN.SW,balanced_rank_v1:cuota_base,ch,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+SUNN.SW,balanced_rank_v1:cuota_base,ch,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+HOLN.SW,balanced_rank_v1:cuota_base,ch,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+SIKA.SW,balanced_rank_v1:cuota_base,ch,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+DSFIR.SW,balanced_rank_v1:cuota_base,ch,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+AMRZ.SW,balanced_rank_v1:cuota_base,ch,Basic Materials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+NVD.DE,balanced_rank_v1:cuota_base,de,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+SAP.DE,balanced_rank_v1:cuota_base,de,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+3CP.F,balanced_rank_v1:cuota_base,de,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+IFX.DE,balanced_rank_v1:cuota_base,de,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+NOA3.DE,balanced_rank_v1:cuota_base,de,Technology,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+MS51.DE,balanced_rank_v1:cuota_base,de,Technology,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+SIE.DE,balanced_rank_v1:cuota_base,de,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+AIR.DE,balanced_rank_v1:cuota_base,de,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+RRU.DE,balanced_rank_v1:cuota_base,de,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+ENR.DE,balanced_rank_v1:cuota_base,de,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+DHL.DE,balanced_rank_v1:cuota_base,de,Industrials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+RHM.DE,balanced_rank_v1:cuota_base,de,Industrials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+NOV.DE,balanced_rank_v1:cuota_base,de,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+MRK.DE,balanced_rank_v1:cuota_base,de,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+BAYN.DE,balanced_rank_v1:cuota_base,de,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+SHL.DE,balanced_rank_v1:cuota_base,de,Healthcare,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+FME.DE,balanced_rank_v1:cuota_base,de,Healthcare,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+QIA.DE,balanced_rank_v1:cuota_base,de,Healthcare,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+MBG.DE,balanced_rank_v1:cuota_base,de,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+P911.DE,balanced_rank_v1:cuota_base,de,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+VOW3.DE,balanced_rank_v1:cuota_base,de,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+BMW.DE,balanced_rank_v1:cuota_base,de,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+ADS.DE,balanced_rank_v1:cuota_base,de,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+8TI.DE,balanced_rank_v1:cuota_base,de,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+HEN3.DE,balanced_rank_v1:cuota_base,de,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+BEI.DE,balanced_rank_v1:cuota_base,de,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+SZU.DE,balanced_rank_v1:cuota_base,de,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+HFG.DE,balanced_rank_v1:cuota_base,de,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+DTE.DE,balanced_rank_v1:cuota_base,de,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+EVD.DE,balanced_rank_v1:cuota_base,de,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+G24.DE,balanced_rank_v1:cuota_base,de,Communication Services,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+UTDI.DE,balanced_rank_v1:cuota_base,de,Communication Services,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+FNTN.DE,balanced_rank_v1:cuota_base,de,Communication Services,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+SAX.DE,balanced_rank_v1:cuota_base,de,Communication Services,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+BPE5.DE,balanced_rank_v1:cuota_base,de,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+BAS.DE,balanced_rank_v1:cuota_base,de,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+HEI.DE,balanced_rank_v1:cuota_base,de,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+SY1.DE,balanced_rank_v1:cuota_base,de,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+BNR.DE,balanced_rank_v1:cuota_base,de,Basic Materials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+EVK.DE,balanced_rank_v1:cuota_base,de,Basic Materials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+ALI1.DE,balanced_rank_v1:cuota_base,de,Basic Materials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+NNGF.DE,balanced_rank_v1:cuota_base,de,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+EOAN.DE,balanced_rank_v1:cuota_base,de,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+RWE.DE,balanced_rank_v1:cuota_base,de,Utilities,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+STMPA.PA,balanced_rank_v1:cuota_base,fr,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+DSY.PA,balanced_rank_v1:cuota_base,fr,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+CAP.PA,balanced_rank_v1:cuota_base,fr,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+RXL.PA,balanced_rank_v1:cuota_base,fr,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+SOI.PA,balanced_rank_v1:cuota_base,fr,Technology,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+OVH.PA,balanced_rank_v1:cuota_base,fr,Technology,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+SU.PA,balanced_rank_v1:cuota_base,fr,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+AIR.PA,balanced_rank_v1:cuota_base,fr,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+SAF.PA,balanced_rank_v1:cuota_base,fr,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+DG.PA,balanced_rank_v1:cuota_base,fr,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+HO.PA,balanced_rank_v1:cuota_base,fr,Industrials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+SGO.PA,balanced_rank_v1:cuota_base,fr,Industrials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+SAN.PA,balanced_rank_v1:cuota_base,fr,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+EL.PA,balanced_rank_v1:cuota_base,fr,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+IPN.PA,balanced_rank_v1:cuota_base,fr,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+ERF.PA,balanced_rank_v1:cuota_base,fr,Healthcare,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+BIM.PA,balanced_rank_v1:cuota_base,fr,Healthcare,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+ABVX.PA,balanced_rank_v1:cuota_base,fr,Healthcare,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+MC.PA,balanced_rank_v1:cuota_base,fr,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+KER.PA,balanced_rank_v1:cuota_base,fr,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+ML.PA,balanced_rank_v1:cuota_base,fr,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+STLAP.PA,balanced_rank_v1:cuota_base,fr,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+AC.PA,balanced_rank_v1:cuota_base,fr,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+RNO.PA,balanced_rank_v1:cuota_base,fr,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+OR.PA,balanced_rank_v1:cuota_base,fr,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+BN.PA,balanced_rank_v1:cuota_base,fr,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+RI.PA,balanced_rank_v1:cuota_base,fr,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+CA.PA,balanced_rank_v1:cuota_base,fr,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+ORA.PA,balanced_rank_v1:cuota_base,fr,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+BOL.PA,balanced_rank_v1:cuota_base,fr,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+DEC.PA,balanced_rank_v1:cuota_base,fr,Communication Services,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+SESG.PA,balanced_rank_v1:cuota_base,fr,Communication Services,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+MMT.PA,balanced_rank_v1:cuota_base,fr,Communication Services,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+TFI.PA,balanced_rank_v1:cuota_base,fr,Communication Services,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+TTE.PA,balanced_rank_v1:cuota_base,fr,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+TE.PA,balanced_rank_v1:cuota_base,fr,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+RUI.PA,balanced_rank_v1:cuota_base,fr,Energy,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+MAU.PA,balanced_rank_v1:cuota_base,fr,Energy,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+AI.PA,balanced_rank_v1:cuota_base,fr,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+VK.PA,balanced_rank_v1:cuota_base,fr,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+AKE.PA,balanced_rank_v1:cuota_base,fr,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+ENGI.PA,balanced_rank_v1:cuota_base,fr,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+VLTSA.PA,balanced_rank_v1:cuota_base,fr,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+ASML.AS,balanced_rank_v1:cuota_base,nl,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+ASM.AS,balanced_rank_v1:cuota_base,nl,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+ADYEN.AS,balanced_rank_v1:cuota_base,nl,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+BESI.AS,balanced_rank_v1:cuota_base,nl,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+REN.AS,balanced_rank_v1:cuota_base,nl,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+EXO.AS,balanced_rank_v1:cuota_base,nl,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+CSG.AS,balanced_rank_v1:cuota_base,nl,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+WKL.AS,balanced_rank_v1:cuota_base,nl,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+PHIA.AS,balanced_rank_v1:cuota_base,nl,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+PRX.AS,balanced_rank_v1:cuota_base,nl,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+BFIT.AS,balanced_rank_v1:cuota_base,nl,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+UNA.AS,balanced_rank_v1:cuota_base,nl,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+HEIA.AS,balanced_rank_v1:cuota_base,nl,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+AD.AS,balanced_rank_v1:cuota_base,nl,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+HEIO.AS,balanced_rank_v1:cuota_base,nl,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+UMG.AS,balanced_rank_v1:cuota_base,nl,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+KPN.AS,balanced_rank_v1:cuota_base,nl,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+SHELL.AS,balanced_rank_v1:cuota_base,nl,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+SBMO.AS,balanced_rank_v1:cuota_base,nl,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+VPK.AS,balanced_rank_v1:cuota_base,nl,Energy,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+FUR.AS,balanced_rank_v1:cuota_base,nl,Energy,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+MT.AS,balanced_rank_v1:cuota_base,nl,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+DSFIR.AS,balanced_rank_v1:cuota_base,nl,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+AKZA.AS,balanced_rank_v1:cuota_base,nl,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+IMCD.AS,balanced_rank_v1:cuota_base,nl,Basic Materials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+UMI.BR,balanced_rank_v1:cuota_base,be,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+UCB.BR,balanced_rank_v1:cuota_base,be,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+ABI.BR,balanced_rank_v1:cuota_base,be,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+ONTEX.BR,balanced_rank_v1:cuota_base,be,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+PROX.BR,balanced_rank_v1:cuota_base,be,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+CMBT.BR,balanced_rank_v1:cuota_base,be,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+SYENS.BR,balanced_rank_v1:cuota_base,be,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+AZE.BR,balanced_rank_v1:cuota_base,be,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+ATS.VI,balanced_rank_v1:cuota_base,at,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+OMV.VI,balanced_rank_v1:cuota_base,at,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+VOE.VI,balanced_rank_v1:cuota_base,at,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+WIE.VI,balanced_rank_v1:cuota_base,at,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+VER.VI,balanced_rank_v1:cuota_base,at,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+RYA.IR,balanced_rank_v1:cuota_base,ie,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+IR5B.IR,balanced_rank_v1:cuota_base,ie,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+UPR.IR,balanced_rank_v1:cuota_base,ie,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+C5H.IR,balanced_rank_v1:cuota_base,ie,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+GVR.IR,balanced_rank_v1:cuota_base,ie,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+KRZ.IR,balanced_rank_v1:cuota_base,ie,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+GL9.IR,balanced_rank_v1:cuota_base,ie,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+AMS.MC,balanced_rank_v1:cuota_base,es,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+IDR.MC,balanced_rank_v1:cuota_base,es,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+AMP.MC,balanced_rank_v1:cuota_base,es,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+DOM.MC,balanced_rank_v1:cuota_base,es,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+AENA.MC,balanced_rank_v1:cuota_base,es,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+FER.MC,balanced_rank_v1:cuota_base,es,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+ACS.MC,balanced_rank_v1:cuota_base,es,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+IAG.MC,balanced_rank_v1:cuota_base,es,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+GRF.MC,balanced_rank_v1:cuota_base,es,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+ROVI.MC,balanced_rank_v1:cuota_base,es,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+ALM.MC,balanced_rank_v1:cuota_base,es,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+FAE.MC,balanced_rank_v1:cuota_base,es,Healthcare,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+FDR.MC,balanced_rank_v1:cuota_base,es,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+CIRSA.MC,balanced_rank_v1:cuota_base,es,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+MEL.MC,balanced_rank_v1:cuota_base,es,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+HBX.MC,balanced_rank_v1:cuota_base,es,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+ITX.MC,balanced_rank_v1:retencion_incumbente,es,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=7; cuota_seleccion=4
+PUIG.MC,balanced_rank_v1:cuota_base,es,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+TEF.MC,balanced_rank_v1:cuota_base,es,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+DIGIS.MC,balanced_rank_v1:cuota_base,es,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+A3M.MC,balanced_rank_v1:cuota_base,es,Communication Services,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+REP.MC,balanced_rank_v1:cuota_base,es,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+ACX.MC,balanced_rank_v1:cuota_base,es,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+ENC.MC,balanced_rank_v1:cuota_base,es,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+TUB.MC,balanced_rank_v1:cuota_base,es,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+MTS.MC,balanced_rank_v1:cuota_base,es,Basic Materials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+IBE.MC,balanced_rank_v1:cuota_base,es,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+ELE.MC,balanced_rank_v1:cuota_base,es,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+NTGY.MC,balanced_rank_v1:cuota_base,es,Utilities,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+RED.MC,balanced_rank_v1:cuota_base,es,Utilities,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+CTT.LS,balanced_rank_v1:cuota_base,pt,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+EGL.LS,balanced_rank_v1:cuota_base,pt,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+JMT.LS,balanced_rank_v1:cuota_base,pt,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+SON.LS,balanced_rank_v1:cuota_base,pt,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+NOS.LS,balanced_rank_v1:cuota_base,pt,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+GALP.LS,balanced_rank_v1:cuota_base,pt,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+NVG.LS,balanced_rank_v1:cuota_base,pt,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+ALTR.LS,balanced_rank_v1:cuota_base,pt,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+EDP.LS,balanced_rank_v1:cuota_base,pt,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+EDPR.LS,balanced_rank_v1:cuota_base,pt,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+1NOKIA.MI,balanced_rank_v1:cuota_base,it,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+STMMI.MI,balanced_rank_v1:cuota_base,it,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+TPRO.MI,balanced_rank_v1:cuota_base,it,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+NEXI.MI,balanced_rank_v1:cuota_base,it,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+PST.MI,balanced_rank_v1:cuota_base,it,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+PRY.MI,balanced_rank_v1:cuota_base,it,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+LDO.MI,balanced_rank_v1:cuota_base,it,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+1CNHI.MI,balanced_rank_v1:cuota_base,it,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+REC.MI,balanced_rank_v1:cuota_base,it,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+DIA.MI,balanced_rank_v1:cuota_base,it,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+AMP.MI,balanced_rank_v1:cuota_base,it,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+RACE.MI,balanced_rank_v1:cuota_base,it,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+STLAM.MI,balanced_rank_v1:cuota_base,it,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+MONC.MI,balanced_rank_v1:cuota_base,it,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+PIRC.MI,balanced_rank_v1:cuota_base,it,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+CPR.MI,balanced_rank_v1:cuota_base,it,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+MARR.MI,balanced_rank_v1:cuota_base,it,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+TIT.MI,balanced_rank_v1:cuota_base,it,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+MFEB.MI,balanced_rank_v1:cuota_base,it,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+MFEA.MI,balanced_rank_v1:cuota_base,it,Communication Services,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+JUVE.MI,balanced_rank_v1:cuota_base,it,Communication Services,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+ENI.MI,balanced_rank_v1:cuota_base,it,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+TEN.MI,balanced_rank_v1:cuota_base,it,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+GSP.MI,balanced_rank_v1:cuota_base,it,Energy,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+SPM.MI,balanced_rank_v1:cuota_base,it,Energy,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+BZU.MI,balanced_rank_v1:cuota_base,it,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+CEM.MI,balanced_rank_v1:cuota_base,it,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+ENEL.MI,balanced_rank_v1:cuota_base,it,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+TRN.MI,balanced_rank_v1:cuota_base,it,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+SRG.MI,balanced_rank_v1:cuota_base,it,Utilities,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+IG.MI,balanced_rank_v1:cuota_base,it,Utilities,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+NETC.CO,balanced_rank_v1:cuota_base,dk,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+DSV.CO,balanced_rank_v1:cuota_base,dk,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+VWS.CO,balanced_rank_v1:cuota_base,dk,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+NOVO-B.CO,balanced_rank_v1:cuota_base,dk,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+GMAB.CO,balanced_rank_v1:cuota_base,dk,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+PNDORA.CO,balanced_rank_v1:cuota_base,dk,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+MATAS.CO,balanced_rank_v1:cuota_base,dk,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+RBREW.CO,balanced_rank_v1:cuota_base,dk,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+BIOMAR.CO,balanced_rank_v1:cuota_base,dk,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+TRMD-A.CO,balanced_rank_v1:cuota_base,dk,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+NSIS-B.CO,balanced_rank_v1:cuota_base,dk,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+ORSTED.CO,balanced_rank_v1:cuota_base,dk,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+NOKIA-SEK.ST,balanced_rank_v1:cuota_base,se,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+ERIC-B.ST,balanced_rank_v1:cuota_base,se,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+HEXA-B.ST,balanced_rank_v1:cuota_base,se,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+SILEX.ST,balanced_rank_v1:cuota_base,se,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+ABB.ST,balanced_rank_v1:cuota_base,se,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+ATCO-A.ST,balanced_rank_v1:cuota_base,se,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+ATCO-B.ST,balanced_rank_v1:cuota_base,se,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+VOLV-B.ST,balanced_rank_v1:cuota_base,se,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+AZN.ST,balanced_rank_v1:cuota_base,se,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+SOBI.ST,balanced_rank_v1:cuota_base,se,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+GETI-B.ST,balanced_rank_v1:cuota_base,se,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+SECT-B.ST,balanced_rank_v1:cuota_base,se,Healthcare,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+HM-B.ST,balanced_rank_v1:cuota_base,se,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+EVO.ST,balanced_rank_v1:cuota_base,se,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+STE-R.ST,balanced_rank_v1:cuota_base,se,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+VOLCAR-B.ST,balanced_rank_v1:cuota_base,se,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+ESSITY-B.ST,balanced_rank_v1:cuota_base,se,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+AXFO.ST,balanced_rank_v1:cuota_base,se,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+AAK.ST,balanced_rank_v1:cuota_base,se,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+CLA-B.ST,balanced_rank_v1:cuota_base,se,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+TELIA.ST,balanced_rank_v1:cuota_base,se,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+TEL2-B.ST,balanced_rank_v1:cuota_base,se,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+SINCH.ST,balanced_rank_v1:cuota_base,se,Communication Services,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+HACK.ST,balanced_rank_v1:cuota_base,se,Communication Services,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+IPCO.ST,balanced_rank_v1:cuota_base,se,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+MER.ST,balanced_rank_v1:cuota_base,se,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+LUMI.ST,balanced_rank_v1:cuota_base,se,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+LUG.ST,balanced_rank_v1:cuota_base,se,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=4
+BOL.ST,balanced_rank_v1:cuota_base,se,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=4
+SSAB-A.ST,balanced_rank_v1:cuota_base,se,Basic Materials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=4
+ORRON.ST,balanced_rank_v1:cuota_base,se,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=4
+NOD.OL,balanced_rank_v1:cuota_base,no,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+KIT.OL,balanced_rank_v1:cuota_base,no,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+KOG.OL,balanced_rank_v1:cuota_base,no,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+WAWI.OL,balanced_rank_v1:cuota_base,no,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+CRNA.OL,balanced_rank_v1:cuota_base,no,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+TRMED.OL,balanced_rank_v1:cuota_base,no,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+ELO.OL,balanced_rank_v1:cuota_base,no,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+SATS.OL,balanced_rank_v1:cuota_base,no,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+MOWI.OL,balanced_rank_v1:cuota_base,no,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+ORK.OL,balanced_rank_v1:cuota_base,no,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+TEL.OL,balanced_rank_v1:cuota_base,no,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+VEND.OL,balanced_rank_v1:cuota_base,no,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+EQNR.OL,balanced_rank_v1:cuota_base,no,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+AKRBP.OL,balanced_rank_v1:cuota_base,no,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+NHY.OL,balanced_rank_v1:cuota_base,no,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+YAR.OL,balanced_rank_v1:cuota_base,no,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+SCATC.OL,balanced_rank_v1:cuota_base,no,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+ELMRA.OL,balanced_rank_v1:cuota_base,no,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+NOKIA.HE,balanced_rank_v1:cuota_base,fi,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+IQMX.HE,balanced_rank_v1:cuota_base,fi,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+KNEBV.HE,balanced_rank_v1:cuota_base,fi,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+WRT1V.HE,balanced_rank_v1:cuota_base,fi,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+ORNBV.HE,balanced_rank_v1:cuota_base,fi,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+TTALO.HE,balanced_rank_v1:cuota_base,fi,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+STERV.HE,balanced_rank_v1:cuota_base,fi,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+HUH1V.HE,balanced_rank_v1:cuota_base,fi,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+KESKOB.HE,balanced_rank_v1:cuota_base,fi,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+TOKMAN.HE,balanced_rank_v1:cuota_base,fi,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+TELIA1.HE,balanced_rank_v1:cuota_base,fi,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+ELISA.HE,balanced_rank_v1:cuota_base,fi,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+NESTE.HE,balanced_rank_v1:cuota_base,fi,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+UPM.HE,balanced_rank_v1:cuota_base,fi,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+SSABBH.HE,balanced_rank_v1:cuota_base,fi,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+FORTUM.HE,balanced_rank_v1:cuota_base,fi,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+285A.T,balanced_rank_v1:cuota_base,jp,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+8035.T,balanced_rank_v1:cuota_base,jp,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+6857.T,balanced_rank_v1:cuota_base,jp,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+6758.T,balanced_rank_v1:cuota_base,jp,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+6861.T,balanced_rank_v1:cuota_base,jp,Technology,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+6981.T,balanced_rank_v1:cuota_base,jp,Technology,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+6501.T,balanced_rank_v1:cuota_base,jp,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+8058.T,balanced_rank_v1:cuota_base,jp,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+8001.T,balanced_rank_v1:cuota_base,jp,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+8031.T,balanced_rank_v1:cuota_base,jp,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+7011.T,balanced_rank_v1:cuota_base,jp,Industrials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+6503.T,balanced_rank_v1:cuota_base,jp,Industrials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+4519.T,balanced_rank_v1:cuota_base,jp,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+4502.T,balanced_rank_v1:cuota_base,jp,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+7741.T,balanced_rank_v1:cuota_base,jp,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+4578.T,balanced_rank_v1:cuota_base,jp,Healthcare,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+4568.T,balanced_rank_v1:cuota_base,jp,Healthcare,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+4503.T,balanced_rank_v1:cuota_base,jp,Healthcare,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+7203.T,balanced_rank_v1:cuota_base,jp,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+9983.T,balanced_rank_v1:cuota_base,jp,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+5802.T,balanced_rank_v1:cuota_base,jp,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+7267.T,balanced_rank_v1:cuota_base,jp,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+5108.T,balanced_rank_v1:cuota_base,jp,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+4661.T,balanced_rank_v1:cuota_base,jp,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+2914.T,balanced_rank_v1:cuota_base,jp,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+2802.T,balanced_rank_v1:cuota_base,jp,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+3382.T,balanced_rank_v1:cuota_base,jp,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+4452.T,balanced_rank_v1:cuota_base,jp,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+2502.T,balanced_rank_v1:cuota_base,jp,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+2503.T,balanced_rank_v1:cuota_base,jp,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+9984.T,balanced_rank_v1:cuota_base,jp,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+6098.T,balanced_rank_v1:cuota_base,jp,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+9432.T,balanced_rank_v1:cuota_base,jp,Communication Services,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+9434.T,balanced_rank_v1:cuota_base,jp,Communication Services,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+9433.T,balanced_rank_v1:cuota_base,jp,Communication Services,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+7974.T,balanced_rank_v1:cuota_base,jp,Communication Services,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+1605.T,balanced_rank_v1:cuota_base,jp,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+5020.T,balanced_rank_v1:cuota_base,jp,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+5019.T,balanced_rank_v1:cuota_base,jp,Energy,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+5021.T,balanced_rank_v1:cuota_base,jp,Energy,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+6269.T,balanced_rank_v1:cuota_base,jp,Energy,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+1662.T,balanced_rank_v1:cuota_base,jp,Energy,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+4063.T,balanced_rank_v1:cuota_base,jp,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+5401.T,balanced_rank_v1:cuota_base,jp,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+4004.T,balanced_rank_v1:cuota_base,jp,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+5713.T,balanced_rank_v1:cuota_base,jp,Basic Materials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+4612.T,balanced_rank_v1:cuota_base,jp,Basic Materials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+4091.T,balanced_rank_v1:cuota_base,jp,Basic Materials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+9503.T,balanced_rank_v1:cuota_base,jp,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+9532.T,balanced_rank_v1:cuota_base,jp,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+9502.T,balanced_rank_v1:cuota_base,jp,Utilities,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+9531.T,balanced_rank_v1:cuota_base,jp,Utilities,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+9508.T,balanced_rank_v1:cuota_base,jp,Utilities,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+9501.T,balanced_rank_v1:cuota_base,jp,Utilities,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+XYZ.AX,balanced_rank_v1:cuota_base,au,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+XRO.AX,balanced_rank_v1:cuota_base,au,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+WTC.AX,balanced_rank_v1:cuota_base,au,Technology,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+TNE.AX,balanced_rank_v1:cuota_base,au,Technology,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+NXT.AX,balanced_rank_v1:cuota_base,au,Technology,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+CDA.AX,balanced_rank_v1:cuota_base,au,Technology,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+BXB.AX,balanced_rank_v1:cuota_base,au,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+SGH.AX,balanced_rank_v1:cuota_base,au,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+QAN.AX,balanced_rank_v1:cuota_base,au,Industrials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+AIA.AX,balanced_rank_v1:cuota_base,au,Industrials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+IFT.AX,balanced_rank_v1:cuota_base,au,Industrials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+ALQ.AX,balanced_rank_v1:cuota_base,au,Industrials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+RMD.AX,balanced_rank_v1:cuota_base,au,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+SIG.AX,balanced_rank_v1:cuota_base,au,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+FPH.AX,balanced_rank_v1:cuota_base,au,Healthcare,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+PME.AX,balanced_rank_v1:cuota_base,au,Healthcare,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+RHC.AX,balanced_rank_v1:cuota_base,au,Healthcare,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+SHL.AX,balanced_rank_v1:cuota_base,au,Healthcare,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+WES.AX,balanced_rank_v1:cuota_base,au,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+ALL.AX,balanced_rank_v1:cuota_base,au,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+AMC.AX,balanced_rank_v1:cuota_base,au,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+TLC.AX,balanced_rank_v1:cuota_base,au,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+LNW.AX,balanced_rank_v1:cuota_base,au,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+JBH.AX,balanced_rank_v1:cuota_base,au,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+COL.AX,balanced_rank_v1:cuota_base,au,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+EDV.AX,balanced_rank_v1:cuota_base,au,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+A2M.AX,balanced_rank_v1:cuota_base,au,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+TWE.AX,balanced_rank_v1:cuota_base,au,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+MTS.AX,balanced_rank_v1:cuota_base,au,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+BGA.AX,balanced_rank_v1:cuota_base,au,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+NWS.AX,balanced_rank_v1:cuota_base,au,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+REA.AX,balanced_rank_v1:cuota_base,au,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+CAR.AX,balanced_rank_v1:cuota_base,au,Communication Services,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+TPG.AX,balanced_rank_v1:cuota_base,au,Communication Services,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+SEK.AX,balanced_rank_v1:cuota_base,au,Communication Services,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+CNU.AX,balanced_rank_v1:cuota_base,au,Communication Services,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+WDS.AX,balanced_rank_v1:cuota_base,au,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+ALD.AX,balanced_rank_v1:cuota_base,au,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+NXG.AX,balanced_rank_v1:cuota_base,au,Energy,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+YAL.AX,balanced_rank_v1:cuota_base,au,Energy,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+WHC.AX,balanced_rank_v1:cuota_base,au,Energy,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+PDN.AX,balanced_rank_v1:cuota_base,au,Energy,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+BHP.AX,balanced_rank_v1:cuota_base,au,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+RIO.AX,balanced_rank_v1:cuota_base,au,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+NEM.AX,balanced_rank_v1:cuota_base,au,Basic Materials,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+FMG.AX,balanced_rank_v1:cuota_base,au,Basic Materials,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+NST.AX,balanced_rank_v1:cuota_base,au,Basic Materials,disc_20260831T103225269745Z; rank_bucket=5; cuota_seleccion=6
+EVN.AX,balanced_rank_v1:cuota_base,au,Basic Materials,disc_20260831T103225269745Z; rank_bucket=6; cuota_seleccion=6
+ORG.AX,balanced_rank_v1:cuota_base,au,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=6
+APA.AX,balanced_rank_v1:cuota_base,au,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=6
+AGL.AX,balanced_rank_v1:cuota_base,au,Utilities,disc_20260831T103225269745Z; rank_bucket=3; cuota_seleccion=6
+LGI.AX,balanced_rank_v1:cuota_base,au,Utilities,disc_20260831T103225269745Z; rank_bucket=4; cuota_seleccion=6
+VGL.NZ,balanced_rank_v1:cuota_base,nz,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+AIA.NZ,balanced_rank_v1:cuota_base,nz,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+IFT.NZ,balanced_rank_v1:cuota_base,nz,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+FPH.NZ,balanced_rank_v1:cuota_base,nz,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+EBO.NZ,balanced_rank_v1:cuota_base,nz,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+THL.NZ,balanced_rank_v1:cuota_base,nz,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+FCG.NZ,balanced_rank_v1:cuota_base,nz,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+ATM.NZ,balanced_rank_v1:cuota_base,nz,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+SPK.NZ,balanced_rank_v1:cuota_base,nz,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+CNU.NZ,balanced_rank_v1:cuota_base,nz,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+CHI.NZ,balanced_rank_v1:cuota_base,nz,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+FBU.NZ,balanced_rank_v1:cuota_base,nz,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+VSL.NZ,balanced_rank_v1:cuota_base,nz,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+MEL.NZ,balanced_rank_v1:cuota_base,nz,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+MCY.NZ,balanced_rank_v1:cuota_base,nz,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+UGBD.SI,balanced_rank_v1:cuota_base,sg,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+V03.SI,balanced_rank_v1:cuota_base,sg,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+S63.SI,balanced_rank_v1:cuota_base,sg,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+C6L.SI,balanced_rank_v1:cuota_base,sg,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+T14.SI,balanced_rank_v1:cuota_base,sg,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+H02.SI,balanced_rank_v1:cuota_base,sg,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+HBBD.SI,balanced_rank_v1:cuota_base,sg,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+NIO.SI,balanced_rank_v1:cuota_base,sg,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+F34.SI,balanced_rank_v1:cuota_base,sg,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+EB5.SI,balanced_rank_v1:cuota_base,sg,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+Z77.SI,balanced_rank_v1:cuota_base,sg,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+HTCD.SI,balanced_rank_v1:cuota_base,sg,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+5E2.SI,balanced_rank_v1:cuota_base,sg,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+U96.SI,balanced_rank_v1:cuota_base,sg,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+3308.HK,balanced_rank_v1:cuota_base,hk,Technology,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+1810.HK,balanced_rank_v1:cuota_base,hk,Technology,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+3750.HK,balanced_rank_v1:cuota_base,hk,Industrials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+0019.HK,balanced_rank_v1:cuota_base,hk,Industrials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+2359.HK,balanced_rank_v1:cuota_base,hk,Healthcare,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+6160.HK,balanced_rank_v1:cuota_base,hk,Healthcare,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+9988.HK,balanced_rank_v1:cuota_base,hk,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+1211.HK,balanced_rank_v1:cuota_base,hk,Consumer Cyclical,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+9633.HK,balanced_rank_v1:cuota_base,hk,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+2714.HK,balanced_rank_v1:cuota_base,hk,Consumer Defensive,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+0700.HK,balanced_rank_v1:cuota_base,hk,Communication Services,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+0941.HK,balanced_rank_v1:cuota_base,hk,Communication Services,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+0857.HK,balanced_rank_v1:cuota_base,hk,Energy,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+0883.HK,balanced_rank_v1:cuota_base,hk,Energy,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+2899.HK,balanced_rank_v1:cuota_base,hk,Basic Materials,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+2259.HK,balanced_rank_v1:cuota_base,hk,Basic Materials,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2
+0002.HK,balanced_rank_v1:cuota_base,hk,Utilities,disc_20260831T103225269745Z; rank_bucket=1; cuota_seleccion=2
+1038.HK,balanced_rank_v1:cuota_base,hk,Utilities,disc_20260831T103225269745Z; rank_bucket=2; cuota_seleccion=2

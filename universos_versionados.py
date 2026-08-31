@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import io
 import json
 import os
 import re
@@ -274,6 +275,108 @@ def _escribir_atomico(ruta: Path, contenido: str) -> None:
     if modo is not None:
         os.chmod(ruta_temporal, modo)
     os.replace(ruta_temporal, ruta)
+
+
+def registrar_universo_draft(
+    universe_id: str,
+    filas: Iterable[dict],
+    selection_method: str,
+    notes: str,
+    supersedes: str,
+    created_at: str,
+    ruta_manifest: str | Path = RUTA_MANIFEST_DEFECTO,
+    ruta_espejo: str | Path = RUTA_ESPEJO_DEFECTO,
+) -> dict:
+    """Registra un CSV oficial nuevo como draft sin alterar el activo.
+
+    Los IDs y archivos ya registrados se consideran inmutables. El CSV se
+    publica antes que el manifest para que una interrupción nunca haga que el
+    registro apunte a un archivo inexistente.
+    """
+    ruta_manifest = Path(ruta_manifest)
+    activo = validar_manifest(ruta_manifest, ruta_espejo)
+    manifest = cargar_manifest(ruta_manifest)
+    if not PATRON_ID_UNIVERSO.fullmatch(str(universe_id)):
+        raise ErrorUniversoVersionado(f"universe_id no válido: {universe_id!r}")
+    if universe_id in {v["universe_id"] for v in manifest["universes"]}:
+        raise ErrorUniversoVersionado(f"universo ya registrado: {universe_id}")
+    if supersedes != activo.universe_id:
+        raise ErrorUniversoVersionado(
+            f"el draft debe reemplazar al activo {activo.universe_id}, no a {supersedes}"
+        )
+    if not isinstance(selection_method, str) or not selection_method:
+        raise ErrorUniversoVersionado("selection_method no puede estar vacío")
+    if not isinstance(notes, str):
+        raise ErrorUniversoVersionado("notes debe ser texto")
+    _validar_fecha_iso(created_at, "created_at", universe_id)
+
+    filas = list(filas)
+    if not filas:
+        raise ErrorUniversoVersionado("el draft no contiene filas")
+    for posicion, fila in enumerate(filas, start=1):
+        if not isinstance(fila, dict) or set(fila) != set(COLUMNAS_UNIVERSO):
+            raise ErrorUniversoVersionado(
+                f"fila {posicion} incompatible con el esquema oficial"
+            )
+        for campo in COLUMNAS_UNIVERSO:
+            if not isinstance(fila[campo], str):
+                raise ErrorUniversoVersionado(
+                    f"{campo} debe ser texto en la fila {posicion}"
+                )
+    tickers = normalizar_tickers(fila["ticker"] for fila in filas)
+    for fila, ticker in zip(filas, tickers):
+        if fila["ticker"] != ticker:
+            raise ErrorUniversoVersionado(
+                f"ticker no canónico en el draft: {fila['ticker']!r}"
+            )
+
+    ruta_declarada = f"oficiales/{universe_id}.csv"
+    ruta_universo = _resolver_ruta_manifest(ruta_manifest, ruta_declarada)
+    if ruta_universo.exists():
+        raise ErrorUniversoVersionado(
+            f"el archivo inmutable del draft ya existe: {ruta_universo}"
+        )
+    salida = io.StringIO(newline="")
+    escritor = csv.DictWriter(
+        salida, fieldnames=COLUMNAS_UNIVERSO, lineterminator="\n",
+    )
+    escritor.writeheader()
+    escritor.writerows(filas)
+
+    version = {
+        "universe_id": universe_id,
+        "path": ruta_declarada,
+        "status": "draft",
+        "created_at": created_at,
+        "effective_from": None,
+        "supersedes": supersedes,
+        "asset_type": "equity",
+        "ticker_count": len(tickers),
+        "sha256": calcular_hash_universo(tickers),
+        "selection_method": selection_method,
+        "notes": notes,
+    }
+    manifest["universes"].append(version)
+    _escribir_atomico(ruta_universo, salida.getvalue())
+    ruta_manifest_temporal = None
+    try:
+        with NamedTemporaryFile(
+            "w", delete=False, dir=ruta_manifest.parent,
+            encoding="utf-8", newline="",
+        ) as temporal:
+            temporal.write(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+            temporal.flush()
+            os.fsync(temporal.fileno())
+            ruta_manifest_temporal = Path(temporal.name)
+        os.chmod(ruta_manifest_temporal, ruta_manifest.stat().st_mode)
+        validar_manifest(ruta_manifest_temporal, ruta_espejo)
+        os.replace(ruta_manifest_temporal, ruta_manifest)
+    except Exception:
+        if ruta_manifest_temporal is not None:
+            ruta_manifest_temporal.unlink(missing_ok=True)
+        ruta_universo.unlink(missing_ok=True)
+        raise
+    return version
 
 
 def activar_universo(

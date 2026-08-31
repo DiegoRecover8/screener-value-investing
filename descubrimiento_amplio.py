@@ -217,6 +217,18 @@ def _csv_descubrimiento(filas: list[dict]) -> str:
     return salida.getvalue()
 
 
+def calcular_hash_catalogo(filas: list[dict]) -> str:
+    """Hash canónico de todos los campos que condicionan la selección."""
+    canonico = [
+        {columna: str(fila.get(columna, "")) for columna in COLUMNAS_DESCUBRIMIENTO}
+        for fila in filas
+    ]
+    contenido = json.dumps(
+        canonico, ensure_ascii=False, sort_keys=True, separators=(",", ":"),
+    )
+    return hashlib.sha256(contenido.encode("utf-8")).hexdigest()
+
+
 def generar_snapshot_descubrimiento(
     config: ConfiguracionDescubrimiento | None = None,
     directorio: str | Path = DIRECTORIO_DESCUBRIMIENTO,
@@ -358,6 +370,7 @@ def generar_snapshot_descubrimiento(
         "source": FUENTE_DESCUBRIMIENTO,
         "csv_path": ruta_csv.as_posix(),
         "sha256": hash_universo,
+        "catalog_sha256": calcular_hash_catalogo(estado["rows"]),
         "config": _config_a_dict(config),
         "config_sha256": _hash_config(config),
         "control": control,

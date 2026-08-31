@@ -14,6 +14,19 @@
       "sha256": "3aadf46d002d1e98dc663ed7e21ae6b1e3a21281df8b4db47905082379c63120",
       "selection_method": "legacy_manual",
       "notes": "Migración inicial exacta desde universo.txt"
+    },
+    {
+      "universe_id": "uv_2026q3_r02",
+      "path": "oficiales/uv_2026q3_r02.csv",
+      "status": "draft",
+      "created_at": "2026-08-31T11:36:30.331468+00:00",
+      "effective_from": null,
+      "supersedes": "uv_2026q3_r01",
+      "asset_type": "equity",
+      "ticker_count": 670,
+      "sha256": "2ce9ec09a885d191cb154d354ad34dfefde1a866e0c4fc87aeda73c94dd649c6",
+      "selection_method": "balanced_rank_v1",
+      "notes": "Selección reproducible desde disc_20260831T103225269745Z; auditoría en selecciones/uv_2026q3_r02.json; config_sha256=babd507c902d7cef3ef53a4deabd0fa38d7d01fde452381339f13e329221e4e7"
     }
   ]
 }

@@ -5,6 +5,7 @@
   "source": "yfinance.screen",
   "csv_path": "universos/descubrimiento/disc_20260831T103225269745Z.csv",
   "sha256": "6636dede3c73d98696356ae7af8682013a05e0c4659680633c903852d77edb85",
+  "catalog_sha256": "d8e9bb86dd994db9e1d5976d6598c063cdde2f982d2653d6f16a9757106059ba",
   "config": {
     "perfil": "desarrollados_v1",
     "cuotas_region": {

@@ -12,6 +12,7 @@ from descubrimiento_amplio import (
     CUOTAS_DESARROLLADOS_V1,
     ConfiguracionDescubrimiento,
     ErrorDescubrimiento,
+    calcular_hash_catalogo,
     configuracion_desarrollados_v1,
     generar_snapshot_descubrimiento,
 )
@@ -71,6 +72,7 @@ class TestDescubrimientoAmplio(unittest.TestCase):
         self.assertEqual(snapshot.control["duplicados"], 1)
         self.assertEqual(snapshot.control["capacidad_teorica"], 6)
         self.assertEqual(metadatos["sha256"], snapshot.sha256)
+        self.assertEqual(metadatos["catalog_sha256"], calcular_hash_catalogo(filas))
         self.assertEqual(snapshot.diferencias_activo["anadidos"], ["BBB", "CCC", "DUP"])
         self.assertEqual(snapshot.diferencias_activo["eliminados"], ["OLD"])
 

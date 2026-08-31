@@ -224,7 +224,8 @@ Cada ejecución guarda:
 
 - `disc_<timestamp>.csv`: tickers únicos con país, sector, posición y cuota
   del bucket que los descubrió.
-- `disc_<timestamp>.json`: configuración, SHA-256, recuentos, cobertura,
+- `disc_<timestamp>.json`: configuración, SHA-256 de la pertenencia, hash
+  del catálogo completo (incluidos país, sector y rank), recuentos, cobertura,
   fallos y diferencias frente al universo oficial activo.
 - `checkpoint_disc_<timestamp>.json`: estado local después de cada bucket.
   Se elimina al publicar un snapshot válido y no se versiona.
@@ -241,6 +242,43 @@ python generar_descubrimiento.py \
 Un snapshot de descubrimiento nunca se activa automáticamente. Primero se
 revisa y compara; solo una selección deliberada puede convertirse después en
 un CSV `draft` bajo `universos/oficiales/`.
+
+#### Selección reproducible hacia un draft
+
+`generar_universo_draft.py` transforma un snapshot concreto en una versión
+oficial revisable, sin consultar Yahoo y sin activar el resultado. El perfil
+versionado `balanced_rank_v1` aplica una cuota por bucket país×sector: 12 en
+EE. UU.; 6 en Canadá, Reino Unido, Alemania, Francia, Japón y Australia; 4 en
+Suiza, Países Bajos, España, Italia y Suecia; y 2 en los demás mercados del
+perfil. Solo conserva una empresa del universo activo fuera de la cuota si
+fue descubierta como máximo tres posiciones después. No recupera manualmente
+empresas ausentes del snapshot.
+
+El selector exige los 198 buckets correctos y un resultado de 400 a 800
+empresas. Verifica tanto el hash de tickers como el hash del ranking completo;
+por eso modificar país, sector, posición o cuota invalida la entrada. El orden
+del CSV no cambia el resultado.
+
+```bash
+python generar_universo_draft.py \
+  --snapshot universos/descubrimiento/disc_20260831T103225269745Z.csv \
+  --id uv_2026q3_r02
+```
+
+La operación crea tres artefactos auditables:
+
+- `universos/oficiales/uv_<...>.csv`, con la regla y el rank de cada miembro.
+- `universos/selecciones/uv_<...>.json`, con los hashes de entrada, el perfil,
+  altas, bajas, permanencias y cualquier retención por margen.
+- Una entrada `status: draft` en `universos/manifest.json`.
+
+`active_universe_id` y `universo.txt` permanecen intactos. La activación sigue
+siendo una decisión manual posterior, después de revisar la auditoría y comparar:
+
+```bash
+python gestionar_universos.py comparar uv_2026q3_r01 uv_2026q3_r02
+python gestionar_universos.py activar uv_2026q3_r02
+```
 
 **`journal_candidatos.csv` se AÑADE, nunca se sobrescribe** (a diferencia
 de `candidatos.csv`, que es una foto de la última ejecución y por eso está
