@@ -12,6 +12,7 @@ from journal import (
     crear_snapshot_id,
     filtrar_journal_oficial,
     migrar_snapshot_ids_journal,
+    migrar_trazabilidad_github_control,
     registrar_control_integridad,
     snapshot_ids_oficiales_efectivos,
     validar_integridad_ejecucion,
@@ -153,7 +154,9 @@ class TestIntegridadEjecucion(unittest.TestCase):
             ruta = Path(tmp) / "ejecuciones.csv"
             registrar_control_integridad(
                 control, snapshot_id, momento, ruta, origen="schedule",
-                oficial=True,
+                oficial=True, github_run_id="123", github_run_attempt="2",
+                github_run_url="https://github.com/acme/screener/actions/runs/123",
+                github_sha="abc123",
             )
             registrar_control_integridad(
                 control, "snap_revision_2", momento + pd.Timedelta(hours=1), ruta,
@@ -166,6 +169,37 @@ class TestIntegridadEjecucion(unittest.TestCase):
         self.assertEqual(metadatos.loc[0, "empresas_evaluadas"], 10)
         self.assertEqual(list(metadatos["revision"]), [1, 2])
         self.assertEqual(list(metadatos["oficial"]), [True, False])
+        self.assertEqual(str(metadatos.loc[0, "github_run_id"]), "123.0")
+        self.assertEqual(str(metadatos.loc[0, "github_run_attempt"]), "2.0")
+        self.assertEqual(
+            metadatos.loc[0, "github_run_url"],
+            "https://github.com/acme/screener/actions/runs/123",
+        )
+        self.assertEqual(metadatos.loc[0, "github_sha"], "abc123")
+
+    def test_migra_control_antiguo_sin_alterar_la_fila_publicada(self):
+        cabecera = (
+            "snapshot_id,fecha_ejecucion,semana_iso,origen,oficial,revision,"
+            "tickers_solicitados,resultados_brutos,descargas_correctas,"
+            "errores_descarga,deduplicados,empresas_evaluadas,candidatas,"
+            "tasa_exito_descarga,umbral_exito_minimo\n"
+        )
+        fila = (
+            "snap_antiguo,2026-08-31T08:15:23+00:00,2026-W36,"
+            "workflow_dispatch,False,1,205,205,205,0,19,186,1,1.0,0.8\n"
+        )
+        with TemporaryDirectory() as tmp:
+            ruta = Path(tmp) / "ejecuciones.csv"
+            ruta.write_text(cabecera + fila, encoding="utf-8")
+
+            self.assertTrue(migrar_trazabilidad_github_control(ruta))
+            self.assertFalse(migrar_trazabilidad_github_control(ruta))
+            texto_migrado = ruta.read_text(encoding="utf-8")
+            metadatos = pd.read_csv(ruta)
+
+        self.assertIn(fila.rstrip("\n") + ",,,,\n", texto_migrado)
+        self.assertTrue(metadatos["github_run_id"].isna().all())
+        self.assertTrue(metadatos["github_run_url"].isna().all())
 
     def test_mayor_revision_oficial_sustituye_a_la_anterior_sin_borrarla(self):
         journal = pd.DataFrame([

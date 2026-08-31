@@ -24,13 +24,17 @@ RUTA_JOURNAL_DEFECTO = "journal_candidatos.csv"
 RUTA_EJECUCIONES_DEFECTO = "ejecuciones_screener.csv"
 UMBRAL_EXITO_DESCARGA = 0.80
 
-COLUMNAS_CONTROL = [
+COLUMNAS_CONTROL_BASE = [
     "snapshot_id", "fecha_ejecucion", "semana_iso", "origen", "oficial",
     "revision",
     "tickers_solicitados", "resultados_brutos", "descargas_correctas",
     "errores_descarga", "deduplicados", "empresas_evaluadas", "candidatas",
     "tasa_exito_descarga", "umbral_exito_minimo",
 ]
+COLUMNAS_TRAZABILIDAD_GITHUB = [
+    "github_run_id", "github_run_attempt", "github_run_url", "github_sha",
+]
+COLUMNAS_CONTROL = COLUMNAS_CONTROL_BASE + COLUMNAS_TRAZABILIDAD_GITHUB
 
 
 class ErrorIntegridadEjecucion(ValueError):
@@ -184,6 +188,58 @@ def migrar_snapshot_ids_journal(
     return True
 
 
+def migrar_trazabilidad_github_control(
+    ruta_ejecuciones: str | Path = RUTA_EJECUCIONES_DEFECTO,
+) -> bool:
+    """Añade trazabilidad GitHub a un control antiguo sin alterar sus valores.
+
+    Las ejecuciones previas no pueden asociarse retrospectivamente a un run
+    con garantía, por lo que reciben campos vacíos. El reemplazo es atómico y
+    conserva literalmente cada fila ya publicada.
+    """
+    ruta = Path(ruta_ejecuciones)
+    if not ruta.exists() or ruta.stat().st_size == 0:
+        return False
+    modo_original = ruta.stat().st_mode
+
+    with ruta.open("r", newline="", encoding="utf-8") as archivo:
+        texto = archivo.read()
+    lineas = texto.splitlines(keepends=True)
+    filas = list(csv.reader(io.StringIO(texto)))
+    if not filas:
+        return False
+    if filas[0] == COLUMNAS_CONTROL:
+        return False
+    if filas[0] != COLUMNAS_CONTROL_BASE:
+        raise ErrorIntegridadEjecucion(
+            f"esquema incompatible en {ruta}: se esperaban "
+            f"{COLUMNAS_CONTROL_BASE} o {COLUMNAS_CONTROL}, pero contiene {filas[0]}"
+        )
+    if len(lineas) != len(filas):
+        raise ErrorIntegridadEjecucion(
+            f"{ruta} contiene saltos de línea dentro de campos CSV; "
+            "no se puede migrar preservando literalmente sus filas"
+        )
+
+    with NamedTemporaryFile(
+        "w", delete=False, dir=ruta.parent, newline="", encoding="utf-8",
+    ) as temporal:
+        for indice, linea in enumerate(lineas):
+            cuerpo = linea.rstrip("\r\n")
+            salto = linea[len(cuerpo):]
+            sufijo = (
+                "," + ",".join(COLUMNAS_TRAZABILIDAD_GITHUB)
+                if indice == 0
+                else "," * len(COLUMNAS_TRAZABILIDAD_GITHUB)
+            )
+            temporal.write(f"{cuerpo}{sufijo}{salto}")
+        ruta_temporal = Path(temporal.name)
+
+    os.chmod(ruta_temporal, modo_original)
+    os.replace(ruta_temporal, ruta)
+    return True
+
+
 def _validar_cabecera_csv(ruta: Path, columnas_esperadas: list[str]) -> None:
     """Impide anexar filas con un esquema distinto al ya versionado."""
     if not ruta.exists() or ruta.stat().st_size == 0:
@@ -242,12 +298,17 @@ def registrar_control_integridad(
     origen: str = "local",
     oficial: bool = False,
     revision: int | None = None,
+    github_run_id: str = "",
+    github_run_attempt: str = "",
+    github_run_url: str = "",
+    github_sha: str = "",
 ) -> pd.DataFrame:
     """Añade una fila de metadatos auditables para un snapshot válido."""
     momento = _momento_utc(momento)
     iso = momento.isocalendar()
     semana_iso = f"{iso.year}-W{iso.week:02d}"
     ruta = Path(ruta_ejecuciones)
+    migrar_trazabilidad_github_control(ruta)
     _validar_cabecera_csv(ruta, COLUMNAS_CONTROL)
     existentes = leer_ejecuciones(ruta)
     if snapshot_id in set(existentes.get("snapshot_id", pd.Series(dtype=str)).astype(str)):
@@ -271,6 +332,10 @@ def registrar_control_integridad(
         "oficial": bool(oficial),
         "revision": revision,
         **control,
+        "github_run_id": github_run_id,
+        "github_run_attempt": github_run_attempt,
+        "github_run_url": github_run_url,
+        "github_sha": github_sha,
     }
     salida = pd.DataFrame([fila], columns=COLUMNAS_CONTROL)
     escribir_cabecera = not ruta.exists() or ruta.stat().st_size == 0

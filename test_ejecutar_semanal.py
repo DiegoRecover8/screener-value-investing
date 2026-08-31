@@ -78,6 +78,9 @@ class TestEjecucionSemanal(unittest.TestCase):
                 patch("ejecutar_semanal.ejecutar", return_value=_resultado(0)),
                 patch.dict(os.environ, {
                     "SCREENER_OFICIAL": "true", "SCREENER_ORIGEN": "schedule",
+                    "GITHUB_RUN_ID": "987654", "GITHUB_RUN_ATTEMPT": "2",
+                    "GITHUB_SERVER_URL": "https://github.com",
+                    "GITHUB_REPOSITORY": "acme/screener", "GITHUB_SHA": "deadbeef",
                 }),
             ):
                 main()
@@ -86,6 +89,13 @@ class TestEjecucionSemanal(unittest.TestCase):
 
         self.assertTrue(bool(ejecuciones["oficial"].iloc[0]))
         self.assertEqual(ejecuciones["origen"].iloc[0], "schedule")
+        self.assertEqual(ejecuciones["github_run_id"].iloc[0], 987654)
+        self.assertEqual(ejecuciones["github_run_attempt"].iloc[0], 2)
+        self.assertEqual(
+            ejecuciones["github_run_url"].iloc[0],
+            "https://github.com/acme/screener/actions/runs/987654",
+        )
+        self.assertEqual(ejecuciones["github_sha"].iloc[0], "deadbeef")
 
 
 if __name__ == "__main__":

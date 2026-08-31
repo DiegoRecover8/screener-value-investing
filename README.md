@@ -168,6 +168,9 @@ El workflow usa el grupo de concurrencia `screener-historico` con
 `cancel-in-progress: false`: una ejecución activa nunca se cancela a mitad de
 la descarga y otra debe esperar antes de hacer checkout y escribir. Esto
 evita que dos Actions partan del mismo CSV y compitan al hacer `git push`.
+Además, limita cada job a 20 minutos para no dejar un runner bloqueado y
+activa la caché de `pip` de `setup-python`; la instalación sigue verificando
+`requirements.txt`, pero puede reutilizar descargas en ejecuciones posteriores.
 
 **`universo.txt` es una lista fija y versionada, deliberadamente NO
 reconstruida desde Yahoo en cada ejecución.** La Fase 4 (seguimiento
@@ -194,7 +197,10 @@ de descarte, tres columnas de auditoría:
 `ejecuciones_screener.csv` contiene una sola fila por snapshot válido con
 su origen, si fue declarado oficial, su número de revisión, tickers
 solicitados, descargas correctas y fallidas, listings deduplicados, empresas
-evaluadas, candidatas y tasa de éxito. Cada snapshot válido incrementa la
+evaluadas, candidatas y tasa de éxito. En GitHub también guarda `github_run_id`,
+`github_run_attempt`, `github_run_url` y `github_sha`, para enlazar el snapshot
+con el run exacto, distinguir sus reintentos y saber qué commit se ejecutó;
+en ejecuciones locales esos campos quedan vacíos. Cada snapshot válido incrementa la
 `revision` de su semana, sea prueba u oficial. Si hay varias revisiones
 marcadas como oficiales, la de mayor número es la **oficial efectiva**; las
 anteriores no se borran, pero dejan de alimentar señales, seguimiento y la

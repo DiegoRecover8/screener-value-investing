@@ -38,6 +38,23 @@ def _variable_booleana(nombre: str, defecto: bool = False) -> bool:
     return valor.strip().lower() in {"true", "1", "sí", "si", "yes"}
 
 
+def _metadatos_github() -> dict[str, str]:
+    """Devuelve la identidad del run actual, o valores vacíos fuera de GitHub."""
+    run_id = os.environ.get("GITHUB_RUN_ID", "")
+    servidor = os.environ.get("GITHUB_SERVER_URL", "").rstrip("/")
+    repositorio = os.environ.get("GITHUB_REPOSITORY", "").strip("/")
+    run_url = (
+        f"{servidor}/{repositorio}/actions/runs/{run_id}"
+        if servidor and repositorio and run_id else ""
+    )
+    return {
+        "github_run_id": run_id,
+        "github_run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT", ""),
+        "github_run_url": run_url,
+        "github_sha": os.environ.get("GITHUB_SHA", ""),
+    }
+
+
 def main() -> None:
     if len(sys.argv) < 2:
         print(
@@ -68,7 +85,7 @@ def main() -> None:
     )
     metadatos = registrar_control_integridad(
         control, snapshot_id, momento, ruta_ejecuciones,
-        origen=origen, oficial=oficial,
+        origen=origen, oficial=oficial, **_metadatos_github(),
     )
     print(
         f"\nSnapshot válido {snapshot_id}: {len(filas_nuevas)} empresas, "
