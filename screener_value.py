@@ -12,6 +12,7 @@ revisión de los estados financieros publicados por la empresa.
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import asdict
 
 import numpy as np
@@ -209,6 +210,118 @@ COLUMNAS_METRICAS = [
     "earnings_yield", "caja_neta_pct_mcap", "roic_fiable", "region",
     "per_mediana_sector", "n_sector", "base_mediana", "error_descarga",
 ] + COLUMNAS_PROCEDENCIA
+
+CATEGORIAS_INCIDENCIAS = [
+    ("campos_ausentes", "campos esenciales ausentes"),
+    ("divisas", "divisas ausentes o incompatibles"),
+    ("cuentas_obsoletas", "estados contables obsoletos"),
+    ("fechas_ausentes", "fechas contables ausentes"),
+    ("fechas_futuras", "fechas contables futuras"),
+    ("periodos_desalineados", "resultados y caja desalineados"),
+    ("periodo_no_identificado", "periodo contable no identificado"),
+    ("valores_invalidos", "valores contables inválidos"),
+    ("errores_descarga", "errores de descarga"),
+    ("otras", "otras incidencias"),
+]
+
+
+def resumir_incidencias_calidad(datos: pd.DataFrame) -> dict:
+    """Agrupa incidencias por empresa sin inflar categorías repetidas.
+
+    Una empresa sí puede pertenecer a varias categorías (por ejemplo,
+    campos ausentes y divisa ausente). Por eso la suma de categorías puede
+    superar `empresas_con_incidencias`.
+    """
+    categorias: Counter[str] = Counter()
+    campos_ausentes: Counter[str] = Counter()
+    empresas_con_incidencias = 0
+    if datos.empty:
+        return {
+            "empresas_con_incidencias": 0,
+            "categorias": {},
+            "campos_ausentes": {},
+        }
+
+    for _, fila in datos.iterrows():
+        valor_calidad = fila.get("calidad_datos", "ok")
+        calidad = "ok" if _es_na(valor_calidad) else str(valor_calidad).strip().lower()
+        valor_error = fila.get("error_descarga", "")
+        error = "" if _es_na(valor_error) else str(valor_error).strip()
+        valor_incidencias = fila.get("incidencias_datos", "")
+        texto = (
+            "" if _es_na(valor_incidencias) else str(valor_incidencias).strip()
+        )
+        if calidad == "ok" and not error and not texto:
+            continue
+        empresas_con_incidencias += 1
+        categorias_empresa: set[str] = set()
+        if error or calidad == "error":
+            categorias_empresa.add("errores_descarga")
+
+        for incidencia in (parte.strip() for parte in texto.split(";") if parte.strip()):
+            minusculas = incidencia.lower()
+            if minusculas.startswith("campos ausentes:"):
+                categorias_empresa.add("campos_ausentes")
+                campos = incidencia.split(":", 1)[1]
+                for campo in (parte.strip() for parte in campos.split(",")):
+                    if campo:
+                        campos_ausentes[campo] += 1
+            elif "divisa" in minusculas:
+                categorias_empresa.add("divisas")
+            elif "obsoleto" in minusculas:
+                categorias_empresa.add("cuentas_obsoletas")
+            elif "fecha futura" in minusculas:
+                categorias_empresa.add("fechas_futuras")
+            elif "fecha de " in minusculas and "ausente" in minusculas:
+                categorias_empresa.add("fechas_ausentes")
+            elif "desalineados" in minusculas:
+                categorias_empresa.add("periodos_desalineados")
+            elif "periodo contable no identificado" in minusculas:
+                categorias_empresa.add("periodo_no_identificado")
+            elif (
+                "capitalización no positiva" in minusculas
+                or "deuda negativa" in minusculas
+                or "caja negativa" in minusculas
+            ):
+                categorias_empresa.add("valores_invalidos")
+            elif not error:
+                categorias_empresa.add("otras")
+
+        if not categorias_empresa:
+            categorias_empresa.add("otras")
+        categorias.update(categorias_empresa)
+
+    return {
+        "empresas_con_incidencias": empresas_con_incidencias,
+        "categorias": dict(categorias),
+        "campos_ausentes": dict(campos_ausentes),
+    }
+
+
+def imprimir_resumen_incidencias(datos: pd.DataFrame) -> None:
+    """Imprime un resumen compacto y reproducible para el log de Actions."""
+    resumen = resumir_incidencias_calidad(datos)
+    afectadas = resumen["empresas_con_incidencias"]
+    total = len(datos)
+    if afectadas == 0:
+        print("Incidencias de calidad: ninguna.")
+        return
+    print(
+        "Incidencias de calidad "
+        f"(una empresa puede aparecer en varias categorías): "
+        f"{afectadas}/{total} empresas ({afectadas / total:.1%})"
+    )
+    for clave, etiqueta in CATEGORIAS_INCIDENCIAS:
+        cantidad = resumen["categorias"].get(clave, 0)
+        if cantidad:
+            print(f"  - {etiqueta}: {cantidad} ({cantidad / total:.1%})")
+    if resumen["campos_ausentes"]:
+        print("  Campos ausentes más frecuentes:")
+        ordenados = sorted(
+            resumen["campos_ausentes"].items(), key=lambda item: (-item[1], item[0]),
+        )
+        for campo, cantidad in ordenados:
+            print(f"    - {campo}: {cantidad} ({cantidad / total:.1%})")
 
 
 def calcular_metricas(
@@ -514,6 +627,7 @@ def ejecutar(tickers: list[str], salida_csv: str = "candidatos.csv") -> pd.DataF
         print("Calidad de la fuente: " + ", ".join(
             f"{estado}={cantidad}" for estado, cantidad in conteo_calidad.items()
         ))
+        imprimir_resumen_incidencias(resultado)
     print(f"\n{DISCLAIMER}")
     return resultado
 

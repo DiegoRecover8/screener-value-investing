@@ -21,6 +21,7 @@ from screener_value import (
     capital_invertido,
     deduplicar_listings,
     incorporar_ranking_candidatos,
+    resumir_incidencias_calidad,
     margen_operativo,
     region_comparable,
     per,
@@ -175,6 +176,59 @@ class TestFiltros(unittest.TestCase):
         resultado = aplicar_filtros(metricas)
         self.assertTrue(resultado.empty)
         self.assertIn("pasa", resultado.columns)
+
+
+class TestResumenIncidencias(unittest.TestCase):
+    def test_agrupa_por_empresa_y_desglosa_campos_ausentes(self):
+        datos = pd.DataFrame([
+            {
+                "ticker": "A",
+                "calidad_datos": "revisar",
+                "error_descarga": "",
+                "incidencias_datos": (
+                    "campos ausentes: EBIT, gasto por intereses; "
+                    "fecha de balance ausente"
+                ),
+            },
+            {
+                "ticker": "B",
+                "calidad_datos": "revisar",
+                "error_descarga": "",
+                "incidencias_datos": (
+                    "campos ausentes: EBIT; resultados obsoleto (700 días); "
+                    "flujo de caja obsoleto (700 días)"
+                ),
+            },
+            {
+                "ticker": "C",
+                "calidad_datos": np.nan,
+                "error_descarga": np.nan,
+                "incidencias_datos": np.nan,
+            },
+        ])
+
+        resumen = resumir_incidencias_calidad(datos)
+
+        self.assertEqual(resumen["empresas_con_incidencias"], 2)
+        self.assertEqual(resumen["categorias"]["campos_ausentes"], 2)
+        # B tiene dos estados obsoletos, pero cuenta una sola vez en la categoría.
+        self.assertEqual(resumen["categorias"]["cuentas_obsoletas"], 1)
+        self.assertEqual(resumen["categorias"]["fechas_ausentes"], 1)
+        self.assertEqual(resumen["campos_ausentes"]["EBIT"], 2)
+        self.assertEqual(resumen["campos_ausentes"]["gasto por intereses"], 1)
+
+    def test_separa_errores_de_descarga_de_otras_incidencias(self):
+        datos = pd.DataFrame([{
+            "ticker": "ERR",
+            "calidad_datos": "error",
+            "error_descarga": "TimeoutError: sin respuesta",
+            "incidencias_datos": "TimeoutError: sin respuesta",
+        }])
+
+        resumen = resumir_incidencias_calidad(datos)
+
+        self.assertEqual(resumen["categorias"], {"errores_descarga": 1})
+        self.assertEqual(resumen["empresas_con_incidencias"], 1)
 
 
 class TestMedianaSectorial(unittest.TestCase):

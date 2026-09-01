@@ -569,6 +569,13 @@ inventada. Limitaciones reales encontradas durante esa verificación:
   no puede convertirse en candidata aunque sus ratios aislados parezcan
   superar los umbrales.
 
+- **Resumen de incidencias en Actions.** Al final de cada ejecución se
+  muestra cuántas empresas tienen campos esenciales ausentes, divisas
+  problemáticas, cuentas obsoletas, fechas ausentes/futuras, periodos
+  desalineados, valores inválidos o errores de descarga. Una empresa cuenta
+  una sola vez dentro de cada categoría, aunque acumule varias incidencias
+  del mismo tipo; también se desglosan los campos ausentes más frecuentes.
+
 - **Actualización diaria/semanal, no tiempo real.** Las métricas
   fundamentales no cambian intradía; no hay ni se necesita streaming ni
   websockets.
