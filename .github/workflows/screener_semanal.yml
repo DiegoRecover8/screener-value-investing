@@ -77,8 +77,10 @@ jobs:
           SCREENER_ORIGEN: ${{ github.event_name }}
           SCREENER_OFICIAL: ${{ github.event_name == 'schedule' || inputs.modo == 'oficial' }}
           SCREENER_UNIVERSO_PRUEBA: ${{ inputs.universo_prueba }}
-          SCREENER_VERIFICAR_CANDIDATAS: ${{ vars.SEC_USER_AGENT != '' && (github.event_name == 'schedule' || inputs.verificar_sec) }}
-          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+          # El contacto SEC puede contener datos personales. Debe guardarse
+          # como Secret para que GitHub lo enmascare en los logs del runner.
+          SCREENER_VERIFICAR_CANDIDATAS: ${{ secrets.SEC_USER_AGENT != '' && (github.event_name == 'schedule' || inputs.verificar_sec) }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
 
       - name: Calcular rendimiento de las candidatas trackeadas
         if: ${{ github.event_name == 'schedule' || inputs.modo == 'oficial' }}

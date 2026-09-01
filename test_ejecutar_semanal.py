@@ -233,7 +233,8 @@ class TestEjecucionSemanal(unittest.TestCase):
         self.assertIn('--universo-id "$SCREENER_UNIVERSO_PRUEBA"', workflow)
         self.assertIn('[[ "$SCREENER_OFICIAL" == "true" ]]', workflow)
         self.assertIn("verificar_sec:", workflow)
-        self.assertIn("vars.SEC_USER_AGENT", workflow)
+        self.assertIn("secrets.SEC_USER_AGENT", workflow)
+        self.assertNotIn("vars.SEC_USER_AGENT", workflow)
         self.assertIn("verificacion_candidatas.csv", workflow)
 
     def test_verificacion_sec_es_lateral_y_escribe_el_snapshot_compartido(self):

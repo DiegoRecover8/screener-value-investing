@@ -199,10 +199,11 @@ conceptos XBRL estandarizados.
 
 Para habilitarla en GitHub:
 
-1. Ve a **Settings → Secrets and variables → Actions → Variables**.
-2. Crea la variable `SEC_USER_AGENT` con un valor como
-   `screener-value-investing contacto@tu-dominio.example`. No es un secreto:
-   se envía en la cabecera HTTP a la SEC.
+1. Ve a **Settings → Secrets and variables → Actions → Secrets**.
+2. Crea el *repository secret* `SEC_USER_AGENT` con un valor como
+   `screener-value-investing contacto@tu-dominio.example`. Aunque la SEC
+   necesita recibirlo en la cabecera HTTP, guardarlo como Secret evita que el
+   correo de contacto quede visible en los logs públicos de GitHub Actions.
 3. En una ejecución manual, marca **Contrastar candidatas con SEC EDGAR en
    modo sombra**. Las ejecuciones programadas la activarán automáticamente
    cuando la variable exista.
