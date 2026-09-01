@@ -7,7 +7,7 @@ métricas y se deja preparada una futura verificación cruzada.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Protocol
 
 import numpy as np
@@ -65,6 +65,15 @@ class Fundamentales:
     fecha_balance: str = ""
     calidad_datos: str = "ok"
     incidencias_datos: str = ""
+    # Enlace al documento/API que respalda la observación. No forma parte del
+    # journal oficial: se usa solo en los artefactos laterales de verificación.
+    url_fuente: str = ""
+    # Vista anual alternativa capturada en la misma consulta. Permite comparar
+    # Yahoo con SEC anual sin presentar falsamente un TTM como si fuera anual.
+    comparables_anuales: dict[str, float] = field(default_factory=dict, repr=False)
+    fecha_resultados_anual: str = ""
+    fecha_flujo_caja_anual: str = ""
+    conceptos_fuente: dict[str, str] = field(default_factory=dict, repr=False)
 
 
 class ProveedorFundamentales(Protocol):

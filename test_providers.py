@@ -96,6 +96,9 @@ class TestProveedorYFinance(unittest.TestCase):
         self.assertEqual(datos.calidad_datos, "ok")
         self.assertEqual(datos.incidencias_datos, "")
         self.assertTrue(datos.fecha_consulta_utc.startswith("2026-09-01T"))
+        self.assertEqual(datos.comparables_anuales["ingresos"], 1_000.0)
+        self.assertEqual(datos.comparables_anuales["free_cash_flow"], 80.0)
+        self.assertEqual(datos.fecha_resultados_anual, "2025-12-31")
 
     def test_no_mezcla_resultados_ttm_con_flujo_anual(self):
         ticker = _TickerCompleto()

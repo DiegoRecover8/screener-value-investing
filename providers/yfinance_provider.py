@@ -274,6 +274,30 @@ class ProveedorYFinance:
                 ingresos_inicio, ingresos_fin, anios = _extremos_historicos(
                     fin_anual, ["Total Revenue", "Operating Revenue"],
                 )
+                comparables_anuales = {
+                    "ingresos": _valor_reciente(
+                        fin_anual, ["Total Revenue", "Operating Revenue"],
+                    ),
+                    "net_income": _valor_reciente(
+                        fin_anual,
+                        ["Net Income", "Net Income Common Stockholders"],
+                    ),
+                    "ebit": _valor_reciente(
+                        fin_anual, ["EBIT", "Operating Income"],
+                    ),
+                    "free_cash_flow": _valor_reciente(
+                        cf_anual, ["Free Cash Flow"],
+                    ),
+                    # ``balance_sheet`` ya es anual; se reutiliza ese mismo
+                    # corte instantáneo en vez de etiquetarlo como TTM.
+                    "total_debt": deuda,
+                    "cash": caja,
+                    "equity": equity,
+                    "gasto_intereses": _valor_reciente(
+                        fin_anual,
+                        ["Interest Expense", "Interest Expense Non Operating"],
+                    ),
+                }
 
                 divisa_cotizacion = str(info.get("currency") or "").upper()
                 divisa_financiera = str(info.get("financialCurrency") or "").upper()
@@ -321,6 +345,9 @@ class ProveedorYFinance:
                     fecha_resultados=_fecha_reciente(fin_periodo),
                     fecha_flujo_caja=_fecha_reciente(cf_periodo),
                     fecha_balance=_fecha_reciente(bs),
+                    comparables_anuales=comparables_anuales,
+                    fecha_resultados_anual=_fecha_reciente(fin_anual),
+                    fecha_flujo_caja_anual=_fecha_reciente(cf_anual),
                 )
                 _evaluar_calidad(datos, momento)
                 salida.append(datos)

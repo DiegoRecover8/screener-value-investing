@@ -7,6 +7,7 @@ from .base import (
     ProveedorFundamentales,
 )
 from .yfinance_provider import ProveedorYFinance
+from .sec_edgar_provider import ProveedorSecEdgar
 
 __all__ = [
     "COLUMNAS_PROCEDENCIA",
@@ -14,4 +15,5 @@ __all__ = [
     "Fundamentales",
     "ProveedorFundamentales",
     "ProveedorYFinance",
+    "ProveedorSecEdgar",
 ]

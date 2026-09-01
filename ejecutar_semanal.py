@@ -35,6 +35,13 @@ from journal import (
     validar_integridad_ejecucion,
 )
 from screener_value import ejecutar
+from providers import ProveedorSecEdgar
+from verificacion_candidatas import (
+    RUTA_VERIFICACION_DEFECTO,
+    crear_verificacion,
+    imprimir_resumen_verificacion,
+    registrar_verificacion,
+)
 from universos_versionados import (
     RUTA_ESPEJO_DEFECTO,
     RUTA_MANIFEST_DEFECTO,
@@ -68,6 +75,47 @@ def _metadatos_github() -> dict[str, str]:
         "github_run_url": run_url,
         "github_sha": os.environ.get("GITHUB_SHA", ""),
     }
+
+
+def _verificar_candidatas_en_sombra(
+    resultado: pd.DataFrame,
+    snapshot_id: str,
+    momento: pd.Timestamp,
+) -> None:
+    """Verifica solo candidatas; cualquier fallo queda aislado del oficial."""
+    if not _variable_booleana("SCREENER_VERIFICAR_CANDIDATAS"):
+        print("Verificación secundaria: desactivada.")
+        return
+    primarias = resultado.attrs.get("fundamentales_candidatas")
+    if primarias is None or primarias.empty:
+        print("Verificación secundaria: no hay candidatas que consultar.")
+        return
+    user_agent = os.environ.get("SEC_USER_AGENT", "").strip()
+    if not user_agent:
+        print(
+            "AVISO verificación secundaria omitida: falta SEC_USER_AGENT "
+            "(nombre del proyecto y contacto)."
+        )
+        return
+    try:
+        proveedor = ProveedorSecEdgar(user_agent=user_agent)
+        secundarias = proveedor.descargar(
+            primarias["ticker"].astype(str).tolist(),
+        )
+        verificacion = crear_verificacion(
+            primarias, secundarias, snapshot_id=snapshot_id, momento=momento,
+        )
+        ruta = os.environ.get(
+            "SCREENER_RUTA_VERIFICACION", RUTA_VERIFICACION_DEFECTO,
+        )
+        registrar_verificacion(verificacion, ruta)
+        imprimir_resumen_verificacion(verificacion)
+        print(f"Verificación: {ruta}")
+    except Exception as exc:  # el modo sombra nunca invalida el snapshot
+        print(
+            "AVISO verificación secundaria no completada; el resultado "
+            f"oficial no cambia: {type(exc).__name__}: {exc}"
+        )
 
 
 def _resolver_universo(
@@ -162,6 +210,7 @@ def main() -> None:
         origen=origen, oficial=oficial,
         **_metadatos_github(), **metadatos_universo,
     )
+    _verificar_candidatas_en_sombra(resultado, snapshot_id, momento)
     print(
         f"\nSnapshot válido {snapshot_id}: {len(filas_nuevas)} empresas, "
         f"{control['descargas_correctas']}/{control['tickers_solicitados']} "

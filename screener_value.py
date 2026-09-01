@@ -597,6 +597,30 @@ def ejecutar(tickers: list[str], salida_csv: str = "candidatos.csv") -> pd.DataF
             "calidad_datos", pd.Series("ok", index=metricas.index),
         ).isin(["inutilizable", "error"]).sum()),
     }
+    # Conserva en memoria los componentes crudos de las candidatas para una
+    # verificación secundaria posterior. No se añaden al journal ni se vuelcan
+    # en candidatos.csv, evitando cambiar el esquema oficial por un artefacto
+    # que todavía está en modo sombra.
+    tickers_candidatas = set(resultado.loc[resultado["pasa"], "ticker"].astype(str))
+    filas_verificacion = []
+    for dato in datos:
+        if dato.ticker not in tickers_candidatas:
+            continue
+        fila = asdict(dato)
+        anuales = fila.pop("comparables_anuales", {})
+        if anuales:
+            fila.update(anuales)
+            fila["proveedor_datos"] = f"{dato.proveedor_datos}_anual"
+            fila["tipo_periodo"] = "ANUAL"
+            fila["fecha_resultados"] = fila.pop("fecha_resultados_anual", "")
+            fila["fecha_flujo_caja"] = fila.pop("fecha_flujo_caja_anual", "")
+        filas_verificacion.append(fila)
+    resultado.attrs["fundamentales_candidatas"] = (
+        pd.DataFrame(filas_verificacion)
+        .drop_duplicates("ticker", keep="first")
+        .reset_index(drop=True)
+        if filas_verificacion else pd.DataFrame()
+    )
     resultado.to_csv(salida_csv, index=False)
 
     candidatas = resultado[resultado["pasa"]]

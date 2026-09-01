@@ -22,6 +22,11 @@ name: Screener semanal
         required: false
         default: ""
         type: string
+      verificar_sec:
+        description: "Contrastar candidatas con SEC EDGAR en modo sombra"
+        required: false
+        default: false
+        type: boolean
 
 # Una ejecución nueva espera a que termine la activa. Nunca se cancela una
 # descarga que ya podría estar a punto de escribir el histórico.
@@ -72,6 +77,8 @@ jobs:
           SCREENER_ORIGEN: ${{ github.event_name }}
           SCREENER_OFICIAL: ${{ github.event_name == 'schedule' || inputs.modo == 'oficial' }}
           SCREENER_UNIVERSO_PRUEBA: ${{ inputs.universo_prueba }}
+          SCREENER_VERIFICAR_CANDIDATAS: ${{ vars.SEC_USER_AGENT != '' && (github.event_name == 'schedule' || inputs.verificar_sec) }}
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
 
       - name: Calcular rendimiento de las candidatas trackeadas
         if: ${{ github.event_name == 'schedule' || inputs.modo == 'oficial' }}
@@ -87,7 +94,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add journal_candidatos.csv ejecuciones_screener.csv seguimiento_candidatas.csv historico.json
+          git add journal_candidatos.csv ejecuciones_screener.csv seguimiento_candidatas.csv historico.json verificacion_candidatas.csv
           if git diff --cached --quiet; then
             echo "Sin cambios que commitear"
           else

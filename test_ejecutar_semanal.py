@@ -10,8 +10,9 @@ from unittest.mock import patch
 
 import pandas as pd
 
-from ejecutar_semanal import main
+from ejecutar_semanal import _verificar_candidatas_en_sombra, main
 from journal import ErrorIntegridadEjecucion
+from providers import Fundamentales
 from universos_versionados import COLUMNAS_UNIVERSO, calcular_hash_universo
 
 
@@ -231,6 +232,53 @@ class TestEjecucionSemanal(unittest.TestCase):
         self.assertIn('timeout-minutes: 30', workflow)
         self.assertIn('--universo-id "$SCREENER_UNIVERSO_PRUEBA"', workflow)
         self.assertIn('[[ "$SCREENER_OFICIAL" == "true" ]]', workflow)
+        self.assertIn("verificar_sec:", workflow)
+        self.assertIn("vars.SEC_USER_AGENT", workflow)
+        self.assertIn("verificacion_candidatas.csv", workflow)
+
+    def test_verificacion_sec_es_lateral_y_escribe_el_snapshot_compartido(self):
+        primarias = pd.DataFrame([{
+            "ticker": "AAA", "proveedor_datos": "yfinance_anual",
+            "tipo_periodo": "ANUAL", "fecha_resultados": "2025-12-31",
+            "fecha_flujo_caja": "2025-12-31", "fecha_balance": "2025-12-31",
+            "divisa_financiera": "USD", "ingresos": 100.0,
+            "net_income": 10.0, "ebit": 15.0, "free_cash_flow": 8.0,
+            "total_debt": 20.0, "cash": 5.0, "equity": 30.0,
+            "gasto_intereses": 2.0,
+        }])
+        resultado = _resultado(0)
+        resultado.attrs["fundamentales_candidatas"] = primarias
+        secundaria = Fundamentales(
+            **{
+                **primarias.iloc[0].to_dict(),
+                "proveedor_datos": "sec_edgar",
+                "url_fuente": "https://sec.test",
+            }
+        )
+
+        with TemporaryDirectory() as tmp:
+            ruta = Path(tmp) / "verificacion.csv"
+            with (
+                patch.dict(os.environ, {
+                    "SCREENER_VERIFICAR_CANDIDATAS": "true",
+                    "SEC_USER_AGENT": "proyecto contacto@example.com",
+                    "SCREENER_RUTA_VERIFICACION": str(ruta),
+                }),
+                patch("ejecutar_semanal.ProveedorSecEdgar") as clase_proveedor,
+            ):
+                clase_proveedor.return_value.descargar.return_value = [secundaria]
+                _verificar_candidatas_en_sombra(
+                    resultado, "snap_20260901T120000000000Z",
+                    pd.Timestamp("2026-09-01", tz="UTC"),
+                )
+
+            verificacion = pd.read_csv(ruta)
+
+        self.assertEqual(verificacion["snapshot_id"].nunique(), 1)
+        self.assertEqual(verificacion["snapshot_id"].iloc[0], "snap_20260901T120000000000Z")
+        self.assertEqual(set(verificacion["estado"]), {"verificado"})
+        # El artefacto lateral no cambia los veredictos del resultado oficial.
+        self.assertFalse(resultado["pasa"].any())
 
 
 if __name__ == "__main__":

@@ -58,6 +58,10 @@ motivo de descarte auditable si no pasa.
 9. **`exportar_historico.py`** exporta journal + seguimiento a un JSON
    compacto, usado para refrescar la "Bitácora del Screener" -una página
    estática publicada como Claude Artifact (ver más abajo).
+10. **`verificacion_candidatas.py`** contrasta solo las candidatas con una
+    segunda fuente y guarda el diagnóstico en un CSV separado. La verificación
+    funciona en modo sombra: no cambia `pasa`, el ranking, el journal ni la
+    identidad del snapshot.
 
 ## Uso
 
@@ -182,6 +186,55 @@ Action lo evalúa conservando ese ID y su hash en el control. Esta opción exige
 `modo: prueba`: un ID explícito nunca puede declararse oficial ni cambia el
 universo activo. Con el campo vacío, tanto las pruebas normales como las
 ejecuciones oficiales siguen usando el universo `active`.
+
+### Verificación selectiva de candidatas
+
+El screener no vuelve a descargar las 645 empresas desde otra fuente. Solo
+contrasta las que ya han superado todos los filtros (11 en el snapshot oficial
+del 1 de septiembre de 2026). El primer adaptador secundario es
+`ProveedorSecEdgar`, basado en la API pública Company Facts de la SEC. La API
+no requiere clave, pero la SEC exige identificar el cliente con un
+`User-Agent`; además su cobertura se limita a emisores registrados y a los
+conceptos XBRL estandarizados.
+
+Para habilitarla en GitHub:
+
+1. Ve a **Settings → Secrets and variables → Actions → Variables**.
+2. Crea la variable `SEC_USER_AGENT` con un valor como
+   `screener-value-investing contacto@tu-dominio.example`. No es un secreto:
+   se envía en la cabecera HTTP a la SEC.
+3. En una ejecución manual, marca **Contrastar candidatas con SEC EDGAR en
+   modo sombra**. Las ejecuciones programadas la activarán automáticamente
+   cuando la variable exista.
+
+El resultado se acumula en `verificacion_candidatas.csv`, con una fila por
+`snapshot_id`, ticker y componente contable. Compara ingresos, beneficio neto,
+EBIT aproximado mediante resultado operativo, FCF derivado, deuda, caja,
+fondos propios e intereses. Antes de calcular diferencias exige la misma
+divisa, el mismo tipo de periodo y fechas separadas como máximo 45 días. Los
+estados posibles son:
+
+Yahoo conserva para este artefacto una vista anual capturada durante la misma
+consulta que alimenta el screener. Así, aunque el ranking use TTM cuando está
+disponible, la comparación con el ejercicio anual de SEC queda etiquetada como
+`yfinance_anual` y enfrenta periodos homogéneos. Esa vista lateral no sustituye
+ni modifica los valores TTM del snapshot oficial.
+
+- `verificado`: diferencia relativa de hasta el 10 %.
+- `advertencia`: diferencia superior al 10 % y de hasta el 25 %.
+- `discrepancia_material`: diferencia superior al 25 %.
+- `no_comparable`: periodo, fecha o divisa incompatibles.
+- `sin_dato`: falta ese componente en una de las fuentes.
+- `sin_cobertura`: el ticker no está registrado literalmente en SEC o la API
+  no respondió.
+
+Nunca se recortan sufijos de mercado para buscar cobertura. Por ejemplo,
+`IAG.MC` no se transforma en `IAG`, porque ese símbolo podría pertenecer a
+otra sociedad en EE. UU. Tampoco se construye una ratio con el numerador de
+Yahoo y el denominador de SEC. Durante al menos 3-4 snapshots, estos estados
+deben servir solo para aprender qué cobertura y discrepancias son habituales;
+no deben convertirse en un filtro automático. La documentación oficial de la
+fuente está en [SEC EDGAR APIs](https://www.sec.gov/search-filings/edgar-application-programming-interfaces).
 
 ### Universos oficiales versionados
 
