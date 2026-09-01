@@ -1,0 +1,1240 @@
+{
+  "schema_version": 1,
+  "universe_id": "uv_2026q3_r03",
+  "status": "draft",
+  "created_at": "2026-09-01T08:12:37.700249+00:00",
+  "activation_performed": false,
+  "selection_profile": "refine_observed_v1",
+  "selection_config": {
+    "perfil": "refine_observed_v1",
+    "exigir_ejecucion_oficial": true,
+    "exigir_cobertura_completa": true,
+    "fallback": "misma_region"
+  },
+  "selection_config_sha256": "d2473833345c5b2f1cd441248e9bf0bc5f977dae9c0204fc406e5c42823fcfe8",
+  "source_universe": {
+    "universe_id": "uv_2026q3_r02",
+    "sha256": "2ce9ec09a885d191cb154d354ad34dfefde1a866e0c4fc87aeda73c94dd649c6",
+    "ticker_count": 670
+  },
+  "official_observation": {
+    "snapshot_id": "snap_20260831T155950914633Z",
+    "universe_id": "uv_2026q3_r02",
+    "deduplicados": 119,
+    "github_run_id": "33410637993",
+    "github_run_url": "https://github.com/DiegoRecover8/screener-value-investing/actions/runs/33410637993",
+    "survivors_sha256": "d50f858b8b9c3b04ecaca13520222eca9a48adfce54dd623408bc6867ea94f9f"
+  },
+  "source_discovery": {
+    "discovery_id": "disc_20260831T103225269745Z",
+    "ticker_sha256": "6636dede3c73d98696356ae7af8682013a05e0c4659680633c903852d77edb85",
+    "catalog_sha256": "d8e9bb86dd994db9e1d5976d6598c063cdde2f982d2653d6f16a9757106059ba"
+  },
+  "output": {
+    "csv_path": "universos/oficiales/uv_2026q3_r03.csv",
+    "ticker_count": 670,
+    "sha256": "a74b5646cab814bfaf14c51d8c084906bfb06552abd69c7c9427260e1080f07b"
+  },
+  "summary": {
+    "tickers_origen": 670,
+    "supervivientes_observados": 551,
+    "listings_excluidos_antes_descarga": 119,
+    "rellenos_mismo_bucket": 114,
+    "rellenos_misma_region": 5,
+    "tickers_finales": 670
+  },
+  "known_dual_listings_removed": [
+    "NVDA",
+    "AAPL",
+    "MSFT",
+    "ASML",
+    "CYATY",
+    "SIEGY",
+    "EADSY",
+    "ABBNY",
+    "RYCEY",
+    "RHHBY",
+    "NVS",
+    "BABA",
+    "LVMUY",
+    "TOYOF",
+    "TM",
+    "IDEXY",
+    "BUD",
+    "UL",
+    "BTI",
+    "GOOGL",
+    "GOOG",
+    "TCEHY",
+    "NFLX",
+    "SFTBY",
+    "RCRUY",
+    "SHEL",
+    "TTE",
+    "PBR-A",
+    "ENB",
+    "BHPLF",
+    "BHP",
+    "RIO",
+    "NEM",
+    "GLNCY",
+    "ENLAY",
+    "NGG",
+    "ENGIY",
+    "EONGY",
+    "NVDA.NE",
+    "NVDA.TO",
+    "AAPL.TO",
+    "MSFT.NE",
+    "MSFT.TO",
+    "AVGO.NE",
+    "UNH.NE",
+    "AMZN.NE",
+    "AMZN.TO",
+    "TSLA.TO",
+    "TSLA.NE",
+    "GOOG.TO",
+    "GOOG.NE",
+    "META.NE",
+    "META.TO",
+    "CNQ.TO",
+    "AEM.TO",
+    "0R2T.IL",
+    "SGE.L",
+    "RR.L",
+    "BAL.XC",
+    "REL.L",
+    "AZN.L",
+    "GSKL.XC",
+    "HLN.L",
+    "0QIU.IL",
+    "0R0X.L",
+    "MKSL.XC",
+    "ULVR.L",
+    "DGEL.XC",
+    "VODL.XC",
+    "SHEL.L",
+    "BP.L",
+    "BPL.XC",
+    "BHP.L",
+    "RIO.L",
+    "RIOL.XC",
+    "NG.L",
+    "NGL.XC",
+    "SVTL.XC",
+    "NOVN.SW",
+    "NESN.SW",
+    "NVD.DE",
+    "NOA3.DE",
+    "AIR.DE",
+    "RRU.DE",
+    "NOV.DE",
+    "8TI.DE",
+    "DTE.DE",
+    "BPE5.DE",
+    "STMPA.PA",
+    "SU.PA",
+    "OR.PA",
+    "AI.PA",
+    "REN.AS",
+    "DSFIR.AS",
+    "MTS.MC",
+    "1NOKIA.MI",
+    "STLAM.MI",
+    "MFEA.MI",
+    "NOVO-B.CO",
+    "NOKIA-SEK.ST",
+    "ABB.ST",
+    "ATCO-B.ST",
+    "AZN.ST",
+    "TELIA.ST",
+    "SSAB-A.ST",
+    "EQNR.OL",
+    "STERV.HE",
+    "7203.T",
+    "9434.T",
+    "AIA.AX",
+    "IFT.AX",
+    "FPH.AX",
+    "A2M.AX",
+    "CNU.AX",
+    "BHP.AX",
+    "HBBD.SI",
+    "HTCD.SI",
+    "1810.HK",
+    "9988.HK"
+  ],
+  "replacements": [
+    {
+      "removed_ticker": "NVDA",
+      "replacement_ticker": "CSCO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 13
+    },
+    {
+      "removed_ticker": "AAPL",
+      "replacement_ticker": "LRCX",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 14
+    },
+    {
+      "removed_ticker": "MSFT",
+      "replacement_ticker": "AMAT",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 15
+    },
+    {
+      "removed_ticker": "ASML",
+      "replacement_ticker": "PANW",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 16
+    },
+    {
+      "removed_ticker": "CYATY",
+      "replacement_ticker": "DE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 13
+    },
+    {
+      "removed_ticker": "SIEGY",
+      "replacement_ticker": "BA",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 14
+    },
+    {
+      "removed_ticker": "EADSY",
+      "replacement_ticker": "SAFRY",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 15
+    },
+    {
+      "removed_ticker": "ABBNY",
+      "replacement_ticker": "ETN",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 16
+    },
+    {
+      "removed_ticker": "RYCEY",
+      "replacement_ticker": "HTHIY",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 17
+    },
+    {
+      "removed_ticker": "RHHBY",
+      "replacement_ticker": "GILD",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 13
+    },
+    {
+      "removed_ticker": "NVS",
+      "replacement_ticker": "PFE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 14
+    },
+    {
+      "removed_ticker": "BABA",
+      "replacement_ticker": "CFRUY",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 13
+    },
+    {
+      "removed_ticker": "LVMUY",
+      "replacement_ticker": "FRCOY",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 14
+    },
+    {
+      "removed_ticker": "TOYOF",
+      "replacement_ticker": "SBUX",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 15
+    },
+    {
+      "removed_ticker": "TM",
+      "replacement_ticker": "PDD",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 16
+    },
+    {
+      "removed_ticker": "IDEXY",
+      "replacement_ticker": "LOW",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 17
+    },
+    {
+      "removed_ticker": "BUD",
+      "replacement_ticker": "MNST",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Consumer Defensive",
+      "sector_reemplazo": "Consumer Defensive",
+      "rank_reemplazo": 13
+    },
+    {
+      "removed_ticker": "UL",
+      "replacement_ticker": "MDLZ",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Consumer Defensive",
+      "sector_reemplazo": "Consumer Defensive",
+      "rank_reemplazo": 14
+    },
+    {
+      "removed_ticker": "BTI",
+      "replacement_ticker": "TGT",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Consumer Defensive",
+      "sector_reemplazo": "Consumer Defensive",
+      "rank_reemplazo": 15
+    },
+    {
+      "removed_ticker": "GOOGL",
+      "replacement_ticker": "SPOT",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 13
+    },
+    {
+      "removed_ticker": "GOOG",
+      "replacement_ticker": "APP",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 14
+    },
+    {
+      "removed_ticker": "TCEHY",
+      "replacement_ticker": "CMCSA",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 15
+    },
+    {
+      "removed_ticker": "NFLX",
+      "replacement_ticker": "NTTYY",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 16
+    },
+    {
+      "removed_ticker": "SFTBY",
+      "replacement_ticker": "NTES",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 17
+    },
+    {
+      "removed_ticker": "RCRUY",
+      "replacement_ticker": "WBD",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 18
+    },
+    {
+      "removed_ticker": "SHEL",
+      "replacement_ticker": "EQNR",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Energy",
+      "sector_reemplazo": "Energy",
+      "rank_reemplazo": 13
+    },
+    {
+      "removed_ticker": "TTE",
+      "replacement_ticker": "PSX",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Energy",
+      "sector_reemplazo": "Energy",
+      "rank_reemplazo": 14
+    },
+    {
+      "removed_ticker": "PBR-A",
+      "replacement_ticker": "WMB",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Energy",
+      "sector_reemplazo": "Energy",
+      "rank_reemplazo": 15
+    },
+    {
+      "removed_ticker": "ENB",
+      "replacement_ticker": "SLB",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Energy",
+      "sector_reemplazo": "Energy",
+      "rank_reemplazo": 16
+    },
+    {
+      "removed_ticker": "BHPLF",
+      "replacement_ticker": "B",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 13
+    },
+    {
+      "removed_ticker": "BHP",
+      "replacement_ticker": "WPM",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 14
+    },
+    {
+      "removed_ticker": "RIO",
+      "replacement_ticker": "SHECY",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 15
+    },
+    {
+      "removed_ticker": "NEM",
+      "replacement_ticker": "APD",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 16
+    },
+    {
+      "removed_ticker": "GLNCY",
+      "replacement_ticker": "VALE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 17
+    },
+    {
+      "removed_ticker": "ENLAY",
+      "replacement_ticker": "XEL",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Utilities",
+      "sector_reemplazo": "Utilities",
+      "rank_reemplazo": 13
+    },
+    {
+      "removed_ticker": "NGG",
+      "replacement_ticker": "VST",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Utilities",
+      "sector_reemplazo": "Utilities",
+      "rank_reemplazo": 14
+    },
+    {
+      "removed_ticker": "ENGIY",
+      "replacement_ticker": "EXC",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Utilities",
+      "sector_reemplazo": "Utilities",
+      "rank_reemplazo": 15
+    },
+    {
+      "removed_ticker": "EONGY",
+      "replacement_ticker": "SSEZY",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "us",
+      "sector_origen": "Utilities",
+      "sector_reemplazo": "Utilities",
+      "rank_reemplazo": 16
+    },
+    {
+      "removed_ticker": "NVDA.NE",
+      "replacement_ticker": "AMD.NE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "NVDA.TO",
+      "replacement_ticker": "AMD.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "AAPL.TO",
+      "replacement_ticker": "PLTR.NE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 9
+    },
+    {
+      "removed_ticker": "MSFT.NE",
+      "replacement_ticker": "ORAC.NE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 10
+    },
+    {
+      "removed_ticker": "MSFT.TO",
+      "replacement_ticker": "INTC.NE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 11
+    },
+    {
+      "removed_ticker": "AVGO.NE",
+      "replacement_ticker": "MU.NE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 12
+    },
+    {
+      "removed_ticker": "UNH.NE",
+      "replacement_ticker": "SIA.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "AMZN.NE",
+      "replacement_ticker": "MG.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "AMZN.TO",
+      "replacement_ticker": "LULU.NE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "TSLA.TO",
+      "replacement_ticker": "CCL-B.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 9
+    },
+    {
+      "removed_ticker": "TSLA.NE",
+      "replacement_ticker": "ATZ.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 10
+    },
+    {
+      "removed_ticker": "GOOG.TO",
+      "replacement_ticker": "RCI-B.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "GOOG.NE",
+      "replacement_ticker": "T.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "META.NE",
+      "replacement_ticker": "QBR-B.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 9
+    },
+    {
+      "removed_ticker": "META.TO",
+      "replacement_ticker": "CCA.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 10
+    },
+    {
+      "removed_ticker": "CNQ.TO",
+      "replacement_ticker": "CCO.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Energy",
+      "sector_reemplazo": "Energy",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "AEM.TO",
+      "replacement_ticker": "TECK-B.TO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ca",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "0R2T.IL",
+      "replacement_ticker": "WISEL.XC",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "SGE.L",
+      "replacement_ticker": "WISE.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "RR.L",
+      "replacement_ticker": "EXPNL.XC",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "BAL.XC",
+      "replacement_ticker": "EXPN.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "REL.L",
+      "replacement_ticker": "0RYA.IL",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 9
+    },
+    {
+      "removed_ticker": "AZN.L",
+      "replacement_ticker": "SN.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "GSKL.XC",
+      "replacement_ticker": "CTEC.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "HLN.L",
+      "replacement_ticker": "HIKL.XC",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 9
+    },
+    {
+      "removed_ticker": "0QIU.IL",
+      "replacement_ticker": "HIK.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 10
+    },
+    {
+      "removed_ticker": "0R0X.L",
+      "replacement_ticker": "KGF.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "MKSL.XC",
+      "replacement_ticker": "BTRW.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "ULVR.L",
+      "replacement_ticker": "TSCO.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Consumer Defensive",
+      "sector_reemplazo": "Consumer Defensive",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "DGEL.XC",
+      "replacement_ticker": "IMBL.XC",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Consumer Defensive",
+      "sector_reemplazo": "Consumer Defensive",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "VODL.XC",
+      "replacement_ticker": "PSONL.XC",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "SHEL.L",
+      "replacement_ticker": "ITH.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Energy",
+      "sector_reemplazo": "Energy",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "BP.L",
+      "replacement_ticker": "SEPL.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Energy",
+      "sector_reemplazo": "Energy",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "BPL.XC",
+      "replacement_ticker": "HBR.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Energy",
+      "sector_reemplazo": "Energy",
+      "rank_reemplazo": 9
+    },
+    {
+      "removed_ticker": "BHP.L",
+      "replacement_ticker": "ANTO.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "RIO.L",
+      "replacement_ticker": "ANTOL.XC",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "RIOL.XC",
+      "replacement_ticker": "FRESL.XC",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 9
+    },
+    {
+      "removed_ticker": "NG.L",
+      "replacement_ticker": "CNA.L",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Utilities",
+      "sector_reemplazo": "Utilities",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "NGL.XC",
+      "replacement_ticker": "CNAL.XC",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Utilities",
+      "sector_reemplazo": "Utilities",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "SVTL.XC",
+      "replacement_ticker": "DRXL.XC",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "gb",
+      "sector_origen": "Utilities",
+      "sector_reemplazo": "Utilities",
+      "rank_reemplazo": 9
+    },
+    {
+      "removed_ticker": "NOVN.SW",
+      "replacement_ticker": "GALD.SW",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "ch",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "NVD.DE",
+      "replacement_ticker": "NEM.DE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "de",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "NOA3.DE",
+      "replacement_ticker": "IOS.DE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "de",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "AIR.DE",
+      "replacement_ticker": "DTG.DE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "de",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "RRU.DE",
+      "replacement_ticker": "MTX.DE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "de",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "NOV.DE",
+      "replacement_ticker": "AFX.DE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "de",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "8TI.DE",
+      "replacement_ticker": "KBX.DE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "de",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "DTE.DE",
+      "replacement_ticker": "PSM.DE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "de",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "STMPA.PA",
+      "replacement_ticker": "XFAB.PA",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "fr",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "SU.PA",
+      "replacement_ticker": "LR.PA",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "fr",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "REN.AS",
+      "replacement_ticker": "INPST.AS",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "nl",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "DSFIR.AS",
+      "replacement_ticker": "APAM.AS",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "nl",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "1NOKIA.MI",
+      "replacement_ticker": "REY.MI",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "it",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "STLAM.MI",
+      "replacement_ticker": "DLG.MI",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "it",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "MFEA.MI",
+      "replacement_ticker": "MN.MI",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "it",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "NOVO-B.CO",
+      "replacement_ticker": "COLO-B.CO",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "dk",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 3
+    },
+    {
+      "removed_ticker": "NOKIA-SEK.ST",
+      "replacement_ticker": "NCAB.ST",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "se",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "ABB.ST",
+      "replacement_ticker": "SAND.ST",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "se",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "ATCO-B.ST",
+      "replacement_ticker": "SAAB-B.ST",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "se",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 6
+    },
+    {
+      "removed_ticker": "AZN.ST",
+      "replacement_ticker": "CAMX.ST",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "se",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "TELIA.ST",
+      "replacement_ticker": "EMBRAC-B.ST",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "se",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "SSAB-A.ST",
+      "replacement_ticker": "SCA-B.ST",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "se",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "EQNR.OL",
+      "replacement_ticker": "VAR.OL",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "no",
+      "sector_origen": "Energy",
+      "sector_reemplazo": "Energy",
+      "rank_reemplazo": 3
+    },
+    {
+      "removed_ticker": "STERV.HE",
+      "replacement_ticker": "TYRES.HE",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "fi",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 3
+    },
+    {
+      "removed_ticker": "7203.T",
+      "replacement_ticker": "6902.T",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "jp",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "9434.T",
+      "replacement_ticker": "9766.T",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "jp",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "AIA.AX",
+      "replacement_ticker": "REH.AX",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "au",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "IFT.AX",
+      "replacement_ticker": "ALX.AX",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "au",
+      "sector_origen": "Industrials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 8
+    },
+    {
+      "removed_ticker": "FPH.AX",
+      "replacement_ticker": "COH.AX",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "au",
+      "sector_origen": "Healthcare",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "A2M.AX",
+      "replacement_ticker": "CBO.AX",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "au",
+      "sector_origen": "Consumer Defensive",
+      "sector_reemplazo": "Consumer Defensive",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "CNU.AX",
+      "replacement_ticker": "EVT.AX",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "au",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "BHP.AX",
+      "replacement_ticker": "JHX.AX",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "au",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "HBBD.SI",
+      "replacement_ticker": "H22.SI",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "sg",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 3
+    },
+    {
+      "removed_ticker": "HTCD.SI",
+      "replacement_ticker": "Z74.SI",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "sg",
+      "sector_origen": "Communication Services",
+      "sector_reemplazo": "Communication Services",
+      "rank_reemplazo": 3
+    },
+    {
+      "removed_ticker": "1810.HK",
+      "replacement_ticker": "0981.HK",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "hk",
+      "sector_origen": "Technology",
+      "sector_reemplazo": "Technology",
+      "rank_reemplazo": 3
+    },
+    {
+      "removed_ticker": "9988.HK",
+      "replacement_ticker": "0300.HK",
+      "strategy": "mismo_bucket",
+      "region_descubrimiento": "hk",
+      "sector_origen": "Consumer Cyclical",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 3
+    },
+    {
+      "removed_ticker": "NESN.SW",
+      "replacement_ticker": "ACLN.SW",
+      "strategy": "misma_region",
+      "region_descubrimiento": "ch",
+      "sector_origen": "Consumer Defensive",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 5
+    },
+    {
+      "removed_ticker": "BPE5.DE",
+      "replacement_ticker": "SZG.DE",
+      "strategy": "misma_region",
+      "region_descubrimiento": "de",
+      "sector_origen": "Energy",
+      "sector_reemplazo": "Basic Materials",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "OR.PA",
+      "replacement_ticker": "EMEIS.PA",
+      "strategy": "misma_region",
+      "region_descubrimiento": "fr",
+      "sector_origen": "Consumer Defensive",
+      "sector_reemplazo": "Healthcare",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "AI.PA",
+      "replacement_ticker": "FDJU.PA",
+      "strategy": "misma_region",
+      "region_descubrimiento": "fr",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Consumer Cyclical",
+      "rank_reemplazo": 7
+    },
+    {
+      "removed_ticker": "MTS.MC",
+      "replacement_ticker": "ANA.MC",
+      "strategy": "misma_region",
+      "region_descubrimiento": "es",
+      "sector_origen": "Basic Materials",
+      "sector_reemplazo": "Industrials",
+      "rank_reemplazo": 5
+    }
+  ]
+}

@@ -287,6 +287,34 @@ python gestionar_universos.py comparar uv_2026q3_r01 uv_2026q3_r02
 python gestionar_universos.py activar uv_2026q3_r02
 ```
 
+#### Refinado previo de cotizaciones duales
+
+El deduplicado del motor usa nombre normalizado, país y capitalización para
+escoger un solo listing por empresa. Una ejecución oficial con cobertura del
+100 % permite reutilizar ese resultado antes de la siguiente descarga.
+`generar_refinado_draft.py` exige que el snapshot sea oficial, que su hash
+coincida con el universo registrado y que los recuentos de control y journal
+cierren exactamente.
+
+Para cada listing descartado, el perfil `refine_observed_v1` toma el siguiente
+rank disponible del mismo país×sector. Si ese bucket se agotó, conserva el país
+y elige la reserva con mejor rank relativo entre los demás sectores. La versión
+de origen permanece activa y el resultado se registra siempre como `draft`:
+
+```bash
+python generar_refinado_draft.py \
+  --id uv_2026q3_r03 \
+  --origen uv_2026q3_r02 \
+  --snapshot-oficial snap_20260831T155950914633Z \
+  --descubrimiento universos/descubrimiento/disc_20260831T103225269745Z.csv
+```
+
+El informe `universos/selecciones/uv_<...>.json` conserva la ejecución oficial,
+los 119 listings conocidos que se excluyeron y cada sustitución con su regla.
+Los tickers de reserva aún no observados podrían contener nuevos listings
+duales; por eso el draft refinado debe pasar otra prueba controlada en Actions
+antes de activarse y, si quedan duplicados, puede repetirse el mismo proceso.
+
 **`journal_candidatos.csv` se AÑADE, nunca se sobrescribe** (a diferencia
 de `candidatos.csv`, que es una foto de la última ejecución y por eso está
 en `.gitignore`). Cada fila lleva, además de todas las métricas y el motivo
