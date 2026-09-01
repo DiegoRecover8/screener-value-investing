@@ -20,6 +20,8 @@ from tempfile import NamedTemporaryFile
 
 import pandas as pd
 
+from providers import COLUMNAS_PROCEDENCIA
+
 RUTA_JOURNAL_DEFECTO = "journal_candidatos.csv"
 RUTA_EJECUCIONES_DEFECTO = "ejecuciones_screener.csv"
 UMBRAL_EXITO_DESCARGA = 0.80
@@ -37,10 +39,14 @@ COLUMNAS_TRAZABILIDAD_GITHUB = [
 COLUMNAS_UNIVERSO_CONTROL = [
     "universe_id", "universe_sha256", "universe_path",
 ]
+COLUMNAS_CALIDAD_CONTROL = [
+    "proveedor_datos", "datos_ok", "datos_revisar", "datos_inutilizables",
+]
 COLUMNAS_CONTROL = (
     COLUMNAS_CONTROL_BASE
     + COLUMNAS_TRAZABILIDAD_GITHUB
     + COLUMNAS_UNIVERSO_CONTROL
+    + COLUMNAS_CALIDAD_CONTROL
 )
 
 
@@ -111,6 +117,26 @@ def validar_integridad_ejecucion(
     deduplicados = int(resumen.get(
         "deduplicados", max(resultados_brutos - len(resultado), 0),
     ))
+    if "calidad_datos" in resultado:
+        calidad = resultado["calidad_datos"].fillna("inutilizable").astype(str)
+    else:
+        calidad = pd.Series(
+            ["error" if str(error).strip() else "ok"
+             for error in resultado["error_descarga"].fillna("")],
+            index=resultado.index,
+        )
+    datos_ok = int(resumen.get("datos_ok", calidad.eq("ok").sum()))
+    datos_revisar = int(resumen.get("datos_revisar", calidad.eq("revisar").sum()))
+    datos_inutilizables = int(resumen.get(
+        "datos_inutilizables", calidad.isin(["inutilizable", "error"]).sum(),
+    ))
+    proveedor_datos = str(resumen.get(
+        "proveedor_datos",
+        ",".join(sorted(set(
+            resultado.get("proveedor_datos", pd.Series(dtype=str))
+            .dropna().astype(str).str.strip()
+        ) - {""})),
+    ))
 
     if resultados_brutos != tickers_solicitados:
         raise ErrorIntegridadEjecucion(
@@ -121,6 +147,8 @@ def validar_integridad_ejecucion(
         raise ErrorIntegridadEjecucion("recuento de errores de descarga incoherente")
     if resultados_brutos - deduplicados != len(resultado):
         raise ErrorIntegridadEjecucion("recuento de listings deduplicados incoherente")
+    if datos_ok + datos_revisar + datos_inutilizables != len(resultado):
+        raise ErrorIntegridadEjecucion("recuento de calidad de datos incoherente")
 
     descargas_correctas = resultados_brutos - errores_descarga
     tasa_exito = descargas_correctas / tickers_solicitados
@@ -141,6 +169,10 @@ def validar_integridad_ejecucion(
         "candidatas": int(resultado["pasa"].astype(bool).sum()),
         "tasa_exito_descarga": tasa_exito,
         "umbral_exito_minimo": umbral_exito,
+        "proveedor_datos": proveedor_datos,
+        "datos_ok": datos_ok,
+        "datos_revisar": datos_revisar,
+        "datos_inutilizables": datos_inutilizables,
     }
 
 
@@ -221,6 +253,11 @@ def migrar_esquema_control(
     esquemas_anteriores = [
         COLUMNAS_CONTROL_BASE,
         COLUMNAS_CONTROL_BASE + COLUMNAS_TRAZABILIDAD_GITHUB,
+        (
+            COLUMNAS_CONTROL_BASE
+            + COLUMNAS_TRAZABILIDAD_GITHUB
+            + COLUMNAS_UNIVERSO_CONTROL
+        ),
     ]
     if cabecera not in esquemas_anteriores:
         raise ErrorIntegridadEjecucion(
@@ -274,6 +311,54 @@ def _validar_cabecera_csv(ruta: Path, columnas_esperadas: list[str]) -> None:
         )
 
 
+def migrar_procedencia_journal(
+    ruta_journal: str | Path,
+    columnas_esperadas: list[str],
+) -> bool:
+    """Inserta trazabilidad de proveedor en journals previos al nuevo esquema.
+
+    Los snapshots históricos conservan sus valores y reciben campos vacíos:
+    no se inventa retrospectivamente qué periodo o payload usó Yahoo.
+    """
+    ruta = Path(ruta_journal)
+    if not ruta.exists() or ruta.stat().st_size == 0:
+        return False
+    with ruta.open(newline="", encoding="utf-8") as archivo:
+        filas = list(csv.reader(archivo))
+    if not filas:
+        return False
+    cabecera = filas[0]
+    if cabecera == columnas_esperadas:
+        return False
+    faltantes = [col for col in columnas_esperadas if col not in cabecera]
+    if (
+        not faltantes
+        or any(col not in COLUMNAS_PROCEDENCIA for col in faltantes)
+        or [col for col in columnas_esperadas if col not in faltantes] != cabecera
+    ):
+        raise ErrorIntegridadEjecucion(
+            f"esquema incompatible en {ruta}: se esperaban "
+            f"{columnas_esperadas}, pero contiene {cabecera}"
+        )
+
+    indices = {col: indice for indice, col in enumerate(cabecera)}
+    modo_original = ruta.stat().st_mode
+    with NamedTemporaryFile(
+        "w", delete=False, dir=ruta.parent, newline="", encoding="utf-8",
+    ) as temporal:
+        escritor = csv.writer(temporal)
+        escritor.writerow(columnas_esperadas)
+        for fila in filas[1:]:
+            escritor.writerow([
+                fila[indices[col]] if col in indices and indices[col] < len(fila) else ""
+                for col in columnas_esperadas
+            ])
+        ruta_temporal = Path(temporal.name)
+    os.chmod(ruta_temporal, modo_original)
+    os.replace(ruta_temporal, ruta)
+    return True
+
+
 def registrar_ejecucion(
     resultado: pd.DataFrame,
     ruta_journal: str | Path = RUTA_JOURNAL_DEFECTO,
@@ -301,6 +386,7 @@ def registrar_ejecucion(
 
     ruta = Path(ruta_journal)
     migrar_snapshot_ids_journal(ruta)
+    migrar_procedencia_journal(ruta, list(filas.columns))
     _validar_cabecera_csv(ruta, list(filas.columns))
     if ruta.exists() and ruta.stat().st_size > 0 and snapshot_id in set(
         pd.read_csv(ruta, usecols=["snapshot_id"])["snapshot_id"].astype(str)

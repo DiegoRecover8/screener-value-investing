@@ -25,10 +25,12 @@ motivo de descarte auditable si no pasa.
    sobrerrepresentado frente a otro con mucho más peso real (p. ej. EE.UU.).
    También cataloga ETF y fondos por categoría temática (ver más abajo), para
    descubrir tickers sin buscarlos a mano.
-2. **`screener_value.py`** descarga los fundamentales TTM y de balance de
-   cada ticker, calcula las métricas, aplica los filtros de `UMBRALES` y
-   genera un ranking tipo Magic Formula sobre las candidatas que los superan
-   todos.
+2. **`providers/` + `screener_value.py`** separan la fuente del motor. El
+   adaptador `ProveedorYFinance` normaliza fundamentales TTM/anuales y de
+   balance, registra su procedencia y valida fechas, periodos, divisas y
+   campos esenciales antes de que el motor calcule las métricas. `yfinance`
+   sigue siendo el proveedor predeterminado, pero ya no está acoplado a los
+   filtros ni al ranking.
 3. **Los archivos `test_*.py`** cubren con datos sintéticos y sin red el
    motor, el journal, las señales y su seguimiento, el prompt LLM, el mapeo
    de TradingView y la exportación del histórico. Incluyen regresiones
@@ -156,7 +158,9 @@ entre **prueba** y **oficial**. El flujo es:
    `test_*.py`) — si el motor está roto, no se genera ni se commitea nada.
 2. Ejecuta `python ejecutar_semanal.py --universo-activo journal_candidatos.csv`.
    Antes de escribir, exige una estructura coherente y al menos un 80% de
-   descargas sin error.
+   descargas sin error. Además cuenta por separado datos `ok`, pendientes de
+   `revisar` e `inutilizables`: una respuesta técnica ya no se confunde con
+   una observación contable fiable.
 3. Si la ejecución es válida, añade el snapshot al journal y su resumen a
    `ejecuciones_screener.csv`. Si no lo es, la Action falla sin contaminar
    ninguno de los dos históricos.
@@ -551,6 +555,20 @@ inventada. Limitaciones reales encontradas durante esa verificación:
   `NaN` para esa fila, y se añade el motivo de descarte explícito. Mezclar
   divisas sin convertir produce ratios sin sentido que parecen válidos.
 
+- **Procedencia y periodo por fila.** `candidatos.csv` y los nuevos snapshots
+  del journal conservan `proveedor_datos`, `fecha_consulta_utc`,
+  `tipo_periodo`, fechas de resultados/caja/balance, `calidad_datos` e
+  `incidencias_datos`. Al migrar el journal, esas columnas quedan vacías en
+  snapshots antiguos: no se inventa retrospectivamente información que no se
+  guardó.
+
+- **TTM solo si resultados y flujo de caja son TTM.** Si Yahoo ofrece TTM
+  para uno pero no para el otro, ambos se toman del último anual. También se
+  marcan estados con más de 550 días, fechas futuras o resultados y caja
+  desalineados más de 45 días. Una fila `revisar`, `inutilizable` o `error`
+  no puede convertirse en candidata aunque sus ratios aislados parezcan
+  superar los umbrales.
+
 - **Actualización diaria/semanal, no tiempo real.** Las métricas
   fundamentales no cambian intradía; no hay ni se necesita streaming ni
   websockets.
@@ -579,8 +597,11 @@ en el ranking, pero conservan sus métricas y motivos de descarte en el CSV.
 - **El paginado del screener de Yahoo no es fiable a gran escala.** Ver la
   cabecera de `universos_yfinance.py` para el sesgo geográfico real
   observado y por qué se resolvió con una consulta por (región × sector).
-- **Datos de un único proveedor, sin contraste.** No hay verificación
-  cruzada contra otra fuente; un error de Yahoo se propaga tal cual.
+- **Datos todavía sin contraste externo.** La arquitectura ya permite
+  inyectar otro proveedor y detecta incoherencias internas de Yahoo, pero no
+  decide cuál de dos cifras discrepantes es correcta. La siguiente capa
+  prevista es contrastar solo las candidatas contra filings/SEC u otra fuente,
+  sin rellenar campos silenciosamente.
 
 ## Roadmap
 

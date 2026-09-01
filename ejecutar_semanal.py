@@ -167,6 +167,12 @@ def main() -> None:
         f"{control['descargas_correctas']}/{control['tickers_solicitados']} "
         f"descargas correctas ({control['tasa_exito_descarga']:.1%})."
     )
+    print(
+        "Calidad contable: "
+        f"ok={control['datos_ok']}, revisar={control['datos_revisar']}, "
+        f"inutilizables/error={control['datos_inutilizables']} "
+        f"(proveedor: {control['proveedor_datos'] or 'no registrado'})."
+    )
     estado = "oficial" if oficial else "prueba no oficial"
     print(f"Clasificación: {estado}, revisión {metadatos['revision'].iloc[0]}.")
     print(

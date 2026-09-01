@@ -12,12 +12,19 @@ revisión de los estados financieros publicados por la empresa.
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
-from functools import lru_cache
-from typing import Iterable
+from dataclasses import asdict
 
 import numpy as np
 import pandas as pd
+
+from providers import (
+    COLUMNAS_PROCEDENCIA,
+    TASA_IMPOSITIVA_DEFECTO,
+    Fundamentales,
+    ProveedorFundamentales,
+    ProveedorYFinance,
+)
+from providers.yfinance_provider import _extremos_historicos
 
 
 UMBRALES = {
@@ -42,8 +49,6 @@ DISCLAIMER = (
     "filtros no implica que una empresa sea una buena inversión. Verifica "
     "siempre las cuentas publicadas por la propia empresa antes de decidir."
 )
-
-TASA_IMPOSITIVA_DEFECTO = 0.25
 
 # Por encima de este ROIC la base de capital es tan pequeña que la métrica
 # deja de ser comparable. No filtra: marca la fila para revisión manual.
@@ -196,36 +201,6 @@ def cagr_ingresos(ingresos_inicio, ingresos_fin, anios):
     return (float(ingresos_fin) / float(ingresos_inicio)) ** (1 / float(anios)) - 1
 
 
-@dataclass
-class Fundamentales:
-    ticker: str
-    nombre: str = ""
-    sector: str = "SIN_SECTOR"
-    pais: str = ""
-    divisa_cotizacion: str = ""
-    divisa_financiera: str = ""
-    divisa_consistente: bool = True
-    market_cap: float = np.nan
-    market_cap_eur: float = np.nan
-    net_income: float = np.nan
-    ebit: float = np.nan
-    ebitda: float = np.nan
-    ingresos: float = np.nan
-    ingresos_inicio_historico: float = np.nan
-    ingresos_fin_historico: float = np.nan
-    anios_historico: float = np.nan
-    free_cash_flow: float = np.nan
-    total_debt: float = np.nan
-    cash: float = np.nan
-    equity: float = np.nan
-    total_debt_inicio: float = np.nan
-    cash_inicio: float = np.nan
-    equity_inicio: float = np.nan
-    gasto_intereses: float = np.nan
-    tasa_impositiva: float = TASA_IMPOSITIVA_DEFECTO
-    error_descarga: str = ""
-
-
 COLUMNAS_METRICAS = [
     "ticker", "nombre", "sector", "pais", "divisa_cotizacion",
     "divisa_financiera", "divisa_consistente", "market_cap",
@@ -233,7 +208,7 @@ COLUMNAS_METRICAS = [
     "margen_op", "deuda_ebitda", "cobertura_int", "cagr_ingresos",
     "earnings_yield", "caja_neta_pct_mcap", "roic_fiable", "region",
     "per_mediana_sector", "n_sector", "base_mediana", "error_descarga",
-]
+] + COLUMNAS_PROCEDENCIA
 
 
 def calcular_metricas(
@@ -257,9 +232,14 @@ def calcular_metricas(
     for col in (
         "ticker", "nombre", "sector", "pais", "divisa_cotizacion",
         "divisa_financiera", "divisa_consistente", "market_cap",
-        "market_cap_eur", "error_descarga",
+        "market_cap_eur", "error_descarga", *COLUMNAS_PROCEDENCIA,
     ):
-        defecto = True if col == "divisa_consistente" else ""
+        if col == "divisa_consistente":
+            defecto = True
+        elif col == "calidad_datos":
+            defecto = "ok"
+        else:
+            defecto = ""
         out[col] = df[col] if col in df else defecto
 
     # Las ratios que mezclan cotización y cuentas solo se calculan si ambas
@@ -343,6 +323,12 @@ def evaluar_fila(fila: pd.Series, u: dict = UMBRALES) -> tuple[bool, list[str]]:
 
     if fila.get("error_descarga", ""):
         motivos.append(f"descarga: {fila['error_descarga']}")
+    calidad = str(fila.get("calidad_datos", "ok") or "ok").strip().lower()
+    if calidad != "ok":
+        detalle = str(fila.get("incidencias_datos", "") or "").strip()
+        motivos.append(
+            f"calidad de datos {calidad}" + (f": {detalle}" if detalle else "")
+        )
     if not bool(fila.get("divisa_consistente", False)):
         motivos.append("divisas de cotización y estados financieros incompatibles")
 
@@ -444,179 +430,21 @@ def incorporar_ranking_candidatos(evaluadas: pd.DataFrame) -> pd.DataFrame:
         res.loc[candidatas.index, ["rank_roic", "rank_ey", "puntuacion"]] = candidatas[
             ["rank_roic", "rank_ey", "puntuacion"]
         ]
-    return res.sort_values(["pasa", "puntuacion"], ascending=[False, True], na_position="last")
-
-
-def _serie_ordenada(df: pd.DataFrame, claves: Iterable[str]) -> pd.Series:
-    if df is None or df.empty:
-        return pd.Series(dtype=float)
-    for clave in claves:
-        if clave not in df.index:
-            continue
-        serie = pd.to_numeric(df.loc[clave], errors="coerce").dropna()
-        if serie.empty:
-            continue
-        fechas = pd.to_datetime(serie.index, errors="coerce")
-        if fechas.notna().all():
-            serie = serie.iloc[np.argsort(fechas.values)[::-1]]
-        return serie
-    return pd.Series(dtype=float)
-
-
-def _valor_reciente(df: pd.DataFrame, claves: Iterable[str]):
-    serie = _serie_ordenada(df, claves)
-    return np.nan if serie.empty else float(serie.iloc[0])
-
-
-def _valor_reciente_y_anterior(df: pd.DataFrame, claves: Iterable[str]):
-    serie = _serie_ordenada(df, claves)
-    if serie.empty:
-        return np.nan, np.nan
-    return float(serie.iloc[0]), float(serie.iloc[1]) if len(serie) > 1 else np.nan
-
-
-def _extremos_historicos(df: pd.DataFrame, claves: Iterable[str]):
-    """Devuelve (más antiguo, más reciente, años reales entre ambos)."""
-    serie = _serie_ordenada(df, claves)
-    if len(serie) < 2:
-        return np.nan, np.nan, np.nan
-    fechas = pd.to_datetime(serie.index, errors="coerce")
-    if fechas.isna().any():
-        return np.nan, np.nan, np.nan
-    anios = (fechas[0] - fechas[-1]).days / 365.25
-    if anios <= 0:
-        return np.nan, np.nan, np.nan
-    return float(serie.iloc[-1]), float(serie.iloc[0]), float(anios)
-
-
-@lru_cache(maxsize=32)
-def _tipo_cambio_a_eur(divisa: str) -> float:  # pragma: no cover - red
-    """Número de EUR por unidad de la divisa indicada."""
-    divisa = (divisa or "").upper()
-    if divisa == "EUR":
-        return 1.0
-    if not divisa:
-        return np.nan
-    import yfinance as yf
-
-    historico = yf.download(
-        f"{divisa}EUR=X", period="5d", interval="1d", progress=False,
-        auto_adjust=False, threads=False,
+    res = res.sort_values(
+        ["pasa", "puntuacion"], ascending=[False, True], na_position="last",
     )
-    if historico is None or historico.empty or "Close" not in historico:
-        return np.nan
-    valores = pd.to_numeric(historico["Close"].squeeze(), errors="coerce").dropna()
-    return np.nan if valores.empty else float(valores.iloc[-1])
+    # La procedencia se coloca al final para poder migrar el journal histórico
+    # insertando columnas nuevas justo antes de snapshot_id.
+    procedencia = [col for col in COLUMNAS_PROCEDENCIA if col in res]
+    return res[[col for col in res.columns if col not in procedencia] + procedencia]
 
 
-def _tasa_impositiva(fin_ttm: pd.DataFrame) -> float:
-    provision = _valor_reciente(fin_ttm, ["Tax Provision"])
-    pre_tax = _valor_reciente(fin_ttm, ["Pretax Income"])
-    tasa = _div(provision, pre_tax)
-    if _es_na(tasa) or tasa < 0 or tasa > 0.50:
-        return TASA_IMPOSITIVA_DEFECTO
-    return float(tasa)
-
-
-def descargar_fundamentales(tickers: list[str]) -> list[Fundamentales]:  # pragma: no cover - red
-    """Descarga datos TTM, balance reciente e histórico anual.
-
-    Conserva también los fallos para que el CSV muestre la cobertura real.
-    """
-    import yfinance as yf
-
-    salida: list[Fundamentales] = []
-    for tkr in dict.fromkeys(t.strip().upper() for t in tickers if t.strip()):
-        try:
-            ticker = yf.Ticker(tkr)
-            info = ticker.info or {}
-            fin_anual = ticker.income_stmt
-            cf_anual = ticker.cashflow
-            fin_ttm = ticker.ttm_income_stmt
-            cf_ttm = ticker.ttm_cashflow
-            bs = ticker.balance_sheet
-
-            # Algunos mercados no publican el agregado TTM en Yahoo. En ese
-            # caso se usa de forma coherente el último ejercicio anual para
-            # todas las magnitudes de resultados, en vez de mezclar fuentes.
-            fin_periodo = fin_ttm if fin_ttm is not None and not fin_ttm.empty else fin_anual
-            cf_periodo = cf_ttm if cf_ttm is not None and not cf_ttm.empty else cf_anual
-
-            ingresos = _valor_reciente(fin_periodo, ["Total Revenue", "Operating Revenue"])
-            ebit = _valor_reciente(fin_periodo, ["EBIT", "Operating Income"])
-            net_income = _valor_reciente(fin_periodo, ["Net Income", "Net Income Common Stockholders"])
-            intereses = _valor_reciente(fin_periodo, ["Interest Expense", "Interest Expense Non Operating"])
-            ebitda = _valor_reciente(fin_periodo, ["EBITDA", "Normalized EBITDA"])
-
-            fcf = _valor_reciente(cf_periodo, ["Free Cash Flow"])
-
-            deuda, deuda_inicio = _valor_reciente_y_anterior(bs, ["Total Debt"])
-            caja, caja_inicio = _valor_reciente_y_anterior(
-                bs,
-                [
-                    "Cash Cash Equivalents And Short Term Investments",
-                    "Cash And Cash Equivalents",
-                    "Cash",
-                ],
-            )
-            equity, equity_inicio = _valor_reciente_y_anterior(
-                bs, ["Stockholders Equity", "Total Equity Gross Minority Interest"]
-            )
-            ingresos_inicio, ingresos_fin, anios = _extremos_historicos(
-                fin_anual, ["Total Revenue", "Operating Revenue"]
-            )
-
-            divisa_cotizacion = str(info.get("currency") or "").upper()
-            divisa_financiera = str(info.get("financialCurrency") or "").upper()
-            divisa_consistente = bool(
-                divisa_cotizacion
-                and divisa_financiera
-                and divisa_cotizacion == divisa_financiera
-            )
-            market_cap = info.get("marketCap", np.nan)
-            fx_eur = _tipo_cambio_a_eur(divisa_cotizacion)
-            market_cap_eur = (
-                float(market_cap) * fx_eur
-                if not _es_na(market_cap) and not _es_na(fx_eur)
-                else np.nan
-            )
-
-            salida.append(Fundamentales(
-                ticker=tkr,
-                nombre=info.get("longName", ""),
-                sector=info.get("sector", "SIN_SECTOR"),
-                pais=info.get("country", ""),
-                divisa_cotizacion=divisa_cotizacion,
-                divisa_financiera=divisa_financiera,
-                divisa_consistente=divisa_consistente,
-                market_cap=market_cap,
-                market_cap_eur=market_cap_eur,
-                net_income=net_income,
-                ebit=ebit,
-                ebitda=ebitda,
-                ingresos=ingresos,
-                ingresos_inicio_historico=ingresos_inicio,
-                ingresos_fin_historico=ingresos_fin,
-                anios_historico=anios,
-                free_cash_flow=fcf,
-                total_debt=deuda,
-                cash=caja,
-                equity=equity,
-                total_debt_inicio=deuda_inicio,
-                cash_inicio=caja_inicio,
-                equity_inicio=equity_inicio,
-                gasto_intereses=intereses,
-                tasa_impositiva=_tasa_impositiva(fin_periodo),
-            ))
-            print(f"  ok  {tkr}")
-        except Exception as exc:
-            salida.append(Fundamentales(
-                ticker=tkr,
-                divisa_consistente=False,
-                error_descarga=f"{type(exc).__name__}: {exc}",
-            ))
-            print(f"  ERR {tkr}: {exc}")
-    return salida
+def descargar_fundamentales(
+    tickers: list[str],
+    proveedor: ProveedorFundamentales | None = None,
+) -> list[Fundamentales]:  # pragma: no cover - red
+    """Descarga mediante un proveedor inyectable; yfinance sigue por defecto."""
+    return (proveedor or ProveedorYFinance()).descargar(tickers)
 
 
 def ejecutar(tickers: list[str], salida_csv: str = "candidatos.csv") -> pd.DataFrame:  # pragma: no cover - red
@@ -642,6 +470,19 @@ def ejecutar(tickers: list[str], salida_csv: str = "candidatos.csv") -> pd.DataF
         "resultados_brutos": antes,
         "errores_descarga": errores_descarga,
         "deduplicados": antes - len(metricas),
+        "proveedor_datos": ",".join(sorted(
+            set(metricas.get("proveedor_datos", pd.Series(dtype=str))
+                .dropna().astype(str).str.strip()) - {""}
+        )),
+        "datos_ok": int(metricas.get(
+            "calidad_datos", pd.Series("ok", index=metricas.index),
+        ).eq("ok").sum()),
+        "datos_revisar": int(metricas.get(
+            "calidad_datos", pd.Series("ok", index=metricas.index),
+        ).eq("revisar").sum()),
+        "datos_inutilizables": int(metricas.get(
+            "calidad_datos", pd.Series("ok", index=metricas.index),
+        ).isin(["inutilizable", "error"]).sum()),
     }
     resultado.to_csv(salida_csv, index=False)
 
@@ -668,6 +509,11 @@ def ejecutar(tickers: list[str], salida_csv: str = "candidatos.csv") -> pd.DataF
     else:
         print("Ninguna empresa supera todos los filtros.")
     print(f"\nDetalle y motivos de descarte: {salida_csv}")
+    if "calidad_datos" in resultado:
+        conteo_calidad = resultado["calidad_datos"].value_counts().to_dict()
+        print("Calidad de la fuente: " + ", ".join(
+            f"{estado}={cantidad}" for estado, cantidad in conteo_calidad.items()
+        ))
     print(f"\n{DISCLAIMER}")
     return resultado
 

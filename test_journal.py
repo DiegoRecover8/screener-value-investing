@@ -13,6 +13,7 @@ from journal import (
     filtrar_journal_oficial,
     migrar_snapshot_ids_journal,
     migrar_esquema_control,
+    migrar_procedencia_journal,
     migrar_trazabilidad_github_control,
     registrar_control_integridad,
     snapshot_ids_oficiales_efectivos,
@@ -119,6 +120,30 @@ class TestJournal(unittest.TestCase):
         self.assertEqual(len(journal), 4)
         self.assertEqual(journal["snapshot_id"].nunique(), 2)
 
+    def test_migra_procedencia_sin_inventar_datos_historicos(self):
+        with TemporaryDirectory() as tmp:
+            ruta = Path(tmp) / "journal.csv"
+            antiguo = _resultado_ejemplo()
+            registrar_ejecucion(
+                antiguo, ruta, momento=pd.Timestamp("2026-08-24T07:00:00Z"),
+            )
+            nuevo = _resultado_ejemplo(("CCC", "DDD"))
+            nuevo["proveedor_datos"] = "yfinance"
+            nuevo["calidad_datos"] = "ok"
+            columnas_nuevas = list(nuevo.columns)
+            filas = nuevo.copy()
+            filas.insert(0, "fecha_ejecucion", "2026-08-31T07:00:00+00:00")
+            filas.insert(1, "semana_iso", "2026-W36")
+            filas["snapshot_id"] = "snap_nuevo"
+
+            self.assertTrue(migrar_procedencia_journal(ruta, list(filas.columns)))
+            self.assertFalse(migrar_procedencia_journal(ruta, list(filas.columns)))
+            migrado = pd.read_csv(ruta)
+
+        self.assertIn("proveedor_datos", migrado.columns)
+        self.assertIn("calidad_datos", migrado.columns)
+        self.assertTrue(migrado["proveedor_datos"].isna().all())
+
 
 class TestIntegridadEjecucion(unittest.TestCase):
     def _resultado(self, n=10, errores=0):
@@ -214,10 +239,11 @@ class TestIntegridadEjecucion(unittest.TestCase):
             texto_migrado = ruta.read_text(encoding="utf-8")
             metadatos = pd.read_csv(ruta)
 
-        self.assertIn(fila.rstrip("\n") + ",,,,,,,\n", texto_migrado)
+        self.assertIn(fila.rstrip("\n") + ",,,,,,,,,,,\n", texto_migrado)
         self.assertTrue(metadatos["github_run_id"].isna().all())
         self.assertTrue(metadatos["github_run_url"].isna().all())
         self.assertTrue(metadatos["universe_id"].isna().all())
+        self.assertTrue(metadatos["proveedor_datos"].isna().all())
 
     def test_migra_control_con_github_anadiendo_solo_campos_de_universo(self):
         cabecera = (
@@ -238,7 +264,7 @@ class TestIntegridadEjecucion(unittest.TestCase):
             self.assertTrue(migrar_esquema_control(ruta))
             texto = ruta.read_text(encoding="utf-8")
 
-        self.assertIn(fila.rstrip("\n") + ",,,\n", texto)
+        self.assertIn(fila.rstrip("\n") + ",,,,,,,\n", texto)
 
     def test_mayor_revision_oficial_sustituye_a_la_anterior_sin_borrarla(self):
         journal = pd.DataFrame([

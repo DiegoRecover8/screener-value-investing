@@ -160,6 +160,16 @@ class TestFiltros(unittest.TestCase):
         self.assertFalse(resultado.iloc[0]["pasa"])
         self.assertIn("sin dato", resultado.iloc[0]["motivos_descarte"])
 
+    def test_calidad_pendiente_de_revision_no_puede_ser_candidata(self):
+        resultado = aplicar_filtros(calcular_metricas([
+            empresa_ideal(
+                calidad_datos="revisar",
+                incidencias_datos="resultados obsoletos (700 días)",
+            )
+        ]))
+        self.assertFalse(resultado.iloc[0]["pasa"])
+        self.assertIn("resultados obsoletos", resultado.iloc[0]["motivos_descarte"])
+
     def test_entrada_vacia(self):
         metricas = calcular_metricas([])
         resultado = aplicar_filtros(metricas)
