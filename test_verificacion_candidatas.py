@@ -60,6 +60,43 @@ def test_clasifica_diferencias_sin_mezclar_componentes():
     assert len(resultado) == len(CAMPOS_COMPARABLES)
 
 
+def test_conceptos_de_perimetro_distinto_son_aproximaciones_semanticas():
+    secundaria = _fundamentales(
+        proveedor="sec_edgar", net_income=145, ebit=150, equity=140,
+        conceptos_fuente={
+            "net_income": "ProfitLoss",
+            "ebit": "OperatingIncomeLoss",
+            "equity": "Equity",
+        },
+    )
+
+    resultado = _crear(_fundamentales(), secundaria)
+
+    for metrica in ("net_income", "ebit", "equity"):
+        assert resultado.loc[metrica, "estado"] == "aproximacion_semantica"
+        assert "comparación orientativa (discrepancia_material)" in resultado.loc[
+            metrica, "detalle"
+        ]
+    assert "participaciones no controladoras" in resultado.loc[
+        "net_income", "detalle"
+    ]
+    assert "no equivale necesariamente al EBIT" in resultado.loc["ebit", "detalle"]
+
+
+def test_concepto_directo_conserva_el_veredicto_numerico():
+    secundaria = _fundamentales(
+        proveedor="sec_edgar", net_income=145,
+        conceptos_fuente={"net_income": "NetIncomeLoss"},
+    )
+
+    resultado = _crear(_fundamentales(), secundaria)
+
+    assert resultado.loc["net_income", "estado"] == "discrepancia_material"
+    assert "concepto secundario: NetIncomeLoss" in resultado.loc[
+        "net_income", "detalle"
+    ]
+
+
 def test_periodo_divisa_fecha_y_ausencia_impiden_comparacion():
     primaria = _fundamentales()
     periodo = _crear(primaria, _fundamentales(proveedor="sec", tipo_periodo="TTM"))
@@ -99,3 +136,27 @@ def test_registro_es_atomico_e_idempotente_por_snapshot_y_metrica():
 
     assert len(registrado) == len(CAMPOS_COMPARABLES)
     assert len(releido) == len(CAMPOS_COMPARABLES)
+
+
+def test_al_anexar_preserva_literalmente_las_filas_historicas():
+    primera = crear_verificacion(
+        [_fundamentales()], [_fundamentales(proveedor="sec")],
+        "snap_20260901T120000000000Z",
+    )
+    segunda = crear_verificacion(
+        [_fundamentales(ticker="BBB")],
+        [_fundamentales(ticker="BBB", proveedor="sec")],
+        "snap_20260902T120000000000Z",
+    )
+    with TemporaryDirectory() as tmp:
+        ruta = Path(tmp) / "verificacion.csv"
+        texto_original = primera.to_csv(
+            index=False, float_format="%.16e", lineterminator="\r\n",
+        )
+        ruta.write_bytes(texto_original.encode("utf-8"))
+
+        registrado = registrar_verificacion(segunda, ruta)
+        contenido = ruta.read_bytes()
+
+    assert contenido.startswith(texto_original.encode("utf-8"))
+    assert len(registrado) == 2 * len(CAMPOS_COMPARABLES)

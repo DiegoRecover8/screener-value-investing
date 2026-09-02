@@ -25,6 +25,53 @@ TOLERANCIA_VERIFICADA = 0.10
 TOLERANCIA_ADVERTENCIA = 0.25
 DESFASE_MAXIMO_DIAS = 45
 
+# Un mismo rótulo coloquial puede representar perímetros distintos. Solo los
+# conceptos listados como directos conservan el veredicto numérico. Los demás
+# se muestran como aproximación aunque la diferencia sea grande: siguen siendo
+# útiles para revisar, pero no prueban por sí solos que una fuente esté mal.
+CONCEPTOS_DIRECTOS = {
+    "ingresos": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "Revenues", "SalesRevenueNet", "Revenue",
+    },
+    "net_income": {"NetIncomeLoss"},
+    "cash": {
+        "CashAndCashEquivalentsAtCarryingValue",
+        "CashAndCashEquivalents",
+    },
+    "gasto_intereses": {"InterestExpenseNonOperating", "InterestExpense"},
+}
+
+MOTIVOS_APROXIMACION = {
+    "ProfitLoss": (
+        "beneficio consolidado total; puede incluir participaciones "
+        "no controladoras"
+    ),
+    "OperatingIncomeLoss": (
+        "resultado operativo; no equivale necesariamente al EBIT de Yahoo"
+    ),
+    "ProfitLossFromOperatingActivities": (
+        "resultado de actividades operativas; aproximación a EBIT"
+    ),
+    "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest": (
+        "patrimonio total con participaciones no controladoras"
+    ),
+    "Equity": (
+        "patrimonio IFRS total; puede diferir del atribuible a los accionistas"
+    ),
+    "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents": (
+        "incluye efectivo restringido además de caja y equivalentes"
+    ),
+    "LongTermDebtAndFinanceLeaseObligations": (
+        "deuda a largo plazo y arrendamientos; no es deuda total garantizada"
+    ),
+    "LongTermDebtAndCapitalLeaseObligations": (
+        "deuda a largo plazo y arrendamientos; no es deuda total garantizada"
+    ),
+    "LongTermDebt": "deuda a largo plazo; no es deuda total garantizada",
+    "FinanceCosts": "costes financieros; pueden incluir conceptos no equivalentes",
+}
+
 CAMPOS_COMPARABLES = {
     "ingresos": "fecha_resultados",
     "net_income": "fecha_resultados",
@@ -193,6 +240,22 @@ def _comparar_campo(
     return base
 
 
+def _motivo_aproximacion(campo: str, concepto: str) -> str:
+    """Explica por qué un concepto no debe juzgarse como equivalencia exacta."""
+    if not concepto:
+        return ""
+    if campo == "free_cash_flow" and " - abs(" in concepto:
+        # Ambas fuentes publican/derivan FCF como flujo operativo menos CAPEX;
+        # la fórmula exacta queda visible en ``detalle``.
+        return ""
+    if concepto in CONCEPTOS_DIRECTOS.get(campo, set()):
+        return ""
+    return MOTIVOS_APROXIMACION.get(
+        concepto,
+        f"el concepto {concepto} no está declarado como equivalente directo",
+    )
+
+
 def crear_verificacion(
     primarias: list[Fundamentales] | pd.DataFrame,
     secundarias: list[Fundamentales] | pd.DataFrame,
@@ -240,7 +303,18 @@ def crear_verificacion(
                 {} if secundaria is None else secundaria.get("conceptos_fuente", {})
             )
             if isinstance(conceptos, dict) and conceptos.get(campo):
-                sufijo = f"concepto secundario: {conceptos[campo]}"
+                concepto = str(conceptos[campo])
+                motivo_semantico = _motivo_aproximacion(campo, concepto)
+                if motivo_semantico and fila["estado"] in {
+                    "verificado", "advertencia", "discrepancia_material",
+                }:
+                    veredicto_numerico = fila["estado"]
+                    fila["estado"] = "aproximacion_semantica"
+                    fila["detalle"] = (
+                        f"comparación orientativa ({veredicto_numerico}); "
+                        f"{motivo_semantico}"
+                    )
+                sufijo = f"concepto secundario: {concepto}"
                 fila["detalle"] = (
                     f"{fila['detalle']}; {sufijo}" if fila["detalle"] else sufijo
                 )
@@ -264,29 +338,54 @@ def registrar_verificacion(
     if list(nuevas.columns) != COLUMNAS_VERIFICACION:
         raise ErrorVerificacion("esquema de verificación no válido")
     existentes = pd.DataFrame(columns=COLUMNAS_VERIFICACION)
+    texto_existente = ""
     if ruta.exists() and ruta.stat().st_size:
         with ruta.open(newline="", encoding="utf-8") as archivo:
-            cabecera = next(csv.reader(archivo), [])
+            texto_existente = archivo.read()
+        filas_existentes = list(csv.DictReader(texto_existente.splitlines()))
+        cabecera = (
+            list(filas_existentes[0].keys()) if filas_existentes
+            else next(csv.reader([texto_existente.splitlines()[0]]), [])
+        )
         if cabecera != COLUMNAS_VERIFICACION:
             raise ErrorVerificacion(f"esquema incompatible en {ruta}")
         existentes = pd.read_csv(ruta)
-    combinado = (
-        nuevas.copy().reset_index(drop=True)
-        if existentes.empty
-        else pd.concat([existentes, nuevas], ignore_index=True)
-    )
-    combinado = combinado.drop_duplicates(
+
+    nuevas_unicas = nuevas.drop_duplicates(
         ["snapshot_id", "ticker", "proveedor_secundario", "metrica"],
         keep="last",
     )
+    claves_existentes = set()
+    if not existentes.empty:
+        claves_existentes = set(map(tuple, existentes[
+            ["snapshot_id", "ticker", "proveedor_secundario", "metrica"]
+        ].astype(str).to_numpy()))
+    mascara_nuevas = [
+        tuple(map(str, clave)) not in claves_existentes
+        for clave in nuevas_unicas[
+            ["snapshot_id", "ticker", "proveedor_secundario", "metrica"]
+        ].to_numpy()
+    ]
+    pendientes = nuevas_unicas.loc[mascara_nuevas]
+    if pendientes.empty:
+        return existentes
+
     ruta.parent.mkdir(parents=True, exist_ok=True)
     with NamedTemporaryFile(
         "w", delete=False, dir=ruta.parent, newline="", encoding="utf-8",
     ) as temporal:
-        combinado.to_csv(temporal, index=False)
+        if texto_existente:
+            # Copia literal: ningún float ni salto de línea histórico se
+            # reserializa al incorporar el nuevo snapshot.
+            temporal.write(texto_existente)
+            if not texto_existente.endswith(("\n", "\r")):
+                temporal.write("\n")
+            pendientes.to_csv(temporal, index=False, header=False)
+        else:
+            pendientes.to_csv(temporal, index=False)
         ruta_temporal = Path(temporal.name)
     os.replace(ruta_temporal, ruta)
-    return combinado
+    return pd.read_csv(ruta)
 
 
 def imprimir_resumen_verificacion(verificacion: pd.DataFrame) -> None:

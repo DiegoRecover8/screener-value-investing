@@ -224,6 +224,9 @@ ni modifica los valores TTM del snapshot oficial.
 - `verificado`: diferencia relativa de hasta el 10 %.
 - `advertencia`: diferencia superior al 10 % y de hasta el 25 %.
 - `discrepancia_material`: diferencia superior al 25 %.
+- `aproximacion_semantica`: la cifra puede ser orientativa, pero el concepto
+  SEC tiene otro perímetro (por ejemplo, beneficio o patrimonio con
+  participaciones no controladoras, o resultado operativo frente a EBIT).
 - `no_comparable`: periodo, fecha o divisa incompatibles.
 - `sin_dato`: falta ese componente en una de las fuentes.
 - `sin_cobertura`: el ticker no está registrado literalmente en SEC o la API
@@ -236,6 +239,12 @@ Yahoo y el denominador de SEC. Durante al menos 3-4 snapshots, estos estados
 deben servir solo para aprender qué cobertura y discrepancias son habituales;
 no deben convertirse en un filtro automático. La documentación oficial de la
 fuente está en [SEC EDGAR APIs](https://www.sec.gov/search-filings/edgar-application-programming-interfaces).
+
+La clasificación semántica es conservadora: `ProfitLoss`, `Equity` y
+`OperatingIncomeLoss` conservan la diferencia porcentual, pero no se presentan
+como una discrepancia directa contra beneficio atribuible, patrimonio de los
+accionistas o EBIT. El detalle conserva el concepto XBRL exacto y la razón de
+la aproximación para que pueda revisarse manualmente.
 
 ### Universos oficiales versionados
 
