@@ -17,7 +17,6 @@ from pathlib import Path
 import altair as alt
 import pandas as pd
 import streamlit as st
-from streamlit.components.v1 import html as components_html
 
 from journal import (
     RUTA_JOURNAL_DEFECTO,
@@ -35,7 +34,11 @@ from screener_value import (
     descargar_fundamentales,
     incorporar_ranking_candidatos,
 )
-from seguimiento import RUTA_SEGUIMIENTO_DEFECTO, leer_seguimiento
+from seguimiento import (
+    RUTA_SEGUIMIENTO_DEFECTO,
+    leer_seguimiento,
+    preparar_historial_graficable,
+)
 from tradingview import (
     html_widget_tradingview,
     ticker_a_tradingview,
@@ -163,7 +166,7 @@ def _bar_conteo(df: pd.DataFrame, columna: str, etiqueta: str) -> alt.Chart:
     )
 
 
-def _grafico_tradingview(ticker: str, altura: int = 520) -> None:
+def _grafico_tradingview(ticker: str, altura: int = 680) -> None:
     """Embebe el widget gratuito de TradingView para `ticker`.
 
     Vive en Streamlit y no en el Artifact de histórico a propósito: la CSP
@@ -182,10 +185,10 @@ def _grafico_tradingview(ticker: str, altura: int = 520) -> None:
         f"Candidata `{ticker}` · símbolo de TradingView `{simbolo}` (mapeo aproximado). "
         "El widget permite cambiarlo manualmente si la cotización no está disponible.",
     ))
-    components_html(
+    st.iframe(
         html_widget_tradingview(ticker, locale=st.session_state["idioma"], altura=altura),
+        width="stretch",
         height=altura + 8,
-        scrolling=False,
     )
 
 
@@ -331,19 +334,30 @@ def _vista_historico() -> None:
         file_name=RUTA_SEGUIMIENTO_DEFECTO, mime="text/csv",
     )
 
-    seguimiento = seguimiento.copy()
-    seguimiento["senal"] = (
-        seguimiento["ticker"].astype(str) + _t(" · entry ", " · entrada ")
-        + seguimiento["fecha_entrada"].dt.strftime("%Y-%m-%d")
-    )
-    senales_con_historia = seguimiento.groupby("senal").size()
-    senales_con_historia = senales_con_historia[senales_con_historia > 1]
-    if not senales_con_historia.empty:
+    historial_graficable = preparar_historial_graficable(seguimiento)
+    if historial_graficable.empty:
+        st.info(_t(
+            "A return chart will appear after the same signal has at least two "
+            "successful price observations. Missing observations remain visible "
+            "in the table for audit purposes.",
+            "El gráfico de retorno aparecerá cuando una misma señal tenga al menos "
+            "dos observaciones de precio correctas. Las observaciones ausentes "
+            "permanecen visibles en la tabla para su auditoría.",
+        ))
+    else:
+        historial_graficable["senal"] = (
+            historial_graficable["ticker"].astype(str)
+            + _t(" · entry ", " · entrada ")
+            + historial_graficable["fecha_entrada"].dt.strftime("%Y-%m-%d %H:%M UTC")
+        )
+        senales_con_historia = sorted(historial_graficable["senal"].unique())
         senal_evolucion = st.selectbox(
             _t("View a signal's weekly history", "Ver evolución semanal de una señal"),
-            sorted(senales_con_historia.index),
+            senales_con_historia,
         )
-        serie = seguimiento[seguimiento["senal"] == senal_evolucion]
+        serie = historial_graficable[
+            historial_graficable["senal"] == senal_evolucion
+        ].sort_values("fecha_calculo")
         grafico = (
             alt.Chart(serie)
             .mark_line(point=True, color=AZUL)

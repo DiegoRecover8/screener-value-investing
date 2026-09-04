@@ -17,7 +17,7 @@ dependencies = [
 [project.optional-dependencies]
 dashboard = [
     "altair>=5.0",
-    "streamlit>=1.38",
+    "streamlit>=1.56",
 ]
 test = ["pytest>=8.0"]
 

@@ -13,6 +13,7 @@ from seguimiento import (
     extraer_candidatas_unicas,
     extraer_senales_candidatas,
     leer_seguimiento,
+    preparar_historial_graficable,
     registrar_seguimiento,
 )
 
@@ -189,6 +190,36 @@ class TestRegistrarSeguimiento(unittest.TestCase):
 
     def test_leer_seguimiento_inexistente_devuelve_vacio(self):
         self.assertTrue(leer_seguimiento("/ruta/que/no/existe.csv").empty)
+
+
+class TestHistorialGraficable(unittest.TestCase):
+    def test_excluye_senales_con_filas_repetidas_pero_sin_retorno(self):
+        seguimiento = pd.DataFrame({
+            "ticker": ["VACIA", "VACIA", "VALIDA", "VALIDA"],
+            "fecha_entrada": pd.to_datetime([
+                "2026-08-01T07:00:00Z", "2026-08-01T07:00:00Z",
+                "2026-08-02T07:00:00Z", "2026-08-02T07:00:00Z",
+            ]),
+            "fecha_calculo": pd.to_datetime([
+                "2026-08-03T07:00:00Z", "2026-08-10T07:00:00Z",
+                "2026-08-03T07:00:00Z", "2026-08-10T07:00:00Z",
+            ]),
+            "retorno_total": [np.nan, np.nan, 0.01, 0.03],
+            "max_drawdown": [np.nan, np.nan, -0.01, -0.02],
+        })
+
+        resultado = preparar_historial_graficable(seguimiento)
+
+        self.assertEqual(list(resultado["ticker"]), ["VALIDA", "VALIDA"])
+
+    def test_una_sola_observacion_valida_no_dibuja_linea(self):
+        seguimiento = pd.DataFrame({
+            "ticker": ["AAA", "AAA"],
+            "fecha_entrada": pd.to_datetime(["2026-08-01", "2026-08-01"], utc=True),
+            "fecha_calculo": pd.to_datetime(["2026-08-03", "2026-08-10"], utc=True),
+            "retorno_total": [np.nan, 0.02],
+        })
+        self.assertTrue(preparar_historial_graficable(seguimiento).empty)
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@
 **A reproducible research pipeline for fundamental equity screening**
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Streamlit 1.38+](https://img.shields.io/badge/Streamlit-1.38%2B-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![Streamlit 1.56+](https://img.shields.io/badge/Streamlit-1.56%2B-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![pandas 2.0+](https://img.shields.io/badge/pandas-2.0%2B-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 [![pytest 8.0+](https://img.shields.io/badge/pytest-8.0%2B-0A9EDC?logo=pytest&logoColor=white)](https://pytest.org/)
 [![research engine v0.1.0](https://img.shields.io/badge/research_engine-v0.1.0-234E70)](https://github.com/DiegoRecover8/screener-value-investing/releases/tag/v0.1.0)

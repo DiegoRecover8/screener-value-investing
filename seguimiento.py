@@ -221,3 +221,33 @@ def leer_seguimiento(ruta_seguimiento: str | Path = RUTA_SEGUIMIENTO_DEFECTO) ->
     if not ruta.exists():
         return pd.DataFrame()
     return pd.read_csv(ruta, parse_dates=["fecha_calculo", "fecha_entrada"])
+
+
+def preparar_historial_graficable(
+    seguimiento: pd.DataFrame,
+    minimo_observaciones: int = 2,
+) -> pd.DataFrame:
+    """Conserva solo señales con suficientes retornos observados para una línea.
+
+    Una fila de seguimiento puede tener precios todavía no disponibles y, por
+    tanto, ``retorno_total`` nulo. Esas filas son auditables y permanecen en la
+    tabla, pero no deben hacer que el dashboard ofrezca un gráfico vacío.
+    """
+    columnas_clave = ["ticker", "fecha_entrada", "fecha_calculo", "retorno_total"]
+    if (
+        seguimiento is None
+        or seguimiento.empty
+        or minimo_observaciones < 2
+        or any(columna not in seguimiento for columna in columnas_clave)
+    ):
+        return pd.DataFrame(columns=list(seguimiento.columns) if isinstance(seguimiento, pd.DataFrame) else [])
+
+    validas = seguimiento.dropna(subset=columnas_clave).copy()
+    if validas.empty:
+        return validas
+    validas = (
+        validas.sort_values("fecha_calculo")
+        .drop_duplicates(["ticker", "fecha_entrada", "fecha_calculo"], keep="last")
+    )
+    tamanos = validas.groupby(["ticker", "fecha_entrada"])["fecha_calculo"].transform("size")
+    return validas[tamanos >= minimo_observaciones].reset_index(drop=True)

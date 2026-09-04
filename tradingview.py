@@ -83,7 +83,7 @@ def html_widget_tradingview(
     *,
     locale: str = "en",
     theme: str = "light",
-    altura: int = 520,
+    altura: int = 680,
 ) -> str:
     """Genera el embed oficial del Advanced Chart sin interpolación insegura."""
     if locale not in {"en", "es"}:
@@ -107,14 +107,18 @@ def html_widget_tradingview(
         "allow_symbol_change": True,
         "calendar": False,
         "withdateranges": True,
-        "hide_side_toolbar": False,
+        "hide_side_toolbar": True,
+        "hide_top_toolbar": False,
+        "hide_legend": False,
+        "hide_volume": False,
         "save_image": False,
         "support_host": "https://www.tradingview.com",
     }
     enlace = simbolo.replace(":", "-")
     etiqueta = html.escape(f"{ticker_a_tradingview(ticker)} chart")
     return f"""
-    <div class="tradingview-widget-container" style="height:{altura}px;width:100%">
+    <div class="tradingview-widget-container"
+         style="height:{altura}px;width:100%;min-width:0;overflow:hidden">
       <div class="tradingview-widget-container__widget"
            style="height:calc(100% - 32px);width:100%"></div>
       <div class="tradingview-widget-copyright">

@@ -55,6 +55,8 @@ class TestTickerATradingview(unittest.TestCase):
         self.assertIn("embed-widget-advanced-chart.js", contenido)
         self.assertIn('"symbol": "BME:ITX"', contenido)
         self.assertIn('"locale": "es"', contenido)
+        self.assertIn('"hide_side_toolbar": true', contenido)
+        self.assertIn("height:680px", contenido)
         self.assertNotIn("tv.js", contenido)
 
 
