@@ -116,11 +116,29 @@ def html_widget_tradingview(
     }
     enlace = simbolo.replace(":", "-")
     etiqueta = html.escape(f"{ticker_a_tradingview(ticker)} chart")
-    return f"""
-    <div class="tradingview-widget-container"
-         style="height:{altura}px;width:100%;min-width:0;overflow:hidden">
+    return f"""<!doctype html>
+    <html lang="{locale}">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <style>
+        html, body {{ width:100%; height:100%; margin:0; padding:0; overflow:hidden; }}
+        .tradingview-widget-container {{ width:100%; height:100vh; min-width:0; }}
+        .tradingview-widget-container__widget {{
+          width:100%; height:calc(100vh - 32px); min-height:{altura - 32}px;
+        }}
+        .tradingview-widget-copyright {{
+          height:32px; line-height:32px; text-align:center;
+          font:13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          color:#787b86;
+        }}
+        .tradingview-widget-copyright a {{ color:#2962ff; text-decoration:none; }}
+      </style>
+    </head>
+    <body>
+    <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"
-           style="height:calc(100% - 32px);width:100%"></div>
+           style="height:calc(100vh - 32px);width:100%"></div>
       <div class="tradingview-widget-copyright">
         <a href="https://www.tradingview.com/symbols/{html.escape(enlace)}/"
            rel="noopener nofollow" target="_blank">
@@ -131,4 +149,6 @@ def html_widget_tradingview(
               src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
               async>{json.dumps(configuracion, ensure_ascii=True)}</script>
     </div>
+    </body>
+    </html>
     """

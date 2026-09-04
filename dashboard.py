@@ -358,18 +358,36 @@ def _vista_historico() -> None:
         serie = historial_graficable[
             historial_graficable["senal"] == senal_evolucion
         ].sort_values("fecha_calculo")
+        retorno_inicial = float(serie["retorno_total"].iloc[0])
+        retorno_final = float(serie["retorno_total"].iloc[-1])
+        st.caption(_t(
+            f"Zoomed vertical scale (does not start at zero) · first observation "
+            f"{retorno_inicial:.3%} · latest {retorno_final:.3%}.",
+            f"Escala vertical ampliada (no comienza en cero) · primera observación "
+            f"{retorno_inicial:.3%} · última {retorno_final:.3%}.",
+        ))
         grafico = (
             alt.Chart(serie)
-            .mark_line(point=True, color=AZUL)
+            .mark_line(point=alt.OverlayMarkDef(size=85), color=AZUL, strokeWidth=3)
             .encode(
-                x=alt.X("fecha_calculo:T", title=_t("Calculation date", "Fecha de cálculo")),
-                y=alt.Y("retorno_total:Q", title=_t("Total return", "Retorno total"), axis=alt.Axis(format="%")),
+                x=alt.X(
+                    "fecha_calculo:T",
+                    title=_t("Observation time", "Momento de observación"),
+                    axis=alt.Axis(format="%Y-%m-%d %H:%M", labelAngle=-25),
+                ),
+                y=alt.Y(
+                    "retorno_total:Q",
+                    title=_t("Total return", "Retorno total"),
+                    axis=alt.Axis(format=".2%"),
+                    scale=alt.Scale(zero=False, nice=False, padding=24),
+                ),
                 tooltip=[
                     alt.Tooltip("fecha_calculo:T", title=_t("Date", "Fecha")),
-                    alt.Tooltip("retorno_total:Q", title=_t("Return", "Retorno"), format=".1%"),
-                    alt.Tooltip("max_drawdown:Q", title=_t("Max drawdown", "Drawdown máx."), format=".1%"),
+                    alt.Tooltip("retorno_total:Q", title=_t("Return", "Retorno"), format=".3%"),
+                    alt.Tooltip("max_drawdown:Q", title=_t("Max drawdown", "Drawdown máx."), format=".3%"),
                 ],
             )
+            .properties(height=330)
         )
         st.altair_chart(grafico, width="stretch")
 
