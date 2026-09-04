@@ -59,6 +59,20 @@ class TestGenerarPrompt(unittest.TestCase):
         )
         self.assertIn("N/D", prompt)
 
+    def test_prompt_ingles_para_dashboard_bilingue(self):
+        prompt = generar_prompt_interpretacion(
+            pd.DataFrame([_candidata("ENGLISH", roic_fiable=False)]),
+            idioma="en",
+        )
+        self.assertIn("CANDIDATES (1)", prompt)
+        self.assertIn("Net debt/EBITDA", prompt)
+        self.assertIn("reliable: no", prompt)
+        self.assertIn("must not", prompt)
+
+    def test_idioma_no_soportado_se_rechaza(self):
+        with self.assertRaises(ValueError):
+            generar_prompt_interpretacion(pd.DataFrame([_candidata()]), idioma="fr")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

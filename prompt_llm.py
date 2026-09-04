@@ -40,6 +40,26 @@ dicen los números.
 {DISCLAIMER}
 """
 
+INSTRUCTIONS_EN = """\
+You are an analyst interpreting the output of a quantitative value-investing \
+screener inspired by the Magic Formula. The metrics below have already been \
+calculated; do not recalculate or dispute them.
+
+Your task:
+- Describe what stands out for each company using only these metrics.
+- Explicitly flag an unreliable ROIC or unusually high net cash as a point \
+requiring review.
+
+You must not:
+- Recommend buying, selling or holding any security.
+- Invent an investment thesis, catalysts, forecasts, sector opinions or facts \
+that are absent from the data.
+- Decide whether a company is a good or bad investment.
+
+Research and educational use only. Verify every figure against primary-source \
+financial statements before making any decision.
+"""
+
 
 def _fmt(valor, patron="{:.2f}") -> str:
     if valor is None or (isinstance(valor, float) and pd.isna(valor)):
@@ -50,11 +70,25 @@ def _fmt(valor, patron="{:.2f}") -> str:
         return str(valor)
 
 
-def _bloque_candidata(indice: int, fila: pd.Series) -> str:
+def _bloque_candidata(indice: int, fila: pd.Series, idioma: str = "es") -> str:
     fiable = fila.get("roic_fiable", True)
-    fiable_txt = "sí" if bool(fiable) else "no"
+    fiable_txt = ("yes" if bool(fiable) else "no") if idioma == "en" else ("sí" if bool(fiable) else "no")
     market_cap_eur = fila.get("market_cap_eur")
     cap_b_eur = market_cap_eur / 1e9 if pd.notna(market_cap_eur) else float("nan")
+    if idioma == "en":
+        return (
+            f"{indice}. {fila.get('ticker', 'N/A')} — {fila.get('nombre', 'N/A')} "
+            f"({fila.get('sector', 'N/A')}, {fila.get('region', 'N/A')})\n"
+            f"   P/E: {_fmt(fila.get('per'))} | EV/EBIT: {_fmt(fila.get('ev_ebit'))} | "
+            f"FCF yield: {_fmt(fila.get('fcf_yield'), '{:.1%}')} | "
+            f"ROIC: {_fmt(fila.get('roic'), '{:.1%}')} (reliable: {fiable_txt})\n"
+            f"   Net debt/EBITDA: {_fmt(fila.get('deuda_ebitda'))} | "
+            f"Interest coverage: {_fmt(fila.get('cobertura_int'))} | "
+            f"Revenue CAGR: {_fmt(fila.get('cagr_ingresos'), '{:.1%}')}\n"
+            f"   Net cash / market cap: {_fmt(fila.get('caja_neta_pct_mcap'), '{:.1%}')} | "
+            f"Market capitalization: {_fmt(cap_b_eur)} B EUR | "
+            f"Ranking score: {_fmt(fila.get('puntuacion'))}"
+        )
     return (
         f"{indice}. {fila.get('ticker', 'N/D')} — {fila.get('nombre', 'N/D')} "
         f"({fila.get('sector', 'N/D')}, {fila.get('region', 'N/D')})\n"
@@ -70,21 +104,22 @@ def _bloque_candidata(indice: int, fila: pd.Series) -> str:
     )
 
 
-def generar_prompt_interpretacion(candidatas: pd.DataFrame) -> str | None:
+def generar_prompt_interpretacion(candidatas: pd.DataFrame, idioma: str = "es") -> str | None:
     """Prompt listo para copiar y pegar sobre las candidatas que pasan el filtro.
 
     Devuelve `None` si `candidatas` está vacío -no tiene sentido generar un
     prompt sin datos que interpretar; quien llama debe manejar ese caso.
     """
+    if idioma not in {"en", "es"}:
+        raise ValueError("idioma debe ser 'en' o 'es'")
     if candidatas is None or candidatas.empty:
         return None
 
     bloques = [
-        _bloque_candidata(i, fila)
+        _bloque_candidata(i, fila, idioma)
         for i, (_, fila) in enumerate(candidatas.iterrows(), start=1)
     ]
 
-    return (
-        f"{INSTRUCCIONES}\n"
-        f"CANDIDATAS ({len(candidatas)}):\n\n" + "\n\n".join(bloques)
-    )
+    instrucciones = INSTRUCTIONS_EN if idioma == "en" else INSTRUCCIONES
+    titulo = "CANDIDATES" if idioma == "en" else "CANDIDATAS"
+    return f"{instrucciones}\n{titulo} ({len(candidatas)}):\n\n" + "\n\n".join(bloques)

@@ -2,7 +2,13 @@
 
 import unittest
 
-from tradingview import ticker_a_tradingview
+import pandas as pd
+
+from tradingview import (
+    html_widget_tradingview,
+    ticker_a_tradingview,
+    tickers_candidatos_para_grafico,
+)
 
 
 class TestTickerATradingview(unittest.TestCase):
@@ -30,6 +36,26 @@ class TestTickerATradingview(unittest.TestCase):
         # p. ej. un sufijo de país fuera de universo.txt: sin mapeo mejor
         # que inventar uno, el propio widget deja buscarlo a mano.
         self.assertEqual(ticker_a_tradingview("BHP.AX"), "BHP.AX")
+
+    def test_ticker_inseguro_se_rechaza(self):
+        with self.assertRaises(ValueError):
+            ticker_a_tradingview('AAPL<script>')
+
+    def test_selector_grafico_incluye_solo_candidatas_por_ranking(self):
+        df = pd.DataFrame([
+            {"ticker": "ZZZ", "pasa": False, "puntuacion": 1},
+            {"ticker": "BBB", "pasa": True, "puntuacion": 4},
+            {"ticker": "AAA", "pasa": True, "puntuacion": 2},
+            {"ticker": "AAA", "pasa": True, "puntuacion": 2},
+        ])
+        self.assertEqual(tickers_candidatos_para_grafico(df), ["AAA", "BBB"])
+
+    def test_widget_usa_embed_actual_y_locale(self):
+        contenido = html_widget_tradingview("ITX.MC", locale="es")
+        self.assertIn("embed-widget-advanced-chart.js", contenido)
+        self.assertIn('"symbol": "BME:ITX"', contenido)
+        self.assertIn('"locale": "es"', contenido)
+        self.assertNotIn("tv.js", contenido)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,21 @@
+<div align="center">
+
 # Value Investing Screener
+
+**A reproducible research pipeline for fundamental equity screening**
+
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit 1.38+](https://img.shields.io/badge/Streamlit-1.38%2B-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![pandas 2.0+](https://img.shields.io/badge/pandas-2.0%2B-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![pytest 8.0+](https://img.shields.io/badge/pytest-8.0%2B-0A9EDC?logo=pytest&logoColor=white)](https://pytest.org/)
+[![research engine v0.1.0](https://img.shields.io/badge/research_engine-v0.1.0-234E70)](https://github.com/DiegoRecover8/screener-value-investing/releases/tag/v0.1.0)
+[![weekly workflow](https://github.com/DiegoRecover8/screener-value-investing/actions/workflows/screener_semanal.yml/badge.svg)](https://github.com/DiegoRecover8/screener-value-investing/actions/workflows/screener_semanal.yml)
+
+[English](README.md) · [Español](README.es.md)
+
+</div>
+
+---
 
 An educational fundamental equity screener inspired by Joel Greenblatt's
 *Magic Formula*, with additional controls for balance-sheet quality, accounting
@@ -10,6 +27,16 @@ and quality metrics, applies an auditable filtering rubric and ranks only the
 companies that pass every required criterion. Rejected companies remain in the
 output with their metrics and exact rejection reasons.
 
+| | Research property | Implementation |
+|---|---|---|
+| 🧪 | **Testable methodology** | Pure metric and filtering functions with offline regression tests |
+| 🔎 | **Auditable decisions** | Every rejected company keeps its values and exact rejection reasons |
+| 🧬 | **Reproducible population** | Immutable universe files, configuration records and SHA-256 controls |
+| ⏱️ | **Point-in-time history** | Append-only snapshots and signal tracking without retrospective re-screening |
+| 🛡️ | **Provider-aware quality** | Period, date, currency, completeness and selective SEC cross-check controls |
+
+---
+
 > [!WARNING]
 > **This is not financial advice.** This repository is an educational and
 > research project. Its results are not recommendations to buy, sell or hold any
@@ -18,7 +45,7 @@ output with their metrics and exact rejection reasons.
 > Investment decisions remain the sole responsibility of the person making
 > them.
 
-## Project scope
+## Research scope
 
 This repository is the research engine and audit trail. It contains:
 
@@ -31,6 +58,12 @@ This repository is the research engine and audit trail. It contains:
 - an experimental Streamlit dashboard;
 - a side-effect-free Python API for external user interfaces.
 
+The central research question is deliberately narrow: **which companies in a
+predefined, reproducible equity population satisfy all stated value, quality,
+leverage and growth constraints at a given observation time?** The software
+does not estimate intrinsic value, forecast returns or automate an investment
+decision.
+
 Interactive or private applications should consume the public Python boundary
 in `screener_api.py`. They must not write to the official journal or turn an
 ad-hoc user analysis into an official snapshot.
@@ -38,7 +71,23 @@ ad-hoc user analysis into an official snapshot.
 The previous full Spanish documentation is preserved in
 [`README.es.md`](README.es.md).
 
-## How it works
+## System design
+
+```mermaid
+flowchart LR
+    D[Yahoo discovery] --> U[Versioned universe]
+    U --> P[Provider normalization]
+    P --> Q[Data-quality gates]
+    Q --> M[Metrics and filters]
+    M --> C[Candidate ranking]
+    C --> J[Append-only journal]
+    C -. shadow check .-> S[SEC Company Facts]
+    J --> T[Signal tracking]
+    M --> A[Side-effect-free API]
+    J --> UI[Bilingual Streamlit lab]
+```
+
+### Pipeline
 
 1. `universos_yfinance.py` discovers equities through separate Yahoo Finance
    queries for every region × sector pair. This avoids the geographical bias
@@ -58,7 +107,9 @@ The previous full Spanish documentation is preserved in
 8. `prompt_llm.py` creates a copyable, constrained prompt that describes the
    calculated results without inventing an investment thesis.
 
-## Installation
+---
+
+## Reproduce locally
 
 Python 3.10 or later is recommended.
 
@@ -73,6 +124,12 @@ Run the complete offline test suite:
 
 ```bash
 python -m pytest -v
+```
+
+Validate the currently active population independently of network access:
+
+```bash
+python gestionar_universos.py validar
 ```
 
 ## Basic usage
@@ -122,6 +179,8 @@ This interface:
 
 `analyze_fundamentals()` exposes the deterministic part of the pipeline for
 tests, cached data and future API workers.
+
+---
 
 ## Methodology
 
@@ -183,7 +242,35 @@ A lower score represents a stronger combined position on those two dimensions.
 - **The system is daily/weekly, not real time.** Fundamental analysis does not
   require intraday streaming.
 
+---
+
 ## Versioned universes
+
+### Current reference population
+
+| Property | Value |
+|---|---|
+| Active ID | `uv_2026q3_r03` |
+| Members | 670 unique ticker symbols |
+| Asset class | Listed equities |
+| Coverage design | 22 developed-market regions × 9 non-financial sectors |
+| Discovery snapshot | 1,419 symbols; all 198 requested buckets completed |
+| Selection | Deterministic regional quotas and within-bucket rank |
+| Refinement | 119 observed duplicate listings removed before download and replaced deterministically |
+| Integrity | Member count, canonical schema and SHA-256 verified before an official run |
+
+The latest effective official observation (`2026-W36`) requested and downloaded
+all 670 members. Runtime issuer de-duplication retained 645 evaluated companies:
+443 were classified as data-quality `ok`, 196 as `review`, and 6 as `unusable`.
+The 25 additional representations collapsed at runtime are visible in the
+execution control rather than hidden. They are a documented target for a later
+universe refinement, not grounds for rewriting this historical version.
+
+The quotas improve geographic and sector breadth, but they do **not** claim to
+replicate a market-cap-weighted index. Financial companies are excluded because
+bank and insurer statements require sector-specific leverage and cash-flow
+definitions. Membership is a documented sampling frame for this methodology,
+not a statement that every eligible global security is represented.
 
 The scheduled run never rebuilds its target universe automatically. It resolves
 the single `active` entry in `universos/manifest.json`, validates the referenced
@@ -198,7 +285,7 @@ deleted.
 Useful commands:
 
 ```bash
-python gestionar_universos.py listar
+python gestionar_universos.py mostrar-activo
 python gestionar_universos.py validar
 python gestionar_universos.py comparar OLD_UNIVERSE_ID NEW_UNIVERSE_ID
 python gestionar_universos.py activar NEW_UNIVERSE_ID
@@ -208,11 +295,21 @@ Discovery outputs under `universos/descubrimiento/` are never official by
 themselves. Selection and refinement reports retain the rules and provenance
 needed to reproduce a draft.
 
+---
+
 ## Weekly automation and audit trail
 
 `.github/workflows/screener_semanal.yml` runs every Monday at 07:00 UTC and can
 also be started manually. A manual run must be classified as either a test or
 an official run.
+
+**No weekly click is required.** The `schedule` trigger launches the official
+run automatically from the default branch. `workflow_dispatch` exists for
+controlled tests and explicit official revisions. As documented for GitHub's
+[`schedule` event](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule),
+jobs may be delayed under platform load; in a public repository schedules are
+also disabled after 60 days without repository activity, so the Actions page
+should be part of the maintenance review.
 
 The workflow:
 
@@ -291,18 +388,27 @@ recomputed using today's fundamentals, preventing look-ahead bias.
 python ejecutar_seguimiento.py journal_candidatos.csv seguimiento_candidatas.csv
 ```
 
-## Streamlit dashboard
+---
 
-The existing dashboard is an experimental research interface:
+## Bilingual Streamlit research lab
+
+The local dashboard is a research interface, not a hosted advisory product:
 
 ```bash
 streamlit run dashboard.py
 ```
 
-It supports manual or predefined universes, cached downloads, threshold sliders,
-filterable results, composition charts, a TradingView widget, historical views
-and a copyable LLM prompt. It is intentionally not the production web
-application boundary; future private interfaces should use `screener_api.py`.
+English is the default language and the 🇬🇧/🇪🇸 controls switch the
+session to Spanish. It supports manual, discovery and active official universes,
+cached downloads, threshold sliders, filterable results, composition charts,
+historical snapshots and a constrained LLM prompt. The
+[TradingView Advanced Chart](https://www.tradingview.com/widget-docs/widgets/charts/advanced-chart)
+selector is intentionally limited to actual candidates and orders them by the
+screener ranking; it never chooses an arbitrary rejected ticker.
+
+The interface is intentionally separate from the official write path. Browsing
+history is read-only, and a live analysis does not become an official snapshot.
+External or private applications should consume `screener_api.py`.
 
 ## Data-source limitations
 
@@ -324,6 +430,8 @@ The software is intended for research and educational use. Before deploying any
 public or commercial service, independently review the data providers' current
 terms, licensing and redistribution requirements.
 
+---
+
 ## Repository map
 
 | Path | Responsibility |
@@ -338,13 +446,13 @@ terms, licensing and redistribution requirements.
 | `seguimiento.py` | Signal lifecycle and performance tracking |
 | `verificacion_candidatas.py` | Selective second-source comparison |
 | `prompt_llm.py` | Constrained interpretation prompt |
-| `dashboard.py` | Experimental Streamlit interface |
+| `dashboard.py` | Bilingual local Streamlit research interface |
 | `test_*.py` | Offline unit, regression and contract tests |
 
 ## Roadmap status
 
 - [x] Reproducible metric engine and offline regression tests.
-- [x] Experimental Streamlit dashboard.
+- [x] Bilingual Streamlit research dashboard with candidate-linked charts.
 - [x] Weekly GitHub Actions execution and append-only journal.
 - [x] Longitudinal tracking without look-ahead bias.
 - [x] Copyable, provider-neutral LLM prompt.
@@ -352,8 +460,8 @@ terms, licensing and redistribution requirements.
 - [x] Pre-download refinement of observed dual listings.
 - [x] Primary-provider quality controls and selective SEC shadow verification.
 - [x] Stable JSON-compatible application API.
-- [ ] Tag the first stable research-engine release.
-- [ ] Build the separate private web interface against a pinned engine release.
+- [x] Tag the first stable research-engine release (`v0.1.0`).
+- [x] Expose a stable boundary for a separately deployed private web interface.
 
 ## Contributing and responsible use
 
