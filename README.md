@@ -227,6 +227,16 @@ A lower score represents a stronger combined position on those two dimensions.
   explicit reason instead of being imputed or silently ignored.
 - **Invested capital does not subtract cash.** Cash already improves EV/EBIT;
   subtracting it again from ROIC would reward the same balance-sheet fact twice.
+- **EV uses only financial debt and available liquidity.** The cash offset is
+  cash, cash equivalents and short-term investments; it deliberately excludes
+  restricted cash. Deferred revenue, contract liabilities, customer advances
+  and `value in circulation` are operating obligations, so they are neither
+  added to debt nor subtracted from standard EV. Issuers whose business model
+  depends on customer float require a separate primary-source review instead
+  of a universal mechanical adjustment. This preserves the standard
+  market-cap-plus-debt-minus-cash definition and consistency between EV and
+  operating EBIT ([Damodaran data definitions](https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/variable.htm),
+  [IFRS 15](https://www.ifrs.org/issued-standards/list-of-standards/ifrs-15-revenue-from-contracts-with-customers/)).
 - **P/E peer medians use sector × comparable region.** If the regional group is
   too small, the calculation falls back to the global sector median.
 - **Extreme ROIC is flagged, not celebrated.** `roic_fiable=False` marks values

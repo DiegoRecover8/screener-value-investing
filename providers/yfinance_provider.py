@@ -18,6 +18,12 @@ from .base import TASA_IMPOSITIVA_DEFECTO, Fundamentales
 
 
 ANTIGUEDAD_MAXIMA_DIAS = 550
+CAMPOS_DEUDA_FINANCIERA_EV = ("Total Debt",)
+CAMPOS_LIQUIDEZ_EV = (
+    "Cash Cash Equivalents And Short Term Investments",
+    "Cash And Cash Equivalents",
+    "Cash",
+)
 CAMPOS_ESENCIALES = {
     "market_cap": "capitalización",
     "net_income": "beneficio neto",
@@ -259,14 +265,15 @@ class ProveedorYFinance:
                     fin_periodo, ["EBITDA", "Normalized EBITDA"],
                 )
                 fcf = _valor_reciente(cf_periodo, ["Free Cash Flow"])
-                deuda, deuda_inicio = _valor_reciente_y_anterior(bs, ["Total Debt"])
+                # EV netea solo deuda financiera contra liquidez disponible.
+                # Caja restringida y pasivos operativos (ingresos diferidos,
+                # anticipos o value in circulation) requieren un análisis
+                # sectorial separado; no son sustitutos de caja ni deuda.
+                deuda, deuda_inicio = _valor_reciente_y_anterior(
+                    bs, CAMPOS_DEUDA_FINANCIERA_EV,
+                )
                 caja, caja_inicio = _valor_reciente_y_anterior(
-                    bs,
-                    [
-                        "Cash Cash Equivalents And Short Term Investments",
-                        "Cash And Cash Equivalents",
-                        "Cash",
-                    ],
+                    bs, CAMPOS_LIQUIDEZ_EV,
                 )
                 equity, equity_inicio = _valor_reciente_y_anterior(
                     bs, ["Stockholders Equity", "Total Equity Gross Minority Interest"],

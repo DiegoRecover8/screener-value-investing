@@ -220,6 +220,16 @@ puntuación suma el rango descendente de ROIC y el de rentabilidad de beneficios
 - **Los datos ausentes nunca superan un filtro:** se descartan explícitamente.
 - **El capital invertido no resta el efectivo:** hacerlo premiaría dos veces el
   mismo hecho, pues el efectivo ya mejora EV/EBIT.
+- **El EV usa solo deuda financiera y liquidez disponible:** la caja que se
+  netea comprende efectivo, equivalentes e inversiones a corto plazo, pero
+  excluye expresamente la caja restringida. Los ingresos diferidos, pasivos de
+  contrato, anticipos de clientes y `value in circulation` son obligaciones
+  operativas: no se añaden a la deuda ni se restan del EV estándar. Los emisores
+  cuyo modelo depende del *float* de clientes necesitan una revisión separada
+  de fuentes primarias, no un ajuste mecánico universal. Esto conserva la
+  definición capitalización-más-deuda-menos-caja y la coherencia entre EV y EBIT
+  operativo ([definiciones de Damodaran](https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/variable.htm),
+  [NIIF 15](https://www.ifrs.org/issued-standards/list-of-standards/ifrs-15-revenue-from-contracts-with-customers/)).
 - **Las medianas de PER usan sector × región comparable:** si el grupo es pequeño,
   se usa la mediana global del sector.
 - **Un ROIC extremo se señala, no se celebra:** `roic_fiable=False` identifica

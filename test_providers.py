@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 from providers import ProveedorYFinance
-from screener_value import descargar_fundamentales
+from screener_value import calcular_metricas, descargar_fundamentales
 
 
 def _estado_resultados(fechas, ingresos):
@@ -109,6 +109,41 @@ class TestProveedorYFinance(unittest.TestCase):
         self.assertEqual(datos.ingresos, 1_000.0)
         self.assertEqual(datos.fecha_resultados, "2025-12-31")
         self.assertEqual(datos.fecha_flujo_caja, "2025-12-31")
+
+    def test_ev_no_netea_caja_restringida_ni_pasivos_operativos(self):
+        """El float de clientes no se trata como caja o deuda financiera."""
+        ticker = _TickerCompleto()
+        ticker.info = {**ticker.info, "marketCap": 10_000.0}
+        ticker.balance_sheet = ticker.balance_sheet.copy()
+        ticker.balance_sheet.loc["Restricted Cash"] = [900.0, 800.0]
+        ticker.balance_sheet.loc["Current Deferred Revenue"] = [700.0, 600.0]
+        ticker.balance_sheet.loc["Value In Circulation"] = [3_000.0, 2_500.0]
+        ticker.balance_sheet.loc["Customer Advances"] = [400.0, 350.0]
+
+        datos = _proveedor(_Cliente(ticker=ticker)).descargar(["FLOAT"])[0]
+        metricas = calcular_metricas([datos])
+
+        self.assertEqual(datos.total_debt, 200.0)
+        self.assertEqual(datos.cash, 100.0)
+        self.assertAlmostEqual(
+            metricas.iloc[0]["ev_ebit"],
+            (10_000.0 + 200.0 - 100.0) / 140.0,
+        )
+
+    def test_caja_restringida_sola_no_se_presenta_como_liquidez_ev(self):
+        ticker = _TickerCompleto()
+        ticker.balance_sheet = ticker.balance_sheet.drop(
+            index=["Cash And Cash Equivalents"],
+        )
+        ticker.balance_sheet.loc[
+            "Cash Cash Equivalents Restricted Cash And Restricted Cash Equivalents"
+        ] = [1_000.0, 900.0]
+
+        datos = _proveedor(_Cliente(ticker=ticker)).descargar(["RESTRICTED"])[0]
+
+        self.assertTrue(np.isnan(datos.cash))
+        self.assertEqual(datos.calidad_datos, "revisar")
+        self.assertIn("caja", datos.incidencias_datos)
 
     def test_marca_cuentas_obsoletas_para_revision(self):
         ticker = _TickerCompleto()
