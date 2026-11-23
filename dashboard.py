@@ -27,8 +27,10 @@ from journal import (
 )
 from prompt_llm import generar_prompt_interpretacion
 from screener_value import (
+    TASA_EXITO_DESCARGA_MINIMA_EN_VIVO,
     UMBRALES,
     descargar_fundamentales,
+    diagnosticar_descarga,
     evaluar_fundamentales,
 )
 from seguimiento import (
@@ -127,8 +129,21 @@ def _tickers_universo_cacheado(nombre: str, max_por_bucket: int) -> list[str]:
 
 @st.cache_data(show_spinner=False, ttl=86_400)
 def _fundamentales_cacheados(tickers: tuple[str, ...]) -> pd.DataFrame:
-    datos = descargar_fundamentales(list(tickers))
-    return pd.DataFrame([asdict(d) for d in datos])
+    datos = pd.DataFrame([asdict(d) for d in descargar_fundamentales(list(tickers))])
+    diagnostico = diagnosticar_descarga(datos)
+    if diagnostico["fallo_proveedor"]:
+        # st.cache_data no guarda excepciones: un bloqueo temporal de Yahoo
+        # no queda en caché 24 h y el siguiente intento vuelve a descargar.
+        raise ErrorProveedorDatos(diagnostico)
+    return datos
+
+
+class ErrorProveedorDatos(RuntimeError):
+    """La mayoría de descargas falló; el resultado no es un análisis válido."""
+
+    def __init__(self, diagnostico: dict) -> None:
+        super().__init__(diagnostico["ejemplo_error"])
+        self.diagnostico = diagnostico
 
 
 @st.cache_data(show_spinner=False, ttl=86_400)
@@ -590,8 +605,25 @@ if st.sidebar.button(_t("🔄 Download & calculate", "🔄 Descargar y calcular"
             "Downloading fundamentals (this may take several minutes)…",
             "Descargando fundamentales (puede tardar varios minutos)…",
         )):
-            st.session_state["raw_df"] = _fundamentales_cacheados(tuple(tickers))
-        st.session_state["n_tickers"] = len(tickers)
+            try:
+                st.session_state["raw_df"] = _fundamentales_cacheados(tuple(tickers))
+                st.session_state["n_tickers"] = len(tickers)
+            except ErrorProveedorDatos as error:
+                st.session_state.pop("raw_df", None)
+                d = error.diagnostico
+                st.error(_t(
+                    f"The data provider failed for {d['errores']} of {d['total']} "
+                    f"tickers (minimum success rate {TASA_EXITO_DESCARGA_MINIMA_EN_VIVO:.0%}), "
+                    "so no analysis is shown. Yahoo Finance may be rate-limiting or "
+                    "blocking this server; try again later or with fewer tickers. "
+                    "Nothing was cached.",
+                    f"El proveedor de datos falló en {d['errores']} de {d['total']} "
+                    f"tickers (tasa mínima de éxito {TASA_EXITO_DESCARGA_MINIMA_EN_VIVO:.0%}), "
+                    "así que no se muestra ningún análisis. Puede que Yahoo Finance esté "
+                    "limitando o bloqueando este servidor; inténtalo más tarde o con menos "
+                    "tickers. No se ha guardado nada en caché.",
+                ))
+                st.caption(_t("First error: ", "Primer error: ") + d["ejemplo_error"][:300])
 
 st.sidebar.divider()
 
@@ -605,6 +637,14 @@ if "raw_df" not in st.session_state:
     st.stop()
 
 raw_df = st.session_state["raw_df"]
+_diagnostico = diagnosticar_descarga(raw_df)
+if _diagnostico["errores"]:
+    st.warning(_t(
+        f"{_diagnostico['errores']} of {_diagnostico['total']} tickers could not be "
+        "downloaded; they appear as discarded with the reason \"descarga\".",
+        f"No se pudieron descargar {_diagnostico['errores']} de {_diagnostico['total']} "
+        "tickers; aparecen como descartados con el motivo \"descarga\".",
+    ))
 st.caption(_t(
     f"Fundamentals loaded for {st.session_state['n_tickers']} requested tickers.",
     f"Fundamentales cargados para {st.session_state['n_tickers']} tickers solicitados.",

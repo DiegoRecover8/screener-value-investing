@@ -597,6 +597,37 @@ def evaluar_fundamentales(
     return resultado
 
 
+# Por debajo de esta proporción de descargas correctas, un análisis en vivo
+# se trata como fallo del proveedor (bloqueo o límite de peticiones) y no
+# como un resultado: mostraría "cero candidatas" por un problema de red.
+TASA_EXITO_DESCARGA_MINIMA_EN_VIVO = 0.5
+
+
+def diagnosticar_descarga(datos: pd.DataFrame) -> dict:
+    """Resume cuántas descargas fallaron y con qué error, sin red.
+
+    Devuelve ``total``, ``errores``, ``tasa_exito``, ``ejemplo_error`` (el
+    primer mensaje, para mostrarlo) y ``fallo_proveedor``: verdadero cuando
+    la tasa de éxito no alcanza ``TASA_EXITO_DESCARGA_MINIMA_EN_VIVO``.
+    """
+    total = len(datos)
+    if total == 0 or "error_descarga" not in datos:
+        return {
+            "total": total, "errores": 0, "tasa_exito": 1.0 if total else 0.0,
+            "ejemplo_error": "", "fallo_proveedor": total == 0,
+        }
+    mensajes = datos["error_descarga"].fillna("").astype(str).str.strip()
+    errores = int(mensajes.ne("").sum())
+    tasa_exito = (total - errores) / total
+    return {
+        "total": total,
+        "errores": errores,
+        "tasa_exito": tasa_exito,
+        "ejemplo_error": next((m for m in mensajes if m), ""),
+        "fallo_proveedor": tasa_exito < TASA_EXITO_DESCARGA_MINIMA_EN_VIVO,
+    }
+
+
 def descargar_fundamentales(
     tickers: list[str],
     proveedor: ProveedorFundamentales | None = None,
