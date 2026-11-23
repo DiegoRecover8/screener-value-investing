@@ -11,10 +11,15 @@ DISCIPLINA CONTRA EL SESGO RETROSPECTIVO (look-ahead bias):
 1. La decisión de qué es candidata nunca se recalcula. `journal.py` ya
    congela ese veredicto en el momento en que se emitió; este módulo solo
    LEE esas fechas, nunca las recalcula con fundamentales de hoy.
-2. El precio de entrada es el primer cierre ajustado disponible EN o
-   DESPUÉS de la fecha en que el ticker apareció por primera vez como
-   candidata -nunca un precio anterior a esa fecha, que supondría usar
-   información que todavía no existía cuando se emitió la señal.
+2. El precio de entrada es el primer cierre ajustado de una sesión
+   POSTERIOR al día en que se emitió la señal (ver
+   `fecha_inicio_precios`). La ejecución programada se retrasa a menudo
+   hasta la tarde (UTC), cuando las bolsas europeas ya han cerrado: usar el
+   cierre de ese mismo día supondría "comprar" a un precio ya conocido antes
+   de que existiera la señal. Las señales anteriores a
+   `FECHA_REGLA_ENTRADA_SESION_SIGUIENTE` conservan la regla con la que se
+   registraron (primer cierre EN o DESPUÉS de la fecha de la señal), para
+   que su serie de seguimiento no cambie de base a mitad de historia.
 3. Si un ticker vuelve a aparecer como candidata en semanas posteriores sin
    haber dejado de serlo, no se abre una entrada nueva: sigue siendo la
    misma señal original, con la misma fecha de entrada. Si existe una
@@ -32,6 +37,11 @@ import numpy as np
 import pandas as pd
 
 RUTA_SEGUIMIENTO_DEFECTO = "seguimiento_candidatas.csv"
+
+# Señales emitidas desde esta fecha (UTC) entran al cierre de la sesión
+# siguiente. Es un corte fijo y versionado: el seguimiento se recalcula
+# entero cada semana y las señales anteriores deben mantener su base.
+FECHA_REGLA_ENTRADA_SESION_SIGUIENTE = pd.Timestamp("2026-11-24", tz="UTC")
 
 COLUMNAS_CANDIDATA = [
     "ticker", "nombre", "sector", "region", "fecha_entrada",
@@ -134,21 +144,38 @@ def calcular_rendimiento(precios: pd.Series) -> dict:
     }
 
 
+def fecha_inicio_precios(fecha_entrada) -> pd.Timestamp:
+    """Primer día (naive, a medianoche) cuyo cierre puede usarse como entrada.
+
+    Para señales desde `FECHA_REGLA_ENTRADA_SESION_SIGUIENTE` es el día
+    siguiente a la señal: el primer cierre disponible desde entonces
+    corresponde a la siguiente sesión hábil (fines de semana y festivos se
+    saltan solos al no haber cotización). Para señales anteriores es el
+    propio día de la señal, la regla con la que se registraron.
+    """
+    momento = pd.Timestamp(fecha_entrada)
+    momento = (
+        momento.tz_localize("UTC") if momento.tzinfo is None
+        else momento.tz_convert("UTC")
+    )
+    dia = momento.normalize().tz_localize(None)
+    if momento >= FECHA_REGLA_ENTRADA_SESION_SIGUIENTE:
+        return dia + pd.Timedelta(days=1)
+    return dia
+
+
 def descargar_precios_ajustados(
     ticker: str, fecha_entrada, hasta: pd.Timestamp | None = None,
 ) -> pd.Series:  # pragma: no cover - red
-    """Cierre ajustado (splits + dividendos) desde `fecha_entrada` hasta hoy.
+    """Cierre ajustado (splits + dividendos) desde la entrada hasta hoy.
 
-    Nunca devuelve precios anteriores a `fecha_entrada`: es la barrera que
-    impide que el cálculo de rendimiento use información previa a la fecha
-    en que el ticker se convirtió en candidata.
+    Nunca devuelve precios anteriores a `fecha_inicio_precios(fecha_entrada)`:
+    es la barrera que impide que el cálculo de rendimiento use información
+    previa a la emisión de la señal.
     """
     import yfinance as yf
 
-    inicio = pd.Timestamp(fecha_entrada)
-    if inicio.tzinfo is not None:
-        inicio = inicio.tz_localize(None)
-    inicio = inicio.normalize()
+    inicio = fecha_inicio_precios(fecha_entrada)
     hasta = pd.Timestamp.now(tz="UTC") if hasta is None else pd.Timestamp(hasta)
     if hasta.tzinfo is not None:
         hasta = hasta.tz_localize(None)

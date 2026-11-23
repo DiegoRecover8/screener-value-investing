@@ -9,7 +9,9 @@ import pandas as pd
 
 from journal import filtrar_journal_oficial
 from seguimiento import (
+    FECHA_REGLA_ENTRADA_SESION_SIGUIENTE,
     calcular_rendimiento,
+    fecha_inicio_precios,
     extraer_candidatas_unicas,
     extraer_senales_candidatas,
     leer_seguimiento,
@@ -21,6 +23,50 @@ from seguimiento import (
 def _serie(precios: list[float], inicio="2026-01-05") -> pd.Series:
     fechas = pd.date_range(inicio, periods=len(precios), freq="B")
     return pd.Series(precios, index=fechas)
+
+
+class TestFechaInicioPrecios(unittest.TestCase):
+    """Regla de entrada: cierre de la sesión siguiente a la señal."""
+
+    def test_senal_nueva_entra_al_dia_siguiente(self):
+        # Lunes a las 17:06 UTC: el cierre europeo de ese día ya se conocía.
+        self.assertEqual(
+            fecha_inicio_precios("2026-11-30T17:06:22+00:00"),
+            pd.Timestamp("2026-12-01"),
+        )
+
+    def test_senal_de_viernes_salta_al_primer_cierre_disponible(self):
+        # El inicio es el sábado; al no cotizar, el primer cierre es el lunes.
+        inicio = fecha_inicio_precios("2026-12-04T16:00:00Z")
+        cierres = pd.Series(
+            [10.0, 11.0, 12.0],
+            index=pd.to_datetime(["2026-12-04", "2026-12-07", "2026-12-08"]),
+        )
+        self.assertEqual(cierres[cierres.index >= inicio].index[0],
+                         pd.Timestamp("2026-12-07"))
+
+    def test_senales_anteriores_al_corte_conservan_su_regla(self):
+        self.assertEqual(
+            fecha_inicio_precios("2026-11-16T17:06:22.029654+00:00"),
+            pd.Timestamp("2026-11-16"),
+        )
+
+    def test_el_corte_es_inclusivo_y_acepta_fechas_sin_zona(self):
+        self.assertEqual(
+            fecha_inicio_precios(FECHA_REGLA_ENTRADA_SESION_SIGUIENTE),
+            pd.Timestamp("2026-11-25"),
+        )
+        self.assertEqual(
+            fecha_inicio_precios("2026-11-24 07:30:00"),
+            pd.Timestamp("2026-11-25"),
+        )
+
+    def test_convierte_otras_zonas_a_utc_antes_de_elegir_el_dia(self):
+        # 23:30 en Nueva York del 30/11 ya es 1/12 en UTC.
+        self.assertEqual(
+            fecha_inicio_precios("2026-11-30T23:30:00-05:00"),
+            pd.Timestamp("2026-12-02"),
+        )
 
 
 class TestCalcularRendimiento(unittest.TestCase):

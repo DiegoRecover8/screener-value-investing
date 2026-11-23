@@ -9,7 +9,7 @@
 [![pandas 2.0+](https://img.shields.io/badge/pandas-2.0%2B-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 [![pytest 8.0+](https://img.shields.io/badge/pytest-8.0%2B-0A9EDC?logo=pytest&logoColor=white)](https://pytest.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![research engine v0.1.0](https://img.shields.io/badge/research_engine-v0.1.0-234E70)](https://github.com/DiegoRecover8/screener-value-investing/releases/tag/v0.1.0)
+[![research engine v0.2.0](https://img.shields.io/badge/research_engine-v0.2.0-234E70)](https://github.com/DiegoRecover8/screener-value-investing/releases/tag/v0.2.0)
 [![weekly workflow](https://github.com/DiegoRecover8/screener-value-investing/actions/workflows/screener_semanal.yml/badge.svg)](https://github.com/DiegoRecover8/screener-value-investing/actions/workflows/screener_semanal.yml)
 
 [English](README.md) · [Español](README.es.md)
@@ -310,8 +310,9 @@ needed to reproduce a draft.
 
 ## Weekly automation and audit trail
 
-`.github/workflows/screener_semanal.yml` runs every Monday at 07:00 UTC and can
-also be started manually. A manual run must be classified as either a test or
+`.github/workflows/screener_semanal.yml` is scheduled every Monday at 07:17 UTC
+(GitHub may delay the start by several hours) and can also be started
+manually. A manual run must be classified as either a test or
 an official run.
 
 **No weekly click is required.** The `schedule` trigger launches the official
@@ -387,9 +388,13 @@ shareholder equity or EBIT. See the official
 ## Longitudinal tracking
 
 `ejecutar_seguimiento.py` reads only effective official snapshots, identifies
-valid transitions into a passing state and tracks each signal from its first
-available adjusted close on or after entry. A later re-entry creates a new
-signal. Missing downloads do not manufacture exits.
+valid transitions into a passing state and tracks each signal from the adjusted
+close of the trading session after it was issued, so a close already known
+when the signal was generated (runs may finish after the European close) is
+never used as the entry. Signals issued before 2026-11-24 keep the rule they
+were recorded with (first close on or after the signal date) so their tracking
+base does not change. A later re-entry creates a new signal. Missing downloads
+do not manufacture exits.
 
 It records time-weighted return and maximum drawdown in the append-only
 `seguimiento_candidatas.csv`. Historical candidate decisions are never

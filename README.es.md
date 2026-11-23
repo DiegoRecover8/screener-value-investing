@@ -9,7 +9,7 @@
 [![pandas 2.0+](https://img.shields.io/badge/pandas-2.0%2B-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 [![pytest 8.0+](https://img.shields.io/badge/pytest-8.0%2B-0A9EDC?logo=pytest&logoColor=white)](https://pytest.org/)
 [![Licencia: MIT](https://img.shields.io/badge/Licencia-MIT-yellow.svg)](LICENSE)
-[![motor de investigación v0.1.0](https://img.shields.io/badge/research_engine-v0.1.0-234E70)](https://github.com/DiegoRecover8/screener-value-investing/releases/tag/v0.1.0)
+[![motor de investigación v0.2.0](https://img.shields.io/badge/research_engine-v0.2.0-234E70)](https://github.com/DiegoRecover8/screener-value-investing/releases/tag/v0.2.0)
 [![workflow semanal](https://github.com/DiegoRecover8/screener-value-investing/actions/workflows/screener_semanal.yml/badge.svg)](https://github.com/DiegoRecover8/screener-value-investing/actions/workflows/screener_semanal.yml)
 
 [English](README.md) · [Español](README.es.md)
@@ -293,8 +293,9 @@ Los informes conservan las reglas y procedencia necesarias para reproducir un bo
 
 ## Automatización semanal y registro de auditoría
 
-`.github/workflows/screener_semanal.yml` se ejecuta cada lunes a las 07:00 UTC y
-puede iniciarse manualmente como prueba o ejecución oficial.
+`.github/workflows/screener_semanal.yml` se programa cada lunes a las 07:17 UTC
+(GitHub puede retrasar el inicio varias horas) y puede iniciarse manualmente
+como prueba o ejecución oficial.
 
 **No hace falta intervenir cada semana.** `schedule` inicia automáticamente la
 ejecución oficial desde la rama predeterminada; `workflow_dispatch` permite
@@ -357,7 +358,11 @@ como equivalentes directos. Consulta la
 ## Seguimiento longitudinal
 
 `ejecutar_seguimiento.py` lee snapshots oficiales efectivos, identifica entradas
-válidas y sigue cada señal desde el primer cierre ajustado disponible. Una
+válidas y sigue cada señal desde el cierre ajustado de la sesión siguiente a
+su emisión. Así no se usa como entrada un cierre que ya se conocía cuando se
+generó la señal (la ejecución puede producirse tras el cierre europeo). Las
+señales anteriores al 24/11/2026 conservan la regla con la que se registraron
+(primer cierre desde el día de la señal) para no cambiar su base. Una
 reentrada crea una señal nueva y una descarga ausente no fabrica una salida.
 
 Registra rentabilidad ponderada por tiempo y *maximum drawdown* en el archivo
