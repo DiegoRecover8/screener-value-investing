@@ -6,6 +6,13 @@ follow [Semantic Versioning](https://semver.org/); while the project is in
 
 ## [Unreleased]
 
+### Fixed
+
+- Dashboard: when most downloads fail (for example, Yahoo blocking a cloud
+  server), it now shows the provider error instead of a "0 candidates"
+  analysis, and the failure is no longer cached for 24 hours. Isolated
+  failures show a warning with the count.
+
 ### Changed
 
 - `historico.json` is written as compact JSON (no indentation): about 20 %
@@ -14,6 +21,9 @@ follow [Semantic Versioning](https://semver.org/); while the project is in
 
 ### Internal
 
+- `screener_value.diagnosticar_descarga()`: offline summary of failed
+  downloads, used by the dashboard.
+- README section on deploying the dashboard to Streamlit Community Cloud.
 - Tests moved to `tests/`; a session-level fixture pins the working
   directory, so the suite also runs when launched from another folder.
 

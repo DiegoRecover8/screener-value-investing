@@ -19,6 +19,7 @@ from screener_value import (
     fcf_yield,
     capital_invertido,
     deduplicar_listings,
+    diagnosticar_descarga,
     evaluar_fundamentales,
     incorporar_ranking_candidatos,
     resumir_incidencias_calidad,
@@ -477,6 +478,34 @@ class TestPipelineUnico(unittest.TestCase):
                 "datos_inutilizables": 1,
             },
         )
+
+
+class TestDiagnosticoDescarga(unittest.TestCase):
+    def _datos(self, errores):
+        return pd.DataFrame({
+            "ticker": [f"T{i}" for i in range(len(errores))],
+            "error_descarga": errores,
+        })
+
+    def test_bloqueo_total_es_fallo_del_proveedor(self):
+        d = diagnosticar_descarga(self._datos(["CONNECT tunnel failed, 403"] * 5))
+        self.assertTrue(d["fallo_proveedor"])
+        self.assertEqual((d["errores"], d["total"], d["tasa_exito"]), (5, 5, 0.0))
+        self.assertEqual(d["ejemplo_error"], "CONNECT tunnel failed, 403")
+
+    def test_fallos_aislados_no_invalidan_el_analisis(self):
+        d = diagnosticar_descarga(self._datos(["", "", "", "HTTP 404", None]))
+        self.assertFalse(d["fallo_proveedor"])
+        self.assertEqual(d["errores"], 1)
+        self.assertAlmostEqual(d["tasa_exito"], 0.8)
+        self.assertEqual(d["ejemplo_error"], "HTTP 404")
+
+    def test_justo_en_el_minimo_se_acepta(self):
+        d = diagnosticar_descarga(self._datos(["", "", "e", "e"]))
+        self.assertFalse(d["fallo_proveedor"])
+
+    def test_sin_filas_es_fallo(self):
+        self.assertTrue(diagnosticar_descarga(pd.DataFrame())["fallo_proveedor"])
 
 
 if __name__ == "__main__":

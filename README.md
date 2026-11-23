@@ -426,6 +426,18 @@ The interface is intentionally separate from the official write path. Browsing
 history is read-only, and a live analysis does not become an official snapshot.
 External or private applications should consume `screener_api.py`.
 
+### Deploying to Streamlit Community Cloud
+
+The dashboard can be published unchanged from this repository at
+[share.streamlit.io](https://share.streamlit.io): branch `main`, main file
+`dashboard.py` and Python 3.12 under *Advanced settings*. No secrets are needed.
+Every weekly-run commit redeploys it, so the displayed history stays current.
+
+Yahoo Finance may rate-limit or block cloud server IPs. If more than half of the
+downloads fail, the dashboard shows the provider error instead of an empty
+analysis and does not cache that failure. Start with the sample manual list
+before running the full official universe (670 tickers, several minutes).
+
 ## Data-source limitations
 
 `yfinance` is the default provider, not an authoritative financial-data source.
