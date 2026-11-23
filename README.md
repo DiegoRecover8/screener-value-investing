@@ -463,7 +463,7 @@ terms, licensing and redistribution requirements.
 | `verificacion_candidatas.py` | Selective second-source comparison |
 | `prompt_llm.py` | Constrained interpretation prompt |
 | `dashboard.py` | Bilingual local Streamlit research interface |
-| `test_*.py` | Offline unit, regression and contract tests |
+| `tests/test_*.py` | Offline unit, regression and contract tests |
 
 ## Roadmap status
 

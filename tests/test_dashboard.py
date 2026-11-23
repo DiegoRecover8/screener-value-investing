@@ -5,7 +5,7 @@ from pathlib import Path
 from streamlit.testing.v1 import AppTest
 
 
-RUTA_DASHBOARD = Path(__file__).with_name("dashboard.py")
+RUTA_DASHBOARD = Path(__file__).resolve().parent.parent / "dashboard.py"
 
 
 def test_dashboard_arranca_en_ingles_sin_consultar_la_red():

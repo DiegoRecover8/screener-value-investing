@@ -28,8 +28,10 @@ py-modules = ["prompt_llm", "screener_api", "screener_value"]
 include = ["providers*"]
 
 [tool.pytest.ini_options]
-testpaths = ["."]
+testpaths = ["tests"]
 python_files = ["test_*.py"]
+# Los módulos del motor viven en la raíz del repositorio.
+pythonpath = ["."]
 
 [tool.ruff]
 target-version = "py310"
