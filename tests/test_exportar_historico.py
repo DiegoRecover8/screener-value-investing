@@ -5,7 +5,9 @@ from unittest.mock import patch
 
 import pandas as pd
 
-from exportar_historico import construir_export
+import json
+
+from exportar_historico import construir_export, serializar_export
 
 
 class TestConstruirExport(unittest.TestCase):
@@ -46,6 +48,24 @@ class TestConstruirExport(unittest.TestCase):
             ["OFICIAL"],
         )
         self.assertEqual([fila["ticker"] for fila in export["journal"]], ["OFICIAL"])
+
+
+class TestSerializarExport(unittest.TestCase):
+    def test_json_compacto_conserva_el_contenido(self):
+        export = {
+            "generado_en": "2026-11-23T00:00:00+00:00",
+            "journal": [{"ticker": "SAB.MC", "nombre": "Banco Sabadell, S.A.",
+                         "pasa": False, "motivos_descarte": "PER 16.0 >= 15.0",
+                         "per": 16.0, "roic": None}],
+            "ejecuciones": [],
+        }
+        texto = serializar_export(export)
+
+        self.assertEqual(json.loads(texto), export)
+        self.assertTrue(texto.endswith("\n"))
+        self.assertEqual(texto.count("\n"), 1)
+        self.assertNotIn('": ', texto)
+        self.assertIn("Banco Sabadell", texto)  # sin escapar caracteres
 
 
 if __name__ == "__main__":
