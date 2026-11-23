@@ -4,6 +4,13 @@ All notable changes to the research engine are documented here. Versions
 follow [Semantic Versioning](https://semver.org/); while the project is in
 `0.x`, a minor version may change methodology.
 
+## [Unreleased]
+
+### Internal
+
+- Tests moved to `tests/`; a session-level fixture pins the working
+  directory, so the suite also runs when launched from another folder.
+
 ## [0.2.0] - 2026-11-23
 
 ### Changed (methodology)

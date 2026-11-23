@@ -431,7 +431,7 @@ los términos, licencias y requisitos de redistribución de cada proveedor.
 | `verificacion_candidatas.py` | Comparación selectiva con segunda fuente |
 | `prompt_llm.py` | Prompt de interpretación acotado |
 | `dashboard.py` | Interfaz local bilingüe en Streamlit |
-| `test_*.py` | Tests sin conexión, de regresión y contrato |
+| `tests/test_*.py` | Tests sin conexión, de regresión y contrato |
 
 ## Estado de la hoja de ruta
 
