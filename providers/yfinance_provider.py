@@ -8,7 +8,6 @@ empresa y clasifica las incidencias antes de que se calculen ratios.
 from __future__ import annotations
 
 from datetime import datetime, timezone
-from functools import lru_cache
 from typing import Callable, Iterable
 
 import numpy as np
@@ -207,14 +206,21 @@ class ProveedorYFinance:
         self.cliente = cliente
         self.reloj = reloj or (lambda: datetime.now(timezone.utc))
         self.resolver_fx = resolver_fx or self._tipo_cambio_a_eur
+        # Caché por instancia: ``lru_cache`` sobre un método retiene ``self``
+        # en una caché global y nunca libera el proveedor.
+        self._cache_fx: dict[str, float] = {}
 
-    @lru_cache(maxsize=32)
     def _tipo_cambio_a_eur(self, divisa: str) -> float:  # pragma: no cover - red
         divisa = (divisa or "").upper()
         if divisa == "EUR":
             return 1.0
         if not divisa:
             return np.nan
+        if divisa not in self._cache_fx:
+            self._cache_fx[divisa] = self._descargar_tipo_cambio(divisa)
+        return self._cache_fx[divisa]
+
+    def _descargar_tipo_cambio(self, divisa: str) -> float:  # pragma: no cover - red
         historico = self.cliente.download(
             f"{divisa}EUR=X", period="5d", interval="1d", progress=False,
             auto_adjust=False, threads=False,

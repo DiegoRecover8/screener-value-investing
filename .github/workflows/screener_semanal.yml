@@ -101,5 +101,17 @@ jobs:
             echo "Sin cambios que commitear"
           else
             git commit -m "Actualiza journal y seguimiento semanal ($(date -u +%Y-%m-%d))"
-            git push
+            # Si alguien ha subido commits a la rama durante la ejecución, un
+            # push directo se rechazaría y se perdería el snapshot de la semana.
+            # Se rebasa el commit de datos sobre el remoto y se reintenta.
+            for intento in 1 2 3; do
+              if git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME"; then
+                exit 0
+              fi
+              git rebase --abort 2>/dev/null || true
+              echo "Push rechazado (intento $intento); reintentando..."
+              sleep $((intento * 10))
+            done
+            echo "No se pudo publicar el snapshot tras 3 intentos"
+            exit 1
           fi

@@ -397,7 +397,7 @@ def registrar_ejecucion(
     return filas
 
 
-def registrar_control_integridad(
+def preparar_control_integridad(
     control: dict,
     snapshot_id: str,
     momento,
@@ -413,7 +413,13 @@ def registrar_control_integridad(
     universe_sha256: str = "",
     universe_path: str = "",
 ) -> pd.DataFrame:
-    """Añade una fila de metadatos auditables para un snapshot válido."""
+    """Valida y construye la fila de control de un snapshot sin escribirla.
+
+    Separarlo de la escritura permite que ``ejecutar_semanal`` compruebe
+    TODAS las condiciones antes de tocar el journal. Si la validación
+    fallara después de anexar el journal, quedaría un snapshot sin fila de
+    control.
+    """
     momento = _momento_utc(momento)
     iso = momento.isocalendar()
     semana_iso = f"{iso.year}-W{iso.week:02d}"
@@ -464,10 +470,33 @@ def registrar_control_integridad(
         "universe_sha256": universe_sha256,
         "universe_path": universe_path,
     }
-    salida = pd.DataFrame([fila], columns=COLUMNAS_CONTROL)
+    return pd.DataFrame([fila], columns=COLUMNAS_CONTROL)
+
+
+def anexar_control_integridad(
+    fila_control: pd.DataFrame,
+    ruta_ejecuciones: str | Path = RUTA_EJECUCIONES_DEFECTO,
+) -> pd.DataFrame:
+    """Anexa una fila ya validada por ``preparar_control_integridad``."""
+    ruta = Path(ruta_ejecuciones)
+    _validar_cabecera_csv(ruta, COLUMNAS_CONTROL)
     escribir_cabecera = not ruta.exists() or ruta.stat().st_size == 0
-    salida.to_csv(ruta, mode="a", index=False, header=escribir_cabecera)
-    return salida
+    fila_control.to_csv(ruta, mode="a", index=False, header=escribir_cabecera)
+    return fila_control
+
+
+def registrar_control_integridad(
+    control: dict,
+    snapshot_id: str,
+    momento,
+    ruta_ejecuciones: str | Path = RUTA_EJECUCIONES_DEFECTO,
+    **kwargs,
+) -> pd.DataFrame:
+    """Añade una fila de metadatos auditables para un snapshot válido."""
+    fila = preparar_control_integridad(
+        control, snapshot_id, momento, ruta_ejecuciones, **kwargs,
+    )
+    return anexar_control_integridad(fila, ruta_ejecuciones)
 
 
 def leer_ejecuciones(
@@ -508,7 +537,19 @@ def snapshot_ids_oficiales_efectivos(
         return ids_journal
 
     ids_controlados = set(ejecuciones["snapshot_id"].dropna().astype(str))
-    ids_legacy = ids_journal - ids_controlados
+    # Solo son legacy los snapshots ANTERIORES al primer control registrado.
+    # Uno posterior sin fila de control es un huérfano (por ejemplo, una
+    # ejecución interrumpida) y nunca debe alimentar señales como oficial.
+    primer_control = pd.to_datetime(
+        ejecuciones["fecha_ejecucion"], utc=True, errors="coerce",
+    ).min()
+    sin_control = journal[~journal["snapshot_id"].astype(str).isin(ids_controlados)]
+    if pd.notna(primer_control) and "fecha_ejecucion" in sin_control:
+        fechas = pd.to_datetime(
+            sin_control["fecha_ejecucion"], utc=True, errors="coerce",
+        )
+        sin_control = sin_control[fechas < primer_control]
+    ids_legacy = set(sin_control["snapshot_id"].dropna().astype(str))
     oficiales = ejecuciones[ejecuciones["oficial"].map(_es_verdadero)].copy()
     if oficiales.empty:
         return ids_legacy

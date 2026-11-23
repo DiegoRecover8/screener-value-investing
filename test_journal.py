@@ -130,7 +130,6 @@ class TestJournal(unittest.TestCase):
             nuevo = _resultado_ejemplo(("CCC", "DDD"))
             nuevo["proveedor_datos"] = "yfinance"
             nuevo["calidad_datos"] = "ok"
-            columnas_nuevas = list(nuevo.columns)
             filas = nuevo.copy()
             filas.insert(0, "fecha_ejecucion", "2026-08-31T07:00:00+00:00")
             filas.insert(1, "semana_iso", "2026-W36")
@@ -296,6 +295,26 @@ class TestIntegridadEjecucion(unittest.TestCase):
 
         self.assertEqual(ids, {"legacy", "oficial-3"})
         self.assertEqual(set(filtrado["ticker"]), {"LEGACY", "VIGENTE"})
+
+    def test_snapshot_huerfano_posterior_al_primer_control_no_es_legacy(self):
+        """Un snapshot sin fila de control solo es legacy si precede al control."""
+        journal = pd.DataFrame([
+            {"snapshot_id": "legacy", "ticker": "LEGACY",
+             "fecha_ejecucion": "2026-08-17T07:00:00Z"},
+            {"snapshot_id": "oficial-1", "ticker": "OFICIAL",
+             "fecha_ejecucion": "2026-08-24T07:00:00Z"},
+            {"snapshot_id": "huerfano", "ticker": "HUERFANO",
+             "fecha_ejecucion": "2026-08-31T07:00:00Z"},
+        ])
+        ejecuciones = pd.DataFrame([{
+            "snapshot_id": "oficial-1", "semana_iso": "2026-W35",
+            "oficial": True, "revision": 1,
+            "fecha_ejecucion": "2026-08-24T07:00:00Z",
+        }])
+
+        ids = snapshot_ids_oficiales_efectivos(journal, ejecuciones)
+
+        self.assertEqual(ids, {"legacy", "oficial-1"})
 
 
 if __name__ == "__main__":

@@ -28,11 +28,8 @@ from journal import (
 from prompt_llm import generar_prompt_interpretacion
 from screener_value import (
     UMBRALES,
-    aplicar_filtros,
-    calcular_metricas,
-    deduplicar_listings,
     descargar_fundamentales,
-    incorporar_ranking_candidatos,
+    evaluar_fundamentales,
 )
 from seguimiento import (
     RUTA_SEGUIMIENTO_DEFECTO,
@@ -657,10 +654,7 @@ u["market_cap_eur_min"] = st.sidebar.slider(
     key="u_market_cap_eur_min") * 1e9
 
 # --- Recalcular métricas y filtros con los umbrales actuales -----------------
-metricas = calcular_metricas(raw_df, u=u)
-metricas = deduplicar_listings(metricas)
-evaluadas = aplicar_filtros(metricas, u)
-resultado = incorporar_ranking_candidatos(evaluadas)
+resultado = evaluar_fundamentales(raw_df, u)
 
 total = len(resultado)
 candidatas = resultado[resultado["pasa"]]
@@ -688,9 +682,9 @@ col4.metric(
 st.subheader(_t("Universe composition", "Composición del universo"))
 col_region, col_sector = st.columns(2)
 with col_region:
-    st.altair_chart(_bar_conteo(metricas, "region", _t("Region", "Región")), width="stretch")
+    st.altair_chart(_bar_conteo(resultado, "region", _t("Region", "Región")), width="stretch")
 with col_sector:
-    st.altair_chart(_bar_conteo(metricas, "sector", "Sector"), width="stretch")
+    st.altair_chart(_bar_conteo(resultado, "sector", "Sector"), width="stretch")
 
 # --- Tabla filtrable ------------------------------------------------------
 st.subheader(_t("Screening results", "Resultados del cribado"))

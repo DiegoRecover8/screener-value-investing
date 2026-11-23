@@ -18,11 +18,8 @@ from prompt_llm import generar_prompt_interpretacion
 from providers import Fundamentales, ProveedorFundamentales
 from screener_value import (
     UMBRALES,
-    aplicar_filtros,
-    calcular_metricas,
-    deduplicar_listings,
     descargar_fundamentales,
-    incorporar_ranking_candidatos,
+    evaluar_fundamentales,
     resumir_incidencias_calidad,
 )
 
@@ -153,14 +150,8 @@ def analyze_fundamentals(
 ) -> AnalysisResult:
     """Run the deterministic calculation/filter/ranking pipeline."""
     resolved = resolve_thresholds(thresholds)
-    metrics = calcular_metricas(fundamentals, resolved)
-    raw_count = len(metrics)
-    errors = int(
-        metrics.get("error_descarga", pd.Series(dtype=str))
-        .fillna("").astype(str).str.strip().ne("").sum()
-    )
-    metrics = deduplicar_listings(metrics)
-    evaluated = incorporar_ranking_candidatos(aplicar_filtros(metrics, resolved))
+    evaluated = evaluar_fundamentales(fundamentals, resolved)
+    control = evaluated.attrs["control_integridad"]
     if requested_tickers is None:
         requested = tuple(evaluated.get("ticker", pd.Series(dtype=str)).astype(str))
     else:
@@ -169,9 +160,9 @@ def analyze_fundamentals(
         requested_tickers=requested,
         thresholds=resolved,
         evaluated=evaluated,
-        raw_result_count=raw_count,
-        download_errors=errors,
-        deduplicated_listings=raw_count - len(metrics),
+        raw_result_count=control["resultados_brutos"],
+        download_errors=control["errores_descarga"],
+        deduplicated_listings=control["deduplicados"],
     )
 
 
