@@ -185,3 +185,105 @@ class TestProveedorYFinance(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class YFRateLimitError(Exception):
+    """Doble con el mismo nombre que la excepción de yfinance."""
+
+
+class _TickerVacio:
+    """Lo que devuelve yfinance cuando oculta un 429: info sí, cuentas vacías."""
+
+    info = _TickerCompleto.info
+    income_stmt = cashflow = ttm_income_stmt = ttm_cashflow = balance_sheet = (
+        pd.DataFrame()
+    )
+
+
+class _ClienteSecuencia:
+    """Devuelve (o lanza) un resultado distinto en cada llamada a Ticker()."""
+
+    def __init__(self, respuestas):
+        self.respuestas = list(respuestas)
+        self.llamadas = 0
+
+    def Ticker(self, _simbolo):
+        respuesta = self.respuestas[min(self.llamadas, len(self.respuestas) - 1)]
+        self.llamadas += 1
+        if isinstance(respuesta, Exception):
+            raise respuesta
+        return respuesta
+
+
+def _proveedor_con_reintentos(cliente, esperas, reintentos=3):
+    return ProveedorYFinance(
+        cliente=cliente,
+        reloj=lambda: datetime(2026, 9, 1, tzinfo=timezone.utc),
+        resolver_fx=lambda _divisa: 1.0,
+        reintentos=reintentos,
+        pausa_reintento=10.0,
+        pausa_entre_tickers=0.5,
+        dormir=esperas.append,
+    )
+
+
+class TestReintentosYFinance(unittest.TestCase):
+    def test_sin_reintentos_conserva_un_intento_por_ticker(self):
+        cliente = _ClienteSecuencia([YFRateLimitError("Too Many Requests"), _TickerCompleto()])
+        datos = _proveedor(cliente).descargar(["A"])[0]
+        self.assertEqual(cliente.llamadas, 1)
+        self.assertEqual(datos.calidad_datos, "error")
+
+    def test_reintenta_un_limite_de_peticiones_con_espera_creciente(self):
+        esperas = []
+        cliente = _ClienteSecuencia([
+            YFRateLimitError("Too Many Requests"),
+            YFRateLimitError("Too Many Requests"),
+            _TickerCompleto(),
+        ])
+        datos = _proveedor_con_reintentos(cliente, esperas).descargar(["A"])[0]
+        self.assertEqual(cliente.llamadas, 3)
+        self.assertEqual(esperas, [10.0, 20.0])
+        self.assertEqual(datos.error_descarga, "")
+
+    def test_no_reintenta_errores_que_no_son_transitorios(self):
+        esperas = []
+        cliente = _ClienteSecuencia([KeyError("symbol"), _TickerCompleto()])
+        datos = _proveedor_con_reintentos(cliente, esperas).descargar(["A"])[0]
+        self.assertEqual(cliente.llamadas, 1)
+        self.assertEqual(esperas, [])
+        self.assertIn("KeyError", datos.error_descarga)
+
+    def test_estados_vacios_se_reintentan_una_vez(self):
+        esperas = []
+        cliente = _ClienteSecuencia([_TickerVacio(), _TickerCompleto()])
+        datos = _proveedor_con_reintentos(cliente, esperas).descargar(["A"])[0]
+        self.assertEqual(cliente.llamadas, 2)
+        self.assertFalse(np.isnan(datos.ebit))
+
+    def test_estados_vacios_persistentes_quedan_anotados(self):
+        esperas = []
+        cliente = _ClienteSecuencia([_TickerVacio()])
+        datos = _proveedor_con_reintentos(cliente, esperas).descargar(["A"])[0]
+        self.assertEqual(cliente.llamadas, 2)
+        self.assertIn("posible límite de peticiones", datos.incidencias_datos)
+        self.assertEqual(datos.calidad_datos, "inutilizable")
+
+    def test_corta_las_esperas_si_yahoo_bloquea_varios_tickers_seguidos(self):
+        esperas = []
+        cliente = _ClienteSecuencia([YFRateLimitError("Too Many Requests")])
+        datos = _proveedor_con_reintentos(cliente, esperas, reintentos=2).descargar(
+            ["A", "B", "C", "D", "E"],
+        )
+        self.assertTrue(all(d.calidad_datos == "error" for d in datos))
+        reintentos = [e for e in esperas if e != 0.5]
+        # 3 tickers agotan sus 2 reintentos; los siguientes fallan sin esperar.
+        self.assertEqual(reintentos, [10.0, 20.0] * 3)
+        self.assertEqual(cliente.llamadas, 3 * 3 + 2)
+
+    def test_pausa_entre_tickers(self):
+        esperas = []
+        _proveedor_con_reintentos(
+            _ClienteSecuencia([_TickerCompleto()]), esperas,
+        ).descargar(["A", "B", "C"])
+        self.assertEqual(esperas, [0.5, 0.5])

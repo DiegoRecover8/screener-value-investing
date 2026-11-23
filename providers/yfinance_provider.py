@@ -7,6 +7,7 @@ empresa y clasifica las incidencias antes de que se calculen ratios.
 
 from __future__ import annotations
 
+import time
 from datetime import datetime, timezone
 from typing import Callable, Iterable
 
@@ -17,6 +18,9 @@ from .base import TASA_IMPOSITIVA_DEFECTO, Fundamentales
 
 
 ANTIGUEDAD_MAXIMA_DIAS = 550
+# Tras tantos tickers seguidos limitados por Yahoo se dejan de esperar
+# reintentos: el servidor está bloqueado y esperar no cambia el resultado.
+MAXIMO_FALLOS_CONSECUTIVOS = 3
 CAMPOS_DEUDA_FINANCIERA_EV = ("Total Debt",)
 CAMPOS_LIQUIDEZ_EV = (
     "Cash Cash Equivalents And Short Term Investments",
@@ -54,6 +58,16 @@ def _div(a, b):
     if not np.isfinite(a) or not np.isfinite(b) or b == 0:
         return np.nan
     return a / b
+
+
+def _es_limite_peticiones(exc: Exception) -> bool:
+    """Reconoce el 429 de Yahoo sin importar yfinance (los tests usan dobles)."""
+    texto = str(exc).lower()
+    return (
+        type(exc).__name__ == "YFRateLimitError"
+        or "too many requests" in texto
+        or "rate limit" in texto
+    )
 
 
 def _serie_ordenada(df: pd.DataFrame, claves: Iterable[str]) -> pd.Series:
@@ -199,6 +213,10 @@ class ProveedorYFinance:
         cliente=None,
         reloj: Callable[[], datetime] | None = None,
         resolver_fx: Callable[[str], float] | None = None,
+        reintentos: int = 0,
+        pausa_reintento: float = 15.0,
+        pausa_entre_tickers: float = 0.0,
+        dormir: Callable[[float], None] | None = None,
     ) -> None:
         if cliente is None:  # importación diferida: los tests puros no necesitan red
             import yfinance as yf
@@ -209,6 +227,13 @@ class ProveedorYFinance:
         # Caché por instancia: ``lru_cache`` sobre un método retiene ``self``
         # en una caché global y nunca libera el proveedor.
         self._cache_fx: dict[str, float] = {}
+        # Reintentos solo para fallos transitorios; 0 conserva un intento por
+        # ticker, que es lo que usa la ejecución oficial semanal.
+        self.reintentos = max(int(reintentos), 0)
+        self.pausa_reintento = float(pausa_reintento)
+        self.pausa_entre_tickers = float(pausa_entre_tickers)
+        self.dormir = dormir or time.sleep
+        self._fallos_consecutivos = 0
 
     def _tipo_cambio_a_eur(self, divisa: str) -> float:  # pragma: no cover - red
         divisa = (divisa or "").upper()
@@ -237,145 +262,206 @@ class ProveedorYFinance:
         momento = _fecha_utc(self.reloj)
         fecha_consulta = momento.isoformat()
         normalizados = dict.fromkeys(t.strip().upper() for t in tickers if t.strip())
-        for tkr in normalizados:
-            try:
-                ticker = self.cliente.Ticker(tkr)
-                info = ticker.info or {}
-                fin_anual = ticker.income_stmt
-                cf_anual = ticker.cashflow
-                fin_ttm = ticker.ttm_income_stmt
-                cf_ttm = ticker.ttm_cashflow
-                bs = ticker.balance_sheet
-
-                # Solo se usa TTM cuando resultados Y caja lo ofrecen. Si uno
-                # falta, ambos pasan al último anual para no mezclar duraciones.
-                usar_ttm = all(
-                    df is not None and not df.empty for df in (fin_ttm, cf_ttm)
-                )
-                fin_periodo = fin_ttm if usar_ttm else fin_anual
-                cf_periodo = cf_ttm if usar_ttm else cf_anual
-                tipo_periodo = "TTM" if usar_ttm else "ANUAL"
-
-                ingresos = _valor_reciente(
-                    fin_periodo, ["Total Revenue", "Operating Revenue"],
-                )
-                ebit = _valor_reciente(fin_periodo, ["EBIT", "Operating Income"])
-                net_income = _valor_reciente(
-                    fin_periodo, ["Net Income", "Net Income Common Stockholders"],
-                )
-                intereses = _valor_reciente(
-                    fin_periodo,
-                    ["Interest Expense", "Interest Expense Non Operating"],
-                )
-                ebitda = _valor_reciente(
-                    fin_periodo, ["EBITDA", "Normalized EBITDA"],
-                )
-                fcf = _valor_reciente(cf_periodo, ["Free Cash Flow"])
-                # EV netea solo deuda financiera contra liquidez disponible.
-                # Caja restringida y pasivos operativos (ingresos diferidos,
-                # anticipos o value in circulation) requieren un análisis
-                # sectorial separado; no son sustitutos de caja ni deuda.
-                deuda, deuda_inicio = _valor_reciente_y_anterior(
-                    bs, CAMPOS_DEUDA_FINANCIERA_EV,
-                )
-                caja, caja_inicio = _valor_reciente_y_anterior(
-                    bs, CAMPOS_LIQUIDEZ_EV,
-                )
-                equity, equity_inicio = _valor_reciente_y_anterior(
-                    bs, ["Stockholders Equity", "Total Equity Gross Minority Interest"],
-                )
-                ingresos_inicio, ingresos_fin, anios = _extremos_historicos(
-                    fin_anual, ["Total Revenue", "Operating Revenue"],
-                )
-                comparables_anuales = {
-                    "ingresos": _valor_reciente(
-                        fin_anual, ["Total Revenue", "Operating Revenue"],
-                    ),
-                    "net_income": _valor_reciente(
-                        fin_anual,
-                        ["Net Income", "Net Income Common Stockholders"],
-                    ),
-                    "ebit": _valor_reciente(
-                        fin_anual, ["EBIT", "Operating Income"],
-                    ),
-                    "free_cash_flow": _valor_reciente(
-                        cf_anual, ["Free Cash Flow"],
-                    ),
-                    # ``balance_sheet`` ya es anual; se reutiliza ese mismo
-                    # corte instantáneo en vez de etiquetarlo como TTM.
-                    "total_debt": deuda,
-                    "cash": caja,
-                    "equity": equity,
-                    "gasto_intereses": _valor_reciente(
-                        fin_anual,
-                        ["Interest Expense", "Interest Expense Non Operating"],
-                    ),
-                }
-
-                divisa_cotizacion = str(info.get("currency") or "").upper()
-                divisa_financiera = str(info.get("financialCurrency") or "").upper()
-                divisa_consistente = bool(
-                    divisa_cotizacion
-                    and divisa_financiera
-                    and divisa_cotizacion == divisa_financiera
-                )
-                market_cap = info.get("marketCap", np.nan)
-                fx_eur = self.resolver_fx(divisa_cotizacion)
-                market_cap_eur = (
-                    float(market_cap) * fx_eur
-                    if not _es_na(market_cap) and not _es_na(fx_eur)
-                    else np.nan
-                )
-                datos = Fundamentales(
-                    ticker=tkr,
-                    nombre=info.get("longName", ""),
-                    sector=info.get("sector", "SIN_SECTOR"),
-                    pais=info.get("country", ""),
-                    divisa_cotizacion=divisa_cotizacion,
-                    divisa_financiera=divisa_financiera,
-                    divisa_consistente=divisa_consistente,
-                    market_cap=market_cap,
-                    market_cap_eur=market_cap_eur,
-                    net_income=net_income,
-                    ebit=ebit,
-                    ebitda=ebitda,
-                    ingresos=ingresos,
-                    ingresos_inicio_historico=ingresos_inicio,
-                    ingresos_fin_historico=ingresos_fin,
-                    anios_historico=anios,
-                    free_cash_flow=fcf,
-                    total_debt=deuda,
-                    cash=caja,
-                    equity=equity,
-                    total_debt_inicio=deuda_inicio,
-                    cash_inicio=caja_inicio,
-                    equity_inicio=equity_inicio,
-                    gasto_intereses=intereses,
-                    tasa_impositiva=_tasa_impositiva(fin_periodo),
-                    proveedor_datos=self.nombre,
-                    fecha_consulta_utc=fecha_consulta,
-                    tipo_periodo=tipo_periodo,
-                    fecha_resultados=_fecha_reciente(fin_periodo),
-                    fecha_flujo_caja=_fecha_reciente(cf_periodo),
-                    fecha_balance=_fecha_reciente(bs),
-                    comparables_anuales=comparables_anuales,
-                    fecha_resultados_anual=_fecha_reciente(fin_anual),
-                    fecha_flujo_caja_anual=_fecha_reciente(cf_anual),
-                )
-                _evaluar_calidad(datos, momento)
-                salida.append(datos)
-                estado = "ok" if datos.calidad_datos == "ok" else datos.calidad_datos
-                print(f"  {estado:>11s}  {tkr}")
-            except Exception as exc:
-                datos = Fundamentales(
-                    ticker=tkr,
-                    divisa_consistente=False,
-                    proveedor_datos=self.nombre,
-                    fecha_consulta_utc=fecha_consulta,
-                    calidad_datos="error",
-                    error_descarga=f"{type(exc).__name__}: {exc}",
-                )
-                _evaluar_calidad(datos, momento)
-                salida.append(datos)
-                print(f"  ERR {tkr}: {exc}")
+        self._fallos_consecutivos = 0
+        for posicion, tkr in enumerate(normalizados):
+            if posicion and self.pausa_entre_tickers:
+                self.dormir(self.pausa_entre_tickers)
+            datos = self._descargar_con_reintentos(tkr, momento, fecha_consulta)
+            salida.append(datos)
+            if datos.calidad_datos == "error":
+                print(f"  ERR {tkr}: {datos.error_descarga}")
+            else:
+                print(f"  {datos.calidad_datos:>11s}  {tkr}")
         return salida
+
+    def _descargar_con_reintentos(
+        self, tkr: str, momento: pd.Timestamp, fecha_consulta: str,
+    ) -> Fundamentales:
+        """Descarga un ticker reintentando solo fallos transitorios de Yahoo.
+
+        Con ``reintentos=0`` (la ejecución semanal) el comportamiento es el de
+        siempre: un intento por ticker. Con reintentos, un límite de peticiones
+        se reintenta con espera creciente, y unos estados financieros vacíos
+        (yfinance oculta el 429 y devuelve tablas vacías) se reintentan una
+        vez. Tras ``MAXIMO_FALLOS_CONSECUTIVOS`` tickers seguidos limitados se
+        deja de esperar: si Yahoo bloquea el servidor, reintentar solo alarga
+        la espera sin cambiar el resultado.
+        """
+        intento = 0
+        while True:
+            puede_reintentar = (
+                intento < self.reintentos
+                and self._fallos_consecutivos < MAXIMO_FALLOS_CONSECUTIVOS
+            )
+            try:
+                datos, estados_vacios = self._descargar_ticker(
+                    tkr, momento, fecha_consulta,
+                )
+            except Exception as exc:
+                if _es_limite_peticiones(exc) and puede_reintentar:
+                    intento += 1
+                    self.dormir(self.pausa_reintento * intento)
+                    continue
+                if _es_limite_peticiones(exc):
+                    self._fallos_consecutivos += 1
+                return self._fila_error(tkr, momento, fecha_consulta, exc)
+            if estados_vacios and self.reintentos:
+                if intento == 0 and puede_reintentar:
+                    intento += 1
+                    self.dormir(self.pausa_reintento)
+                    continue
+                datos.incidencias_datos = "; ".join(filter(None, [
+                    datos.incidencias_datos,
+                    "estados financieros vacíos (posible límite de peticiones de Yahoo)",
+                ]))
+            self._fallos_consecutivos = 0
+            return datos
+
+    def _fila_error(
+        self, tkr: str, momento: pd.Timestamp, fecha_consulta: str, exc: Exception,
+    ) -> Fundamentales:
+        datos = Fundamentales(
+            ticker=tkr,
+            divisa_consistente=False,
+            proveedor_datos=self.nombre,
+            fecha_consulta_utc=fecha_consulta,
+            calidad_datos="error",
+            error_descarga=f"{type(exc).__name__}: {exc}",
+        )
+        _evaluar_calidad(datos, momento)
+        return datos
+
+    def _descargar_ticker(
+        self, tkr: str, momento: pd.Timestamp, fecha_consulta: str,
+    ) -> tuple[Fundamentales, bool]:  # pragma: no cover - red
+        """Un intento de descarga. Devuelve los datos y si todos los estados
+        financieros llegaron vacíos (síntoma de límite de peticiones)."""
+        ticker = self.cliente.Ticker(tkr)
+        info = ticker.info or {}
+        fin_anual = ticker.income_stmt
+        cf_anual = ticker.cashflow
+        fin_ttm = ticker.ttm_income_stmt
+        cf_ttm = ticker.ttm_cashflow
+        bs = ticker.balance_sheet
+
+        # Solo se usa TTM cuando resultados Y caja lo ofrecen. Si uno
+        # falta, ambos pasan al último anual para no mezclar duraciones.
+        usar_ttm = all(
+            df is not None and not df.empty for df in (fin_ttm, cf_ttm)
+        )
+        fin_periodo = fin_ttm if usar_ttm else fin_anual
+        cf_periodo = cf_ttm if usar_ttm else cf_anual
+        tipo_periodo = "TTM" if usar_ttm else "ANUAL"
+
+        ingresos = _valor_reciente(
+            fin_periodo, ["Total Revenue", "Operating Revenue"],
+        )
+        ebit = _valor_reciente(fin_periodo, ["EBIT", "Operating Income"])
+        net_income = _valor_reciente(
+            fin_periodo, ["Net Income", "Net Income Common Stockholders"],
+        )
+        intereses = _valor_reciente(
+            fin_periodo,
+            ["Interest Expense", "Interest Expense Non Operating"],
+        )
+        ebitda = _valor_reciente(
+            fin_periodo, ["EBITDA", "Normalized EBITDA"],
+        )
+        fcf = _valor_reciente(cf_periodo, ["Free Cash Flow"])
+        # EV netea solo deuda financiera contra liquidez disponible.
+        # Caja restringida y pasivos operativos (ingresos diferidos,
+        # anticipos o value in circulation) requieren un análisis
+        # sectorial separado; no son sustitutos de caja ni deuda.
+        deuda, deuda_inicio = _valor_reciente_y_anterior(
+            bs, CAMPOS_DEUDA_FINANCIERA_EV,
+        )
+        caja, caja_inicio = _valor_reciente_y_anterior(
+            bs, CAMPOS_LIQUIDEZ_EV,
+        )
+        equity, equity_inicio = _valor_reciente_y_anterior(
+            bs, ["Stockholders Equity", "Total Equity Gross Minority Interest"],
+        )
+        ingresos_inicio, ingresos_fin, anios = _extremos_historicos(
+            fin_anual, ["Total Revenue", "Operating Revenue"],
+        )
+        comparables_anuales = {
+            "ingresos": _valor_reciente(
+                fin_anual, ["Total Revenue", "Operating Revenue"],
+            ),
+            "net_income": _valor_reciente(
+                fin_anual,
+                ["Net Income", "Net Income Common Stockholders"],
+            ),
+            "ebit": _valor_reciente(
+                fin_anual, ["EBIT", "Operating Income"],
+            ),
+            "free_cash_flow": _valor_reciente(
+                cf_anual, ["Free Cash Flow"],
+            ),
+            # ``balance_sheet`` ya es anual; se reutiliza ese mismo
+            # corte instantáneo en vez de etiquetarlo como TTM.
+            "total_debt": deuda,
+            "cash": caja,
+            "equity": equity,
+            "gasto_intereses": _valor_reciente(
+                fin_anual,
+                ["Interest Expense", "Interest Expense Non Operating"],
+            ),
+        }
+
+        divisa_cotizacion = str(info.get("currency") or "").upper()
+        divisa_financiera = str(info.get("financialCurrency") or "").upper()
+        divisa_consistente = bool(
+            divisa_cotizacion
+            and divisa_financiera
+            and divisa_cotizacion == divisa_financiera
+        )
+        market_cap = info.get("marketCap", np.nan)
+        fx_eur = self.resolver_fx(divisa_cotizacion)
+        market_cap_eur = (
+            float(market_cap) * fx_eur
+            if not _es_na(market_cap) and not _es_na(fx_eur)
+            else np.nan
+        )
+        datos = Fundamentales(
+            ticker=tkr,
+            nombre=info.get("longName", ""),
+            sector=info.get("sector", "SIN_SECTOR"),
+            pais=info.get("country", ""),
+            divisa_cotizacion=divisa_cotizacion,
+            divisa_financiera=divisa_financiera,
+            divisa_consistente=divisa_consistente,
+            market_cap=market_cap,
+            market_cap_eur=market_cap_eur,
+            net_income=net_income,
+            ebit=ebit,
+            ebitda=ebitda,
+            ingresos=ingresos,
+            ingresos_inicio_historico=ingresos_inicio,
+            ingresos_fin_historico=ingresos_fin,
+            anios_historico=anios,
+            free_cash_flow=fcf,
+            total_debt=deuda,
+            cash=caja,
+            equity=equity,
+            total_debt_inicio=deuda_inicio,
+            cash_inicio=caja_inicio,
+            equity_inicio=equity_inicio,
+            gasto_intereses=intereses,
+            tasa_impositiva=_tasa_impositiva(fin_periodo),
+            proveedor_datos=self.nombre,
+            fecha_consulta_utc=fecha_consulta,
+            tipo_periodo=tipo_periodo,
+            fecha_resultados=_fecha_reciente(fin_periodo),
+            fecha_flujo_caja=_fecha_reciente(cf_periodo),
+            fecha_balance=_fecha_reciente(bs),
+            comparables_anuales=comparables_anuales,
+            fecha_resultados_anual=_fecha_reciente(fin_anual),
+            fecha_flujo_caja_anual=_fecha_reciente(cf_anual),
+        )
+        _evaluar_calidad(datos, momento)
+        estados_vacios = all(
+            df is None or df.empty
+            for df in (fin_anual, cf_anual, fin_ttm, cf_ttm, bs)
+        )
+        return datos, estados_vacios

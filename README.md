@@ -435,7 +435,9 @@ Every weekly-run commit redeploys it, so the displayed history stays current.
 
 Yahoo Finance may rate-limit or block cloud server IPs. If more than half of the
 downloads fail, the dashboard shows the provider error instead of an empty
-analysis and does not cache that failure. Start with the sample manual list
+analysis and does not cache that failure. Live downloads are spaced out and
+Yahoo rate limits are retried, so the full universe takes longer than on
+GitHub Actions. Start with the sample manual list
 before running the full official universe (670 tickers, several minutes).
 
 ## Data-source limitations

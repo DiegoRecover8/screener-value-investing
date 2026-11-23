@@ -607,14 +607,23 @@ def diagnosticar_descarga(datos: pd.DataFrame) -> dict:
     """Resume cuántas descargas fallaron y con qué error, sin red.
 
     Devuelve ``total``, ``errores``, ``tasa_exito``, ``ejemplo_error`` (el
-    primer mensaje, para mostrarlo) y ``fallo_proveedor``: verdadero cuando
-    la tasa de éxito no alcanza ``TASA_EXITO_DESCARGA_MINIMA_EN_VIVO``.
+    primer mensaje, para mostrarlo), ``fallo_proveedor`` (la tasa de éxito no
+    alcanza ``TASA_EXITO_DESCARGA_MINIMA_EN_VIVO``) y ``sin_cuentas``: filas
+    sin estados financieros que el proveedor atribuye a un límite de Yahoo.
     """
     total = len(datos)
+    incidencias = (
+        datos["incidencias_datos"].fillna("").astype(str)
+        if "incidencias_datos" in datos else pd.Series(dtype=str)
+    )
+    # Filas "descargadas" cuyas cuentas llegaron vacías tras reintentar: el
+    # proveedor anota esta incidencia cuando sospecha un límite de Yahoo.
+    sin_cuentas = int(incidencias.str.contains("posible límite de peticiones").sum())
     if total == 0 or "error_descarga" not in datos:
         return {
             "total": total, "errores": 0, "tasa_exito": 1.0 if total else 0.0,
             "ejemplo_error": "", "fallo_proveedor": total == 0,
+            "sin_cuentas": sin_cuentas,
         }
     mensajes = datos["error_descarga"].fillna("").astype(str).str.strip()
     errores = int(mensajes.ne("").sum())
@@ -625,6 +634,7 @@ def diagnosticar_descarga(datos: pd.DataFrame) -> dict:
         "tasa_exito": tasa_exito,
         "ejemplo_error": next((m for m in mensajes if m), ""),
         "fallo_proveedor": tasa_exito < TASA_EXITO_DESCARGA_MINIMA_EN_VIVO,
+        "sin_cuentas": sin_cuentas,
     }
 
 
