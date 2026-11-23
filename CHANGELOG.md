@@ -6,6 +6,12 @@ follow [Semantic Versioning](https://semver.org/); while the project is in
 
 ## [Unreleased]
 
+### Changed
+
+- `historico.json` is written as compact JSON (no indentation): about 20 %
+  smaller with identical content, including discarded companies and their
+  rejection reasons.
+
 ### Internal
 
 - Tests moved to `tests/`; a session-level fixture pins the working
