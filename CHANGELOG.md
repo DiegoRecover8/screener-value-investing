@@ -12,6 +12,17 @@ follow [Semantic Versioning](https://semver.org/); while the project is in
   server), it now shows the provider error instead of a "0 candidates"
   analysis, and the failure is no longer cached for 24 hours. Isolated
   failures show a warning with the count.
+- Dashboard on Streamlit Community Cloud: Yahoo rate-limited the shared
+  server (234 of 670 tickers failed, 0 candidates). yfinance also hides
+  rate limits on financial statements and returns empty tables, which the
+  quality filter then discards silently. The live dashboard now spaces
+  requests (0.3 s), retries rate limits with increasing waits, retries empty
+  statements once, stops waiting after 3 consecutive blocked tickers, and
+  warns how many tickers came back without statements. The weekly official
+  run keeps a single attempt per ticker (`reintentos=0`).
+- Dashboard: theme-neutral styles. A fixed white background left the dark
+  theme's light text almost invisible; the TradingView chart also follows
+  the active theme.
 
 ### Changed
 

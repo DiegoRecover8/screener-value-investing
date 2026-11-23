@@ -405,7 +405,9 @@ mostrado se mantiene al día.
 
 Yahoo Finance puede limitar o bloquear las IPs de servidores en la nube. Si
 falla más de la mitad de las descargas, el dashboard muestra el error del
-proveedor en lugar de un análisis vacío y no guarda ese fallo en caché. Conviene
+proveedor en lugar de un análisis vacío y no guarda ese fallo en caché. En vivo,
+el dashboard espacia las peticiones y reintenta los límites de Yahoo, así que el
+universo completo tarda más que en GitHub Actions. Conviene
 empezar con la lista manual de ejemplo antes de lanzar el universo oficial
 completo (670 tickers, varios minutos de descarga).
 

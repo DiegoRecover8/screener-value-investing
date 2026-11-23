@@ -26,6 +26,7 @@ from journal import (
     snapshot_ids_oficiales_efectivos,
 )
 from prompt_llm import generar_prompt_interpretacion
+from providers import ProveedorYFinance
 from screener_value import (
     TASA_EXITO_DESCARGA_MINIMA_EN_VIVO,
     UMBRALES,
@@ -92,10 +93,12 @@ DISCLAIMER_UI = {
 st.markdown(
     """
     <style>
-      .stApp { background: linear-gradient(180deg, #f7f9fc 0, #ffffff 22rem); }
-      [data-testid="stSidebar"] { border-right: 1px solid #e6ebf2; }
+      /* Colores neutros y semitransparentes: funcionan con el tema claro y el
+         oscuro de Streamlit. Un fondo blanco fijo dejaba el texto claro del
+         tema oscuro casi invisible. */
+      [data-testid="stSidebar"] { border-right: 1px solid rgba(128,128,128,.2); }
       .research-hero {
-        padding: 1.5rem 1.65rem; border: 1px solid #dce5f2; border-radius: 18px;
+        padding: 1.5rem 1.65rem; border: 1px solid rgba(128,128,128,.2); border-radius: 18px;
         background: linear-gradient(125deg, #0c274b 0%, #1559a6 68%, #2a78cc 100%);
         color: white; box-shadow: 0 12px 34px rgba(12, 39, 75, .12);
         margin-bottom: 1rem;
@@ -105,10 +108,10 @@ st.markdown(
       .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .73rem;
                  font-weight: 700; color: #9dcbff; }
       [data-testid="stMetric"] {
-        background: rgba(255,255,255,.92); border: 1px solid #e4eaf2;
+        background: rgba(128,128,128,.06); border: 1px solid rgba(128,128,128,.22);
         padding: .9rem 1rem; border-radius: 14px;
       }
-      div[data-testid="stDataFrame"] { border: 1px solid #e4eaf2; border-radius: 12px; }
+      div[data-testid="stDataFrame"] { border: 1px solid rgba(128,128,128,.22); border-radius: 12px; }
       .block-container { padding-top: 1.5rem; padding-bottom: 3rem; }
     </style>
     """,
@@ -129,7 +132,14 @@ def _tickers_universo_cacheado(nombre: str, max_por_bucket: int) -> list[str]:
 
 @st.cache_data(show_spinner=False, ttl=86_400)
 def _fundamentales_cacheados(tickers: tuple[str, ...]) -> pd.DataFrame:
-    datos = pd.DataFrame([asdict(d) for d in descargar_fundamentales(list(tickers))])
+    # En un servidor compartido (Streamlit Cloud) Yahoo limita las peticiones:
+    # se espacian los tickers y se reintentan los fallos transitorios.
+    proveedor = ProveedorYFinance(
+        reintentos=3, pausa_reintento=15.0, pausa_entre_tickers=0.3,
+    )
+    datos = pd.DataFrame([
+        asdict(d) for d in descargar_fundamentales(list(tickers), proveedor=proveedor)
+    ])
     diagnostico = diagnosticar_descarga(datos)
     if diagnostico["fallo_proveedor"]:
         # st.cache_data no guarda excepciones: un bloqueo temporal de Yahoo
@@ -178,6 +188,15 @@ def _bar_conteo(df: pd.DataFrame, columna: str, etiqueta: str) -> alt.Chart:
     )
 
 
+def _tema_activo() -> str:
+    """Tema claro u oscuro de la sesión; claro si Streamlit no lo informa."""
+    try:
+        tipo = st.context.theme.type
+    except Exception:  # versiones o contextos sin información de tema
+        return "light"
+    return tipo if tipo in {"light", "dark"} else "light"
+
+
 def _grafico_tradingview(ticker: str, altura: int = 680) -> None:
     """Embebe el widget gratuito de TradingView para `ticker`.
 
@@ -198,7 +217,10 @@ def _grafico_tradingview(ticker: str, altura: int = 680) -> None:
         "El widget permite cambiarlo manualmente si la cotización no está disponible.",
     ))
     st.iframe(
-        html_widget_tradingview(ticker, locale=st.session_state["idioma"], altura=altura),
+        html_widget_tradingview(
+            ticker, locale=st.session_state["idioma"], altura=altura,
+            theme=_tema_activo(),
+        ),
         width="stretch",
         height=altura + 8,
     )
@@ -644,6 +666,17 @@ if _diagnostico["errores"]:
         "downloaded; they appear as discarded with the reason \"descarga\".",
         f"No se pudieron descargar {_diagnostico['errores']} de {_diagnostico['total']} "
         "tickers; aparecen como descartados con el motivo \"descarga\".",
+    ))
+if _diagnostico["sin_cuentas"]:
+    st.warning(_t(
+        f"{_diagnostico['sin_cuentas']} tickers returned no financial statements even "
+        "after a retry, probably because Yahoo Finance rate-limited this server. They "
+        "are discarded for data quality, so candidates may be missing; try again later "
+        "or with a smaller universe.",
+        f"{_diagnostico['sin_cuentas']} tickers no devolvieron estados financieros ni "
+        "tras reintentar, probablemente porque Yahoo Finance limitó a este servidor. "
+        "Quedan descartados por calidad de datos, así que pueden faltar candidatas; "
+        "inténtalo más tarde o con un universo más pequeño.",
     ))
 st.caption(_t(
     f"Fundamentals loaded for {st.session_state['n_tickers']} requested tickers.",
