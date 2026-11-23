@@ -1,12 +1,15 @@
 name: Screener semanal
 
-# Se ejecuta cada lunes a las 07:00 UTC y añade el resultado a
+# Se programa cada lunes a las 07:17 UTC y añade el resultado a
 # journal_candidatos.csv, ejecuciones_screener.csv y seguimiento_candidatas.csv
 # (ninguno se sobrescribe, ver journal.py y seguimiento.py). También se puede
 # lanzar a mano desde la pestaña "Actions" de GitHub.
 "on":
   schedule:
-    - cron: "0 7 * * 1"
+    # Minuto 17 y no 0: GitHub retrasa mucho los cron de las horas en punto
+    # (con "0 7" las ejecuciones llegaban entre las 14:00 y las 17:20 UTC).
+    # GitHub no garantiza la hora; seguimiento.py no depende de ella.
+    - cron: "17 7 * * 1"
   workflow_dispatch:
     inputs:
       modo:
