@@ -8,8 +8,7 @@ import pandas as pd
 
 from screener_value import (
     Fundamentales,
-    UMBRALES,
-    _extremos_historicos,
+    _clave_empresa,
     aplicar_filtros,
     calcular_metricas,
     cagr_ingresos,
@@ -20,6 +19,7 @@ from screener_value import (
     fcf_yield,
     capital_invertido,
     deduplicar_listings,
+    evaluar_fundamentales,
     incorporar_ranking_candidatos,
     resumir_incidencias_calidad,
     margen_operativo,
@@ -27,6 +27,7 @@ from screener_value import (
     per,
     roic,
 )
+from providers.yfinance_provider import _extremos_historicos
 from universos_yfinance import (
     catalogar_tickers,
     construir_consulta,
@@ -427,6 +428,55 @@ class TestDeduplicado(unittest.TestCase):
 
     def test_dataframe_vacio(self):
         self.assertTrue(deduplicar_listings(calcular_metricas([])).empty)
+
+    def test_sufijos_solo_se_eliminan_como_palabras_completas(self):
+        """Regresión: " SA" recortaba "Sabadell" y " CORP" "Corporación"."""
+        self.assertEqual(_clave_empresa("Banco Sabadell SA"), "BANCO SABADELL")
+        self.assertEqual(_clave_empresa("Banco Santander, S.A."), "BANCO SANTANDER")
+        self.assertEqual(_clave_empresa("The Sage Group plc"), "THE SAGE")
+        self.assertEqual(_clave_empresa("Redeia Corporación, S.A."), "REDEIA CORPORACIÓN")
+        self.assertEqual(_clave_empresa("Tokyo Gas Co.,Ltd."), "TOKYO GAS")
+        self.assertEqual(_clave_empresa("BP p.l.c."), "BP")
+        self.assertEqual(_clave_empresa("ASML Holding N.V."), "ASML HOLDING")
+
+    def test_no_fusiona_empresas_cuyo_nombre_contiene_un_sufijo(self):
+        universo = [
+            empresa_ideal("SAB.MC", nombre="Banco Sabadell SA", pais="Spain"),
+            empresa_ideal("BAD.MC", nombre="Banco Badell SA", pais="Spain"),
+        ]
+        self.assertEqual(len(deduplicar_listings(calcular_metricas(universo))), 2)
+
+
+class TestPipelineUnico(unittest.TestCase):
+    """La ejecución semanal, la API y el dashboard comparten un único pipeline."""
+
+    def test_evaluar_fundamentales_equivale_a_los_pasos_individuales(self):
+        universo = [
+            empresa_ideal("GSK.L", nombre="GSK plc", pais="United Kingdom",
+                          market_cap_eur=89.9e9),
+            empresa_ideal("GSKL.XC", nombre="GSK plc", pais="United Kingdom",
+                          market_cap_eur=89.8e9),
+            empresa_ideal("CARA", nombre="Cara SA", pais="Spain", net_income=1.0),
+            Fundamentales(ticker="ERR", error_descarga="HTTPError: 404",
+                          calidad_datos="error", divisa_consistente=False),
+        ]
+        esperado = incorporar_ranking_candidatos(
+            aplicar_filtros(deduplicar_listings(calcular_metricas(universo)))
+        )
+        resultado = evaluar_fundamentales(universo)
+        pd.testing.assert_frame_equal(resultado, esperado)
+        self.assertEqual(
+            resultado.attrs["control_integridad"],
+            {
+                "resultados_brutos": 4,
+                "errores_descarga": 1,
+                "deduplicados": 1,
+                "proveedor_datos": "",
+                "datos_ok": 2,
+                "datos_revisar": 0,
+                "datos_inutilizables": 1,
+            },
+        )
 
 
 if __name__ == "__main__":

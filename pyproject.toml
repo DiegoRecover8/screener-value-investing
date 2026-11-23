@@ -19,7 +19,7 @@ dashboard = [
     "altair>=5.0",
     "streamlit>=1.56",
 ]
-test = ["pytest>=8.0"]
+test = ["pytest>=8.0", "ruff>=0.6"]
 
 [tool.setuptools]
 py-modules = ["prompt_llm", "screener_api", "screener_value"]
@@ -30,3 +30,12 @@ include = ["providers*"]
 [tool.pytest.ini_options]
 testpaths = ["."]
 python_files = ["test_*.py"]
+
+[tool.ruff]
+target-version = "py310"
+
+[tool.ruff.lint]
+# Errores reales (pyflakes), estilo básico y bugbear. Las líneas largas y
+# zip(strict=...) no se exigen para no reescribir código estable.
+select = ["E", "F", "B"]
+ignore = ["E501", "B905"]

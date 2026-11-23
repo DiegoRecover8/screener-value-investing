@@ -1,6 +1,11 @@
-yfinance>=0.2.40
-pandas>=2.0
-numpy>=1.24
-streamlit>=1.56
-altair>=5.0
-pytest>=8.0
+# Versiones exactas para que la ejecución semanal sea reproducible: un cambio
+# de yfinance o pandas no debe alterar el snapshot oficial sin que se note.
+# Para actualizar: subir la versión aquí, ejecutar `python -m pytest` y
+# revisar el siguiente snapshot. Los rangos compatibles están en pyproject.toml.
+yfinance==1.8.0
+pandas==3.1.1
+numpy==2.5.5
+streamlit==1.67.0
+altair==6.3.0
+pytest==9.2.0
+ruff==0.17.6

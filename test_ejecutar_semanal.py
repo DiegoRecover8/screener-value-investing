@@ -106,6 +106,25 @@ class TestEjecucionSemanal(unittest.TestCase):
             self.assertFalse(Path(tmp, "journal.csv").exists())
             self.assertFalse(Path(tmp, "ejecuciones.csv").exists())
 
+    def test_control_invalido_se_detecta_antes_de_escribir_el_journal(self):
+        """Regresión: el journal se anexaba antes de validar la fila de control."""
+        with TemporaryDirectory() as tmp:
+            Path(tmp, "universo.txt").write_text(
+                "\n".join(f"T{i}" for i in range(10)), encoding="utf-8",
+            )
+            Path(tmp, "ejecuciones.csv").write_text(
+                "esquema,incompatible\n", encoding="utf-8",
+            )
+            with (
+                patch.object(sys, "argv", self._argv(tmp)),
+                patch("ejecutar_semanal.ejecutar", return_value=_resultado(0)),
+                patch.dict(os.environ, {"SCREENER_OFICIAL": "false"}),
+                self.assertRaises(ErrorIntegridadEjecucion),
+            ):
+                main()
+
+            self.assertFalse(Path(tmp, "journal.csv").exists())
+
     def test_control_valido_comparte_snapshot_entre_journal_y_metadatos(self):
         with TemporaryDirectory() as tmp:
             Path(tmp, "universo.txt").write_text(

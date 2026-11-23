@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import json
 from datetime import datetime, timezone
-from functools import lru_cache
 from time import sleep
 from typing import Callable
 from urllib.request import Request, urlopen
@@ -167,15 +166,18 @@ class ProveedorSecEdgar:
         # 0,12 s mantiene el cliente por debajo del límite SEC de 10 req/s.
         # Los transportes falsos de tests no necesitan esperar.
         self.pausa = pausa or (sleep if transport is None else lambda _s: None)
+        self._cache_mapa_tickers: dict[str, int] | None = None
 
-    @lru_cache(maxsize=1)
     def _mapa_tickers(self) -> dict[str, int]:
-        payload = self.transport(URL_TICKERS_SEC, self.user_agent)
-        return {
-            str(fila.get("ticker", "")).strip().upper(): int(fila["cik_str"])
-            for fila in payload.values()
-            if fila.get("ticker") and fila.get("cik_str") is not None
-        }
+        # Caché por instancia; ``lru_cache`` en un método retendría ``self``.
+        if self._cache_mapa_tickers is None:
+            payload = self.transport(URL_TICKERS_SEC, self.user_agent)
+            self._cache_mapa_tickers = {
+                str(fila.get("ticker", "")).strip().upper(): int(fila["cik_str"])
+                for fila in payload.values()
+                if fila.get("ticker") and fila.get("cik_str") is not None
+            }
+        return self._cache_mapa_tickers
 
     def _sin_cobertura(self, ticker: str, fecha: str, detalle: str) -> Fundamentales:
         return Fundamentales(

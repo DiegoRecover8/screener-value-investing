@@ -25,7 +25,6 @@ from providers import (
     ProveedorFundamentales,
     ProveedorYFinance,
 )
-from providers.yfinance_provider import _extremos_historicos
 
 
 UMBRALES = {
@@ -494,14 +493,25 @@ def ranking_compuesto(df: pd.DataFrame) -> pd.DataFrame:
     return res.sort_values("puntuacion")
 
 
+SUFIJOS_SOCIETARIOS = frozenset({
+    "PLC", "AG", "NV", "SA", "INC", "CORPORATION", "CORP", "LTD", "LIMITED",
+    "CO", "GROUP", "HOLDINGS", "COMPANY",
+})
+
+
 def _clave_empresa(nombre: str) -> str:
-    """Normaliza el nombre para detectar la misma empresa en varias bolsas."""
-    texto = str(nombre or "").upper()
-    for ruido in (" PLC", " AG", " NV", " N.V.", " SA", " S.A.", " INC", " INC.",
-                  " CORPORATION", " CORP", " CORP.", " LTD", " LTD.", " LIMITED",
-                  " CO.", " GROUP", " HOLDINGS", " COMPANY", ",", "."):
-        texto = texto.replace(ruido, " ")
-    return " ".join(texto.split())
+    """Normaliza el nombre para detectar la misma empresa en varias bolsas.
+
+    Los sufijos societarios se eliminan como palabras completas. Sustituir
+    subcadenas recortaba nombres legítimos ("Banco Sabadell" -> "BANCO BADELL",
+    "The Sage Group" -> "THE GE") y podía fusionar empresas distintas.
+    Los puntos se eliminan antes de separar palabras para que "N.V.",
+    "S.A." o "p.l.c." se reconozcan igual que "NV", "SA" o "PLC".
+    """
+    texto = str(nombre or "").upper().replace(".", "").replace(",", " ")
+    return " ".join(
+        palabra for palabra in texto.split() if palabra not in SUFIJOS_SOCIETARIOS
+    )
 
 
 def deduplicar_listings(df: pd.DataFrame) -> pd.DataFrame:
@@ -552,6 +562,41 @@ def incorporar_ranking_candidatos(evaluadas: pd.DataFrame) -> pd.DataFrame:
     return res[[col for col in res.columns if col not in procedencia] + procedencia]
 
 
+def evaluar_fundamentales(
+    datos: list[Fundamentales] | pd.DataFrame, u: dict = UMBRALES,
+) -> pd.DataFrame:
+    """Pipeline determinista único: métricas, deduplicado, filtros y ranking.
+
+    Lo comparten la ejecución semanal, ``screener_api`` y el dashboard para
+    que las tres vías no puedan divergir. Los recuentos de integridad se
+    devuelven en ``resultado.attrs["control_integridad"]``.
+    """
+    metricas = calcular_metricas(datos, u)
+    antes = len(metricas)
+    errores_descarga = int(
+        metricas.get("error_descarga", pd.Series(dtype=str))
+        .fillna("").astype(str).str.strip().ne("").sum()
+    )
+    metricas = deduplicar_listings(metricas)
+    resultado = incorporar_ranking_candidatos(aplicar_filtros(metricas, u))
+    calidad = resultado.get(
+        "calidad_datos", pd.Series("ok", index=resultado.index),
+    )
+    resultado.attrs["control_integridad"] = {
+        "resultados_brutos": antes,
+        "errores_descarga": errores_descarga,
+        "deduplicados": antes - len(resultado),
+        "proveedor_datos": ",".join(sorted(
+            set(resultado.get("proveedor_datos", pd.Series(dtype=str))
+                .dropna().astype(str).str.strip()) - {""}
+        )),
+        "datos_ok": int(calidad.eq("ok").sum()),
+        "datos_revisar": int(calidad.eq("revisar").sum()),
+        "datos_inutilizables": int(calidad.isin(["inutilizable", "error"]).sum()),
+    }
+    return resultado
+
+
 def descargar_fundamentales(
     tickers: list[str],
     proveedor: ProveedorFundamentales | None = None,
@@ -564,39 +609,16 @@ def ejecutar(tickers: list[str], salida_csv: str = "candidatos.csv") -> pd.DataF
     print(DISCLAIMER)
     print(f"\nDescargando {len(tickers)} valores...")
     datos = descargar_fundamentales(tickers)
-    metricas = calcular_metricas(datos)
-    antes = len(metricas)
-    errores_descarga = int(
-        metricas["error_descarga"].fillna("").astype(str).str.strip().ne("").sum()
-    )
-    metricas = deduplicar_listings(metricas)
-    if len(metricas) < antes:
-        print(f"\nDeduplicado: {antes - len(metricas)} cotizaciones duales colapsadas "
-              f"({antes} -> {len(metricas)} empresas)")
-    if "pais" in metricas:
+    resultado = evaluar_fundamentales(datos)
+    control = resultado.attrs["control_integridad"]
+    if control["deduplicados"]:
+        print(f"\nDeduplicado: {control['deduplicados']} cotizaciones duales "
+              f"colapsadas ({control['resultados_brutos']} -> {len(resultado)} "
+              "empresas)")
+    if "pais" in resultado and len(resultado):
         print("\nComposición del universo por región:")
-        for region, n in metricas["region"].value_counts().items():
-            print(f"  {region:>14s}: {n:5d}  ({n / len(metricas):5.1%})")
-    evaluadas = aplicar_filtros(metricas)
-    resultado = incorporar_ranking_candidatos(evaluadas)
-    resultado.attrs["control_integridad"] = {
-        "resultados_brutos": antes,
-        "errores_descarga": errores_descarga,
-        "deduplicados": antes - len(metricas),
-        "proveedor_datos": ",".join(sorted(
-            set(metricas.get("proveedor_datos", pd.Series(dtype=str))
-                .dropna().astype(str).str.strip()) - {""}
-        )),
-        "datos_ok": int(metricas.get(
-            "calidad_datos", pd.Series("ok", index=metricas.index),
-        ).eq("ok").sum()),
-        "datos_revisar": int(metricas.get(
-            "calidad_datos", pd.Series("ok", index=metricas.index),
-        ).eq("revisar").sum()),
-        "datos_inutilizables": int(metricas.get(
-            "calidad_datos", pd.Series("ok", index=metricas.index),
-        ).isin(["inutilizable", "error"]).sum()),
-    }
+        for region, n in resultado["region"].value_counts().items():
+            print(f"  {region:>14s}: {n:5d}  ({n / len(resultado):5.1%})")
     # Conserva en memoria los componentes crudos de las candidatas para una
     # verificación secundaria posterior. No se añaden al journal ni se vuelcan
     # en candidatos.csv, evitando cambiar el esquema oficial por un artefacto

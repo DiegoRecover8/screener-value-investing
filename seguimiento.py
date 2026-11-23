@@ -25,6 +25,7 @@ DISCIPLINA CONTRA EL SESGO RETROSPECTIVO (look-ahead bias):
 
 from __future__ import annotations
 
+import csv
 from pathlib import Path
 
 import numpy as np
@@ -210,7 +211,17 @@ def registrar_seguimiento(
     filas.insert(0, "fecha_calculo", momento.isoformat())
 
     ruta = Path(ruta_seguimiento)
-    escribir_cabecera = not ruta.exists()
+    # Igual que el journal: anexar con otro esquema desalinearía en silencio
+    # todas las filas nuevas respecto a la cabecera ya versionada.
+    if ruta.exists() and ruta.stat().st_size > 0:
+        with ruta.open(newline="", encoding="utf-8") as archivo:
+            cabecera = next(csv.reader(archivo), [])
+        if cabecera != list(filas.columns):
+            raise ValueError(
+                f"esquema incompatible en {ruta}: se esperaban "
+                f"{list(filas.columns)}, pero contiene {cabecera}"
+            )
+    escribir_cabecera = not ruta.exists() or ruta.stat().st_size == 0
     filas.to_csv(ruta, mode="a", index=False, header=escribir_cabecera)
     return filas
 

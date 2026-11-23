@@ -188,6 +188,20 @@ class TestRegistrarSeguimiento(unittest.TestCase):
             self.assertEqual(len(historico), 4)
             self.assertEqual(historico["fecha_calculo"].nunique(), 2)
 
+    def test_rechaza_anexar_con_un_esquema_distinto(self):
+        """Regresión: un cambio de columnas desalineaba el CSV en silencio."""
+        with TemporaryDirectory() as tmp:
+            ruta = Path(tmp) / "seguimiento.csv"
+            registrar_seguimiento(
+                self._rendimiento_ejemplo(), ruta, momento=pd.Timestamp("2026-08-24T07:00:00Z"),
+            )
+            distinto = self._rendimiento_ejemplo().drop(columns=["max_drawdown"])
+            with self.assertRaises(ValueError):
+                registrar_seguimiento(
+                    distinto, ruta, momento=pd.Timestamp("2026-08-31T07:00:00Z"),
+                )
+            self.assertEqual(len(leer_seguimiento(ruta)), 2)
+
     def test_leer_seguimiento_inexistente_devuelve_vacio(self):
         self.assertTrue(leer_seguimiento("/ruta/que/no/existe.csv").empty)
 

@@ -29,8 +29,9 @@ import pandas as pd
 from journal import (
     RUTA_EJECUCIONES_DEFECTO,
     RUTA_JOURNAL_DEFECTO,
+    anexar_control_integridad,
     crear_snapshot_id,
-    registrar_control_integridad,
+    preparar_control_integridad,
     registrar_ejecucion,
     validar_integridad_ejecucion,
 )
@@ -202,14 +203,17 @@ def main() -> None:
     momento = pd.Timestamp.now(tz="UTC")
     snapshot_id = crear_snapshot_id(momento)
 
-    filas_nuevas = registrar_ejecucion(
-        resultado, ruta_journal, momento=momento, snapshot_id=snapshot_id,
-    )
-    metadatos = registrar_control_integridad(
+    # Toda la validación del control ocurre ANTES de escribir el journal: un
+    # snapshot en el journal sin fila de control se interpretaría como legacy.
+    fila_control = preparar_control_integridad(
         control, snapshot_id, momento, ruta_ejecuciones,
         origen=origen, oficial=oficial,
         **_metadatos_github(), **metadatos_universo,
     )
+    filas_nuevas = registrar_ejecucion(
+        resultado, ruta_journal, momento=momento, snapshot_id=snapshot_id,
+    )
+    metadatos = anexar_control_integridad(fila_control, ruta_ejecuciones)
     _verificar_candidatas_en_sombra(resultado, snapshot_id, momento)
     print(
         f"\nSnapshot válido {snapshot_id}: {len(filas_nuevas)} empresas, "
